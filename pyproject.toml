@@ -19,10 +19,18 @@ pytest = "^8.4.0"
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.16.1"
 black = "^25.1.0"
-flake8 = "^7.2.0"
 isort = "^6.0.1"
 pre-commit = "^4.2.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+disallow_untyped_defs = true
