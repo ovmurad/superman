@@ -18,6 +18,8 @@ class Array(ABC):
     def __init__(self, data: ArrayData):
         self.data = data
 
+    # ----- Properties -----
+
     @property
     def is_sparse(self) -> bool:
         return isinstance(self.data, csr_array)
