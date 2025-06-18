@@ -13,15 +13,19 @@ if TYPE_CHECKING:
 
 
 class DenseArray(Array):
-    def __init__(self, data: NDArray):
-        if not isinstance(data, np.ndarray):
+    def __init__(self, array: NDArray):
+        if not isinstance(array, np.ndarray):
             raise ValueError(
-                f"DenseArray expects a dense ndarray, but got {type(data)}"
+                f"DenseArray expects a dense ndarray, but got {type(array)}"
             )
-        super().__init__(data)
+        super().__init__(array)
+
+    @property
+    def data(self) -> NDArray:
+        return self.array
 
     def to_dense(self) -> "DenseArray":
         return self
 
     def to_sparse(self) -> "SparseArray":
-        return SparseArray(csr_array(self.data))
+        return SparseArray(csr_array(self.array))
