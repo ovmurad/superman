@@ -15,6 +15,7 @@ matplotlib = "^3.10.3"
 seaborn = "^0.13.2"
 jupyter = "^1.1.1"
 pytest = "^8.4.0"
+sphinx = "^5.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.16.1"
@@ -39,3 +40,6 @@ disallow_untyped_defs = true
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+
+[tool.poetry.extras]
+docs = ["sphinx"]

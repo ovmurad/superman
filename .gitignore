@@ -5,5 +5,7 @@ __pycache__
 *.pyo
 *.pyd
 *.pdf
+*.doctree
 /data/*
 !/data/.gitkeep
+docs/build/
