@@ -2,7 +2,7 @@ name: Deploy Sphinx Docs to GitHub Pages
 
 on:
   push:
-    branches: [ autodocs ]
+    branches: [ main ]
 
 jobs:
   build:
