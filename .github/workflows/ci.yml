@@ -34,11 +34,11 @@ jobs:
 
       - name: Type check with mypy
         run: |
-          poetry run mypy src
+          poetry run mypy src tests
 
       - name: Run tests with coverage
         run: |
-          poetry run pytest --cov=src tests/
+          poetry run pytest --cov=src tests
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
