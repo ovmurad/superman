@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Check Black formatting
+        run: |
+          poetry run black --check .
+
+      - name: Lint with Ruff
+        run: |
+          poetry run ruff check .
+
+      - name: Type check with mypy
+        run: |
+          poetry run mypy src
+
+      - name: Run tests with coverage
+        run: |
+          poetry run pytest --cov=src tests/
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4

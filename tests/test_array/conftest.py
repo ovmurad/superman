@@ -1,16 +1,14 @@
 from dataclasses import dataclass
-from typing import Tuple, Type
+from typing import Generic, Tuple
 
 import numpy as np
-from numpy.typing import NDArray
 from scipy.sparse import csr_array
-
-from src.array.base import Array
+from src.array.base import Array, ArrayType
 
 
 @dataclass
-class TestArray:
-    array: NDArray | csr_array
+class DummyArray(Generic[ArrayType]):
+    array: ArrayType
     properties: Tuple[str, ...] = ("is_sparse", "shape", "ndim", "dtype")
 
     @property
@@ -26,7 +24,7 @@ class TestArray:
         return len(self.array.shape)
 
     @property
-    def dtype(self) -> Type:
+    def dtype(self) -> np.dtype:
         return self.array.dtype
 
     def check(self, array: Array) -> bool:
@@ -35,37 +33,38 @@ class TestArray:
         )
 
 
-dense_test_array = {
-    "dense_1d_float": TestArray(
+dense_dummy_arrays = {
+    "dense_1d_float": DummyArray(
         np.random.rand(30),
     ),
-    "dense_1d_int": TestArray(
+    "dense_1d_int": DummyArray(
         np.random.randint(low=0, high=10, size=(30,)),
     ),
-    "dense_1d_bool": TestArray(
+    "dense_1d_bool": DummyArray(
         np.random.randint(low=0, high=10, size=(30,)) < 5,
     ),
-    "dense_2d_float": TestArray(
+    "dense_2d_float": DummyArray(
         np.random.rand(30, 40) * (np.random.rand(30, 40) < 0.5),
     ),
-    "dense_2d_int": TestArray(
+    "dense_2d_int": DummyArray(
         np.random.randint(low=0, high=10, size=(30, 40))
         * (np.random.rand(30, 40) < 0.5),
     ),
-    "dense_2d_bool": TestArray(
+    "dense_2d_bool": DummyArray(
         np.random.randint(low=0, high=10, size=(30, 40)) < 5,
     ),
 }
 
-sparse_test_array = {}
-for k, v in dense_test_array.items():
-    if "2d" in k:
-        sparse_test_array[k.replace("dense", "sparse")] = TestArray(csr_array(v.array))
+sparse_dummy_arrays = {}
+for dense_key, v in dense_dummy_arrays.items():
+    if "2d" in dense_key:
+        sparse_key = dense_key.replace("dense", "sparse")
+        sparse_dummy_arrays[sparse_key] = DummyArray(csr_array(v.array))
 
-test_array = {**dense_test_array, **sparse_test_array}
+dummy_array = {**dense_dummy_arrays, **sparse_dummy_arrays}
 
-test_array_groups = {
-    "all": tuple(test_array.values()),
-    "dense": tuple(dense_test_array.values()),
-    "sparse": tuple(sparse_test_array.values()),
+dummy_array_groups = {
+    "all": tuple(dummy_array.values()),
+    "dense": tuple(dense_dummy_arrays.values()),
+    "sparse": tuple(sparse_dummy_arrays.values()),
 }

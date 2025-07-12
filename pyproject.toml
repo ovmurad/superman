@@ -9,20 +9,20 @@ packages = [{ include = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
-numpy = "^2.3.0"
-scipy = "^1.15.3"
+numpy = "^2.3.1"
+scipy = "^1.16.0"
+scipy-stubs = "^1.16.0.2"
 matplotlib = "^3.10.3"
 seaborn = "^0.13.2"
 jupyter = "^1.1.1"
-pytest = "^8.4.0"
-sphinx = "^5.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.16.1"
 black = "^25.1.0"
-isort = "^6.0.1"
+ruff = "^0.12.3"
 pre-commit = "^4.2.0"
-pytest = "^8.4.0"
+pytest = "^8.4.1"
+sphinx = "^8.2.3"
 
 [build-system]
 requires = ["poetry-core"]
@@ -30,6 +30,11 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88
+
+[tool.ruff]
+lint.extend-select = ["I"]
+line-length = 88
+src = ["src"]
 
 [tool.isort]
 profile = "black"
