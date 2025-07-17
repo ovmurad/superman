@@ -106,6 +106,17 @@ A very rough list of Objects with their dimensions, type of Array Object support
 
 ### linalg
 
+### Covariance Matrix
+
+- **Array Type**: Dense.
+- **Dimensions**: nfeats or d.
+
+### Spectral Embedding
+
+- **Array Type**: Dense or Sparse.
+- **Dimensions**: 2 x npts
+- **Description**: Tuple containing eigenvalues and eigenvectors
+
 ### geometry
 
 ## Secondary Package Components
