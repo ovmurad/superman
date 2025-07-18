@@ -119,6 +119,11 @@ A very rough list of Objects with their dimensions, type of Array Object support
 - **Dimensions**: 2 x npts.
 - **Description**: Tuple containing eigenvalues and eigenvectors.
 
+### Distortion Matrix
+
+- **Array Type**: Dense.
+- **Dimensions**: npts x ds.
+
 ## Secondary Package Components
 
 ### utils
