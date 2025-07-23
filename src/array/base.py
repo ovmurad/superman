@@ -1,128 +1,125 @@
 from abc import ABC, abstractmethod
-from typing import Generic, Self, Tuple, TypeVar, cast
+from typing import Any, Generic, Self, Tuple, cast
 
 import numpy as np
-from numpy.typing import DTypeLike, NDArray
+from numpy.typing import NDArray
 from scipy.sparse import csr_array
 
-DType = TypeVar("DType", bound=np.number | np.bool_)
-ArrayType = TypeVar("ArrayType", np.ndarray, csr_array)
+from .typing import _Array, _Data, _DType, _DType_, _Idx
+
+# ------------------------------------------
+# ----------------- Array ------------------
+# ------------------------------------------
 
 
-class Array(ABC, Generic[ArrayType, DType]):
+class Array(Generic[_Array, _DType], ABC):
     """Abstract base class for array-like objects (dense or sparse).
 
     Wraps the core interface shared by numpy and scipy.sparse arrays,
     and defines an abstract contract for key operations that are format-specific.
     """
 
-    def __init__(self, array: ArrayType) -> None:
-        self.array: ArrayType = array
+    _array: _Array
 
-    # ----- Properties -----
-
-    @property
-    def is_sparse(self) -> bool:
-        return isinstance(self.array, csr_array)
+    def __init__(self, array: Any) -> None:
+        self._array = array
 
     @property
     def shape(self) -> Tuple[int, ...]:
-        return self.array.shape
-
-    @property
-    def dtype(self) -> np.dtype:
-        return self.array.dtype
+        return self._array.shape
 
     @property
     def ndim(self) -> int:
-        return self.array.ndim
+        return self._array.ndim
+
+    @property
+    def dtype(self) -> np.dtype:
+        return self._array.dtype
+
+    @property
+    def raw_array(self) -> _Array:
+        return self._array
 
     # ----- Magic -----
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(shape={self.shape}, dtype={self.dtype}, array={self.array.__repr__()})"
+        return f"{self.__class__.__name__}(shape={self.shape}, dtype={self.dtype}, array={self._array.__repr__()})"
 
     # ----- Utilities -----
 
     def copy(self) -> Self:
-        return self.__class__(self.array.copy())
+        return self.__class__(self._array.copy())
 
     # ----- Abstract properties -----
-
-    @property
-    @abstractmethod
-    def data(self) -> NDArray[DType]:
-        pass
 
     # ----- Abstract methods -----
 
     @abstractmethod
-    def astype(self, dtype: DTypeLike) -> Self: ...
+    def astype(self, dtype: _DType_) -> "Array[_Array, _DType_]": ...
 
     @abstractmethod
-    def to_dense(self) -> "DenseArray[DType]": ...
+    def to_dense(self) -> "DenseArray[_DType]": ...
 
     @abstractmethod
-    def to_sparse(self) -> "SparseArray[DType]": ...
+    def to_sparse(self) -> "SparseArray[_DType]": ...
 
 
-class DenseArray(Array[np.ndarray, DType]):
-    def __init__(self, array: NDArray[DType]) -> None:
-        if not isinstance(array, np.ndarray):
-            raise ValueError(
-                f"DenseArray expects a dense ndarray, but got {type(array)}"
-            )
-        super().__init__(array)
+# ------------------------------------------
+# -------------- DenseArray ----------------
+# ------------------------------------------
 
-    # ----- Properties -----
 
-    @property
-    def data(self) -> NDArray[DType]:
-        return self.array
+class DenseArray(Generic[_DType], Array[NDArray[_DType], _DType]):
+    _array: NDArray[_DType]
+
+    def __init__(self, array: NDArray[_DType]) -> None:
+        super().__init__(np.asarray(array))
 
     # ----- Utilities -----
 
-    def astype(self, dtype: DTypeLike) -> Self:
-        return self.__class__(self.array.astype(dtype))
+    def astype(self, dtype: _DType_) -> "DenseArray[_DType_]":
+        return DenseArray[_DType_](self._array.astype(dtype))
 
     def to_dense(self) -> Self:
         return self
 
-    def to_sparse(self) -> "SparseArray[DType]":
-        return SparseArray(csr_array(self.array))
+    def to_sparse(self) -> "SparseArray[_DType]":
+        return SparseArray[_DType](csr_array(self._array))
 
 
-class SparseArray(Array[csr_array, DType]):
+# ------------------------------------------
+# ------------- SparseArray ----------------
+# ------------------------------------------
 
-    def __init__(self, array: csr_array[DType]) -> None:
-        if not isinstance(array, csr_array):
-            raise ValueError(
-                f"SparseArray expects a sparse.csr_array, but got {type(array)}"
-            )
+
+class SparseArray(Generic[_DType], Array[csr_array[_DType], _DType]):
+    _array: csr_array[_DType]
+
+    def __init__(self, array: csr_array[_DType]) -> None:
         super().__init__(array)
 
     # ----- Properties -----
 
     @property
-    def data(self) -> NDArray[DType]:
-        return np.asarray(self.array.data)
+    def data(self) -> _Data[_DType]:
+        return np.asarray(self._array.data)
 
     @property
-    def indptr(self) -> NDArray[np.int32]:
-        return self.array.indptr
+    def indptr(self) -> _Idx:
+        return self._array.indptr
 
     @property
-    def indices(self) -> NDArray[np.int32]:
-        return self.array.indices
+    def indices(self) -> _Idx:
+        return self._array.indices
 
     # ----- Utilities -----
 
-    def astype(self, dtype: DTypeLike) -> Self:
-        new_array = cast(csr_array, self.array.astype(dtype))
-        return self.__class__(new_array)
+    def astype(self, dtype: _DType_) -> "SparseArray[_DType_]":
+        array = cast(csr_array[_DType_], self._array.astype(dtype))
+        return SparseArray[_DType_](array)
 
-    def to_dense(self) -> "DenseArray[DType]":
-        return DenseArray(self.array.todense())
+    def to_dense(self) -> "DenseArray[_DType]":
+        return DenseArray(self._array.todense())
 
     def to_sparse(self) -> Self:
         return self

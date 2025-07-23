@@ -61,19 +61,22 @@ a `visualize` function would be a good place to start, but others might be usefu
 
 A very rough list of Objects with their dimensions, type of Array Object supported, and description.
 
-#### Points
+#### Points/Embedded Points/Point Coordinates
 
+- **Variable Name**: for points in ambient space - `xamb`, `yamb`, `amb`; for embedded points - `xemb`, `yemb`, `emb`;
+  for point coordinates - `xcoord`, `ycoord`, `coord`;
 - **Array Type**: Dense.
-- **Dimensions**: npts x nfeats.
-- **Description**: Array containing a set of points sampled from a manifold or subsequently embedded by some embedding
-  algorithm or function.
+- **Dimensions**: (`npts`, `D`) for points in ambient space; (`npts`, `p`) for embedded points; (`npts`, `d`) for point
+  coordinates.
+- **Description**: Array containing a set of points sampled from a manifold, subsequently embedded by some embedding
+  algorithm or function, or the coordinates of the points in some chart.
 
-#### Params
+#### Function
 
+- **Variable Name**: `f`.
 - **Array Type**: Dense.
-- **Dimensions**: npts or npts x nparams.
-- **Description**: Array containing the values of a function or of a parameter(like a coordinate or generative
-  parameter) at the set of points in question.
+- **Dimensions**: `npts` for univariate functions/coords; (`npts`, `k`) for multivariate functions.
+- **Description**: Array containing the values of a function at the set of points we're working with.
   The array can have only one dimension(a function to $\mathbb{R}$) or multiple dimensions(a function to
   $\mathbb{R}^{nparams}$).
   This class is going to be essential for visualization and will generally represent the colors by which we color the
@@ -81,48 +84,71 @@ A very rough list of Objects with their dimensions, type of Array Object support
 
 #### Distance Matrix
 
+- **Variable Name**: `dist_mat`.
 - **Array Type**: Dense or Sparse.
-- **Dimensions**: npts x npts.
+- **Dimensions**: (`npts`, `npts`).
 
 #### Affinity Matrix
 
+- **Variable Name**: `aff_mat`.
 - **Array Type**: Dense or Sparse.
-- **Dimensions**: npts x npts.
+- **Dimensions**: (`npts`, `npts`).
+- **Description**: TODO.
 
 #### Laplacian Matrix
 
+- **Variable Name**: `lap_mat`.
 - **Array Type**: Dense or Sparse.
-- **Dimensions**: npts x npts.
+- **Dimensions**: (`npts`, `npts`).
+- **Description**: TODO.
+
+#### Laplacian Spectrum
+
+- **Varaible Name**: `lap_evals`.
+- **Array Type**: Dense.
+- **Dimensions**: `p`.
+- **Description**: TODO.
 
 #### Tangent Bundle
 
+- **Variable Name**: `tan_bun`.
 - **Array Type**: Dense.
-- **Dimensions**: npts x nfeats x d.
+- **Dimensions**: (`npts`, `D`, `d`) in ambient space; (`npts`, `p`, `d`) in embedding space.
+- **Description**: TODO.
 
-#### Metric
+#### Local Covariance Matrices
 
-- **Array Type**: Dense or Sparse.
-- **Dimensions**: npts x nfeats x nfeats or npts x d x d.
+- **Variable Name**: `cov_mat`.
+- **Array Type**: Dense.
+- **Dimensions**: (`npts`, `D`, `D`) in ambient space; (`npts`, `p`, `p`) in embedding space.
+- **Description**: TODO.
+
+#### Local Covariance Spectra
+
+- **Variable Name**: `cov_evals`.
+- **Array Type**: Dense.
+- **Dimensions**: (`npts`, `D`) in ambient space; (`npts`, `p`) in embedding space.
+- **Description**: TODO.
+
+#### Metric/Co-Metric
+
+- **Variable Name**: `met`, `cmet`.
+- **Array Type**: Dense.
+- **Dimensions**: (`npts`, `D`, `D`) in ambient space and coordinates; (`npts`, `p`, `p`) in embedding space and
+  coordinates; (`npts`, `d`, `d`) in intrinsic coordinates.
+- **Description**: TODO.
+
+#### Metric/Co-Metric Spectra
+
+- **Variable Name**: `met_evals`, `met_evecs`.
+- **Array Type**: Dense.
+- **Dimensions**: (`npts`, `D`, `D`) in ambient space and coordinates; (`npts`, `p`, `p`) in embedding space and
+  coordinates; (`npts`, `d`, `d`) in intrinsic coordinates.
+- **Description**: TODO.
 
 ### linalg
 
-### Covariance Matrix
-
-- **Array Type**: Dense.
-- **Dimensions**: nfeats or d.
-
 ### geometry
-
-### Spectral Embedding
-
-- **Array Type**: Dense.
-- **Dimensions**: 2 x npts.
-- **Description**: Tuple containing eigenvalues and eigenvectors.
-
-### Distortion Matrix
-
-- **Array Type**: Dense.
-- **Dimensions**: npts x ds.
 
 ## Secondary Package Components
 
