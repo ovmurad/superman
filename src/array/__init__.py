@@ -1,3 +1,5 @@
-from .base import Array, DenseArray, SparseArray, _Array, _DType
+from .base import BaseArray
+from .dense import DenseArray
+from .sparse import SparseArray
 
-__all__ = ["Array", "DenseArray", "SparseArray", "_Array", "_DType"]
+__all__ = ["BaseArray", "DenseArray", "SparseArray"]

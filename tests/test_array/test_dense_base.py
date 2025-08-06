@@ -18,7 +18,7 @@ def test_basic_properties_dense(dummy_array: DummyArray) -> None:
 @pytest.mark.parametrize("dtype", (np.float64, np.int64, np.bool))
 def test_astype_dense(dummy_array: DummyArray, dtype: _DTypeBound) -> None:
     array = DenseArray(dummy_array.array).astype(dtype)
-    assert array.dtype == dtype
+    assert array.stype == dtype
 
 
 @pytest.mark.parametrize("dummy_array", dummy_array_groups["dense"])

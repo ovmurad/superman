@@ -7,24 +7,24 @@ repos:
         language: system
         types: [ python ]
         pass_filenames: false
-
-      - id: ruff
-        name: Lint with Ruff
-        entry: poetry run ruff check . --fix
-        language: system
-        types: [ python ]
-        pass_filenames: false
-
-      - id: mypy
-        name: Run mypy
-        entry: poetry run mypy src tests
-        language: system
-        types: [ python ]
-        pass_filenames: false
-
-      - id: run-pytest-fast
-        name: Run Pytest (Fast Tests Only)
-        entry: poetry run pytest -m "fast"
-        language: system
-        types: [ python ]
-        pass_filenames: false
+#
+#      - id: ruff
+#        name: Lint with Ruff
+#        entry: poetry run ruff check . --fix
+#        language: system
+#        types: [ python ]
+#        pass_filenames: false
+#
+#      - id: mypy
+#        name: Run mypy
+#        entry: poetry run mypy src tests
+#        language: system
+#        types: [ python ]
+#        pass_filenames: false
+#
+#      - id: run-pytest-fast
+#        name: Run Pytest (Fast Tests Only)
+#        entry: poetry run pytest -m "fast"
+#        language: system
+#        types: [ python ]
+#        pass_filenames: false

@@ -1,32 +1,53 @@
-from typing import TypeAlias, TypeVar
+from typing import Tuple, Type, TypeAlias, TypeVar, Union
 
 import numpy as np
-from numpy._typing._array_like import (
-    _ArrayLikeBool_co,
-    _ArrayLikeFloat_co,
-    _ArrayLikeInt_co,
-)
-from numpy.typing import NDArray
+from numpy._typing._array_like import _ArrayLikeFloat_co, _ArrayLikeInt_co
 from scipy.sparse import csr_array
 
-# numpy type vars
-_DTypeBound: TypeAlias = np.bool_ | np.integer | np.floating
-_DType = TypeVar("_DType", bound=_DTypeBound)
-_DType_ = TypeVar("_DType_", bound=_DTypeBound)
+BoolLike: TypeAlias = Union[bool, np.bool_]
+IntLike: TypeAlias = Union[int, np.int32, np.int64]
+FloatLike: TypeAlias = Union[float, np.float32, np.float64]
+ScalarLike: TypeAlias = Union[BoolLike, IntLike, FloatLike]
 
-# types of inputs for data and index parsing via numpy functions such as np.asarray, np.broadcast
-_BoolDataLike: TypeAlias = _ArrayLikeBool_co
-_IntDataLike: TypeAlias = _ArrayLikeInt_co
-_FloatDataLike: TypeAlias = _ArrayLikeFloat_co
-_DataLike = TypeVar("_DataLike", _BoolDataLike, _IntDataLike, _FloatDataLike)
+ScalarLikeType: TypeAlias = Union[
+    Type[np.bool_],
+    Type[np.int32],
+    Type[np.int64],
+    Type[np.float32],
+    Type[np.float64],
+    Type[bool],
+    Type[int],
+    Type[float],
+]
 
-_BoolData: TypeAlias = NDArray[np.bool_]
-_IntData: TypeAlias = NDArray[np.integer]
-_FloatData: TypeAlias = NDArray[np.floating]
-_Data: TypeAlias = NDArray[_DType]
+Bool: TypeAlias = np.bool_
+Int: TypeAlias = Union[np.int32, np.int64]
+Float: TypeAlias = Union[np.float32, np.float64]
+Scalar: TypeAlias = Union[Bool, Int, Float]
+ScalarType: TypeAlias = Union[
+    Type[np.bool_], Type[np.int32], Type[np.int64], Type[np.float32], Type[np.float64]
+]
+ScalarTypeVar = TypeVar(
+    "ScalarTypeVar", np.bool_, np.int32, np.int64, np.float32, np.float64
+)
+ScalarTypeVar_ = TypeVar(
+    "ScalarTypeVar_", np.bool_, np.int32, np.int64, np.float32, np.float64
+)
 
-_IdxLike: TypeAlias = _ArrayLikeInt_co
-_Idx: TypeAlias = NDArray[np.integer]
+ShapeTypeVar = TypeVar("ShapeTypeVar", bound=Tuple[int, ...])
 
-# Types of arrays that can be wrapped by Array subclasses
-_Array = TypeVar("_Array", bound=NDArray[_DTypeBound] | csr_array[_DTypeBound])
+DenseStorage: TypeAlias = np.ndarray[ShapeTypeVar, np.dtype[ScalarTypeVar]]
+SparseStorage: TypeAlias = csr_array[ScalarTypeVar, Tuple[int, int]]
+
+ScalarTypeVar__ = TypeVar("ScalarTypeVar__", bound=np.generic)
+Storage: TypeAlias = Union[
+    csr_array[ScalarTypeVar__, Tuple[int, int]],
+    np.ndarray[ShapeTypeVar, np.dtype[ScalarTypeVar__]],
+]
+
+DataLike: TypeAlias = _ArrayLikeFloat_co
+IndexLike: TypeAlias = _ArrayLikeInt_co
+
+# Sparse Array Stuff
+Index: TypeAlias = np.ndarray[Tuple[int], np.dtype[np.int32]]
+Data: TypeAlias = np.ndarray[Tuple[int], np.dtype[ScalarTypeVar]]

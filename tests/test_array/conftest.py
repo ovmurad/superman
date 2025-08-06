@@ -22,7 +22,7 @@ class DummyArray(Generic[_Array]):
 
     @property
     def dtype(self) -> np.dtype:
-        return self.array.dtype
+        return self.array.stype
 
     def check(self, array: Array) -> bool:
         return (self.array is array.raw_array) and all(

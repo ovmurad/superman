@@ -1,125 +1,124 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Any, Generic, Self, Tuple, cast
+from math import prod
+from typing import (
+    Any,
+    Callable,
+    ClassVar,
+    Dict,
+    Optional,
+    Tuple,
+)
 
 import numpy as np
-from numpy.typing import NDArray
-from scipy.sparse import csr_array
+from numpy.lib.mixins import NDArrayOperatorsMixin
 
-from .typing import _Array, _Data, _DType, _DType_, _Idx
-
-# ------------------------------------------
-# ----------------- Array ------------------
-# ------------------------------------------
+from .typing import Scalar, ScalarLikeType, ScalarType
 
 
-class Array(Generic[_Array, _DType], ABC):
-    """Abstract base class for array-like objects (dense or sparse).
+class BaseArray(ABC, NDArrayOperatorsMixin):
+    storage: Any
 
-    Wraps the core interface shared by numpy and scipy.sparse arrays,
-    and defines an abstract contract for key operations that are format-specific.
-    """
+    _is_sparse: ClassVar[bool]
+    _wrap_types: ClassVar[Tuple[type, ...]] = tuple[type]()
 
-    _array: _Array
+    @classmethod
+    def _wrap(cls, out: Any) -> Any:
 
-    def __init__(self, array: Any) -> None:
-        self._array = array
+        if isinstance(out, cls._wrap_types):
+            return cls(out)
+        elif isinstance(out, (tuple, list)):
+            return out.__class__((cls._wrap(o) for o in out))
+        elif isinstance(out, dict):
+            return {k: cls._wrap(o) for k, o in out.items()}
+        else:
+            return out
+
+    @classmethod
+    def _unwrap(cls, inp: Any) -> Any:
+
+        if isinstance(inp, cls):
+            return inp.storage
+        elif isinstance(inp, (tuple, list)):
+            return inp.__class__((cls._unwrap(r) for r in inp))
+        elif isinstance(inp, dict):
+            return {k: cls._unwrap(r) for k, r in inp.items()}
+        else:
+            return inp
+
+    @classmethod
+    def _wrapped_call(cls, func: Callable, *args: Any, **kwargs: Any) -> Any:
+        args = cls._unwrap(args)
+        kwargs = cls._unwrap(kwargs)
+        result = func(*args, **kwargs)
+        return cls._wrap(result)
+
+    def __init__(self, storage: Any) -> None:
+        self.storage = storage
+
+    def __getattr__(self, attr: str) -> Any:
+        """Delegate attributes/methods to storage."""
+        attr_value = getattr(self.storage, attr)
+
+        # If the attribute is a function call and wrap the function
+        if callable(attr_value):
+
+            def _wrapped_attr(*args: Any, **kwargs: Any) -> Any:
+                return self._wrapped_call(attr_value, *args, **kwargs)
+
+            return _wrapped_attr
+        return attr_value
+
+    # --------------- Properties ---------------
+    # Reproduced for type hinting and IDE purpose(__getattr__ would handle everything)
+    # or for the purpose of implementing a common interface
+    @property
+    def is_dense(self) -> bool:
+        return not self._is_sparse
+
+    @property
+    def is_sparse(self) -> bool:
+        return self._is_sparse
 
     @property
     def shape(self) -> Tuple[int, ...]:
-        return self._array.shape
+        return self.storage.shape
 
     @property
     def ndim(self) -> int:
-        return self._array.ndim
+        return self.storage.ndim
 
     @property
-    def dtype(self) -> np.dtype:
-        return self._array.dtype
+    def dtype(self) -> ScalarType:
+        return self.storage.dtype.type
 
     @property
-    def raw_array(self) -> _Array:
-        return self._array
+    def nnz(self) -> int:
+        return self.storage.size
 
-    # ----- Magic -----
+    @property
+    def size(self) -> int:
+        return prod(self.shape)
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(shape={self.shape}, dtype={self.dtype}, array={self._array.__repr__()})"
-
-    # ----- Utilities -----
-
-    def copy(self) -> Self:
-        return self.__class__(self._array.copy())
-
-    # ----- Abstract properties -----
-
-    # ----- Abstract methods -----
+    # --------------- Numpy Interface ---------------
 
     @abstractmethod
-    def astype(self, dtype: _DType_) -> "Array[_Array, _DType_]": ...
+    def __array__(
+        self, dtype: Optional[ScalarLikeType] = None
+    ) -> np.ndarray[Tuple[int, ...], np.dtype[Scalar]]: ...
 
-    @abstractmethod
-    def to_dense(self) -> "DenseArray[_DType]": ...
+    def __array_ufunc__(
+        self, ufunc: np.ufunc, method: str, *args: Any, **kwargs: Any
+    ) -> Any:
+        func = getattr(ufunc, method)
+        return self._wrapped_call(func, *args, **kwargs)
 
-    @abstractmethod
-    def to_sparse(self) -> "SparseArray[_DType]": ...
-
-
-# ------------------------------------------
-# -------------- DenseArray ----------------
-# ------------------------------------------
-
-
-class DenseArray(Generic[_DType], Array[NDArray[_DType], _DType]):
-    _array: NDArray[_DType]
-
-    def __init__(self, array: NDArray[_DType]) -> None:
-        super().__init__(np.asarray(array))
-
-    # ----- Utilities -----
-
-    def astype(self, dtype: _DType_) -> "DenseArray[_DType_]":
-        return DenseArray[_DType_](self._array.astype(dtype))
-
-    def to_dense(self) -> Self:
-        return self
-
-    def to_sparse(self) -> "SparseArray[_DType]":
-        return SparseArray[_DType](csr_array(self._array))
-
-
-# ------------------------------------------
-# ------------- SparseArray ----------------
-# ------------------------------------------
-
-
-class SparseArray(Generic[_DType], Array[csr_array[_DType], _DType]):
-    _array: csr_array[_DType]
-
-    def __init__(self, array: csr_array[_DType]) -> None:
-        super().__init__(array)
-
-    # ----- Properties -----
-
-    @property
-    def data(self) -> _Data[_DType]:
-        return np.asarray(self._array.data)
-
-    @property
-    def indptr(self) -> _Idx:
-        return self._array.indptr
-
-    @property
-    def indices(self) -> _Idx:
-        return self._array.indices
-
-    # ----- Utilities -----
-
-    def astype(self, dtype: _DType_) -> "SparseArray[_DType_]":
-        array = cast(csr_array[_DType_], self._array.astype(dtype))
-        return SparseArray[_DType_](array)
-
-    def to_dense(self) -> "DenseArray[_DType]":
-        return DenseArray(self._array.todense())
-
-    def to_sparse(self) -> Self:
-        return self
+    def __array_function__(
+        self,
+        func: Callable,
+        types: Tuple[type, ...],
+        args: Tuple[Any, ...],
+        kwargs: Dict[str, Any],
+    ) -> Any:
+        return self._wrapped_call(func, *args, **kwargs)

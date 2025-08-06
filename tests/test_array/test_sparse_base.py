@@ -18,14 +18,14 @@ def test_basic_properties_sparse(dummy_array: DummyArray) -> None:
 @pytest.mark.parametrize("dtype", (np.float64, np.int64, np.bool))
 def test_astype_sparse(dummy_array: DummyArray, dtype: _DTypeBound) -> None:
     array = SparseArray(dummy_array.array).astype(dtype)
-    assert array.dtype == dtype
+    assert array.stype == dtype
 
 
 @pytest.mark.parametrize("dummy_array", dummy_array_groups["sparse"])
 def test_copy_sparse(dummy_array: DummyArray) -> None:
     array = SparseArray(dummy_array.array).copy()
 
-    assert array._array is not dummy_array.array
+    assert array.data is not dummy_array.array
     assert not np.shares_memory(array.data, dummy_array.array.data)
     assert not np.shares_memory(array.indptr, dummy_array.array.indptr)
     assert not np.shares_memory(array.indices, dummy_array.array.indices)
