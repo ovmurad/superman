@@ -11,6 +11,33 @@ from ...object.geometry_matrix import (
 from ...object.metadata import AffinityType
 
 
+def _de_affinity_in_place(
+        dists: MatrixArray,
+        eps: float,
+        dist_is_sq: bool
+) -> MatrixArray[np.float64]:
+
+    if not dist_is_sq:
+        np.power(dists, 2, out=dists)
+
+    np.divide(dists, (eps**2), out=dists)
+    np.multiply(dists, -1, out=dists)
+    np.exp(dists, out=dists)
+
+    return dists
+
+
+def _de_affinity_out_of_place(
+        dists: MatrixArray,
+        eps: float,
+        dist_is_sq: bool
+) -> MatrixArray[np.float64]:
+
+    if dist_is_sq:
+        return np.exp(-(dists / (eps**2)))
+    return np.exp(-((dists / eps) ** 2))
+
+
 # TODO
 def adjacency(
     dist_mat: DistanceMatrix,
@@ -31,7 +58,6 @@ def adjacency(
     )
 
 
-# TODO
 def affinity(
     dist_mat: DistanceMatrix,
     aff_type: AffinityType = "gaussian",
@@ -50,8 +76,12 @@ def affinity(
     """
 
     dist_is_sq = dist_mat.metadata.dist_type == "sqeuclidean"
+    dist_data = dist_mat.data
 
-    aff_data: MatrixArray[np.float64] = ...  # type: ignore
+    if in_place:
+        aff_data = _de_affinity_in_place(dist_data, eps, dist_is_sq)
+
+    aff_data: MatrixArray[np.float64] = _de_affinity_out_of_place(dist_data, eps, dist_is_sq)
 
     return AffinityMatrix(
         aff_data,
