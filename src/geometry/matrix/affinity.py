@@ -16,6 +16,7 @@ def _de_affinity_in_place(
         eps: float,
         dist_is_sq: bool
 ) -> MatrixArray[np.float64]:
+    #
 
     if not dist_is_sq:
         np.power(dists, 2, out=dists)

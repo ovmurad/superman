@@ -1,13 +1,16 @@
 from typing import Iterable, Iterator, Optional, Union
 
 import numpy as np
+from sklearn.metrics import pairwise_distances_chunked
 
 from ...object.geometry_matrix import DistanceMatrix, MatrixArray
 from ...object.metadata import DistanceType
 from ...object.points import Points
+from ...array.dense import DenseArray
+from ...array.sparse import SparseArray
 
+from threshold import threshold
 
-# TODO
 def distance(
     x_pts: Points,
     y_pts: Optional[Points] = None,
@@ -26,8 +29,16 @@ def distance(
     :param return_sp:
     :return:
     """
+    #chunked pairwise distance
+    #ndarray boolean mask
 
-    dist_data: MatrixArray[np.float64] = ...  # type: ignore
+    if return_sp:
+        raise NotImplementedError()
+    else:
+        dist_data: MatrixArray[np.float64] = DenseArray(np.fromiter(pairwise_distances_chunked(x_pts, y_pts), dtype=np.float64))
+
+        if radius is not None:
+            threshold(dist_data, radius, True)
 
     x_pts_name = x_pts.metadata.name
     y_pts_name = None if y_pts is None else y_pts.metadata.name
