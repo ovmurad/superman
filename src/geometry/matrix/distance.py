@@ -6,10 +6,19 @@ from sklearn.metrics import pairwise_distances_chunked
 from ...object.geometry_matrix import DistanceMatrix, MatrixArray
 from ...object.metadata import DistanceType
 from ...object.points import Points
-from ...array.dense import DenseArray
-from ...array.sparse import SparseArray
 
-from threshold import threshold
+from .threshold import threshold
+
+def row_chunks_to_matrix(chunks: Iterator[np.ndarray], n_x: int, n_y: int) -> MatrixArray[np.float64]:
+    full_dist_matrix = np.zeros((n_x, n_y))
+    start_idx = 0
+
+    for chunk in chunks:
+        chunk_rows = chunk.shape[0]
+        full_dist_matrix[start_idx:start_idx + chunk_rows, :] = chunk
+        start_idx += chunk_rows
+
+    return full_dist_matrix
 
 def distance(
     x_pts: Points,
@@ -31,12 +40,17 @@ def distance(
     """
     #chunked pairwise distance
     #ndarray boolean mask
+    
+    n_x = x_pts.npts
+    n_y = n_x
+
+    if y_pts is not None:
+        n_y = y_pts.npts
 
     if return_sp:
         raise NotImplementedError()
     else:
-        dist_data: MatrixArray[np.float64] = DenseArray(np.fromiter(pairwise_distances_chunked(x_pts, y_pts), dtype=np.float64))
-
+        dist_data: MatrixArray[np.float64] = row_chunks_to_matrix(pairwise_distances_chunked(x_pts.data, y_pts if y_pts is None else y_pts.data), n_x, n_y)
         if radius is not None:
             threshold(dist_data, radius, True)
 
