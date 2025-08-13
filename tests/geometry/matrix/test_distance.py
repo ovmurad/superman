@@ -12,8 +12,9 @@ pytestmark = pytest.mark.slow
 single_dist_sol: Dict[str, DistanceMatrix] = {key: DistanceMatrix(arr) for key, arr in npy_dict["single_dist_sol"].items()}
 double_dist_sol: Dict[str, DistanceMatrix] = {key: DistanceMatrix(arr) for key, arr in npy_dict["double_dist_sol"].items()}
 threshold_sol: Dict[str, DistanceMatrix] = {key: DistanceMatrix(arr) for key, arr in npy_dict["threshold_sol"].items()}
+threshold_iter_sol: Dict[str, MatrixArray[np.float64]] = {key: arrs for key, arrs in npy_dict["threshold_iter_sol"].items()}
 
-radii: Sequence[float] = [2.13, 2.0, 1.8]
+radii: Sequence[float] = [2.13, 1.23, 11.0, 1.72]
 
 @pytest.mark.parametrize("key", dist_points.keys())
 def test__distance__single_points_no_radius_output(key: str):
@@ -47,7 +48,8 @@ def test__threshold_distance__in_place_behavior(rand_arr: MatrixArray):
     threshold_distance(dummy_dist, arr_mean, True)
     assert np.allclose(dummy_dist.data, dummy_dist_threshold.data, rtol=test_rtol, atol=test_atol)
 
-"""
-@pytest.mark.parametrize("radius", radii)
-def test_threshold_distance_iter__radii_output(radius: float): 
-"""
+@pytest.mark.parametrize("key", single_dist_sol.keys())
+def test__threshold_distance_iter__radii_single_output(key: str): 
+    if key in threshold_iter_sol.keys():
+        arr = np.array([d_mat.data for d_mat in threshold_distance_iter(dist_mat=single_dist_sol[key], radii=radii, in_place=False)])
+        assert np.allclose(arr, threshold_iter_sol[key], rtol=test_rtol, atol=test_atol)

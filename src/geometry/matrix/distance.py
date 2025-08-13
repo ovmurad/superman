@@ -120,4 +120,6 @@ def threshold_distance_iter(
         radii = (radii,)
 
     for radius in reversed(sorted(radii)):
+        print(radius)
+        print(threshold_distance(dist_mat, radius, in_place).data.storage)
         yield threshold_distance(dist_mat, radius, in_place)
