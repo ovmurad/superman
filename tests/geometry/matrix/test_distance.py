@@ -1,7 +1,8 @@
-from typing import Dict
-from src.geometry.matrix.distance import distance
-from src.object.geometry_matrix import DistanceMatrix
-from tests.test_objects import dist_points, test_rtol, test_atol
+from typing import Dict, Sequence
+from src.array.base import BaseArray
+from src.geometry.matrix.distance import distance, threshold_distance
+from src.object.geometry_matrix import DistanceMatrix, MatrixArray
+from tests.test_objects import dist_points, test_rtol, test_atol, rand_dense_arrays
 
 import numpy as np
 import pytest
@@ -388,19 +389,222 @@ double_dist_sol: Dict[str, DistanceMatrix] = {
                     2.20330412, 1.98624324, 1.92870856, 2.47461044, 2.39113441]])),
 }
 
-def test__distance__single_points_no_radius_correct_output():
-    for key in dist_points.keys():
+threshold_sol: Dict[str, DistanceMatrix] = {
+    "30x30_float_1":
+        DistanceMatrix(
+            np.array(
+                [[0., 1.80228652, np.inf, np.inf, np.inf, 
+                1.91833945, 1.99248336, np.inf, np.inf, 2.11992303, 
+                np.inf, 2.10936924, np.inf, 2.12862424, 2.10298795, 
+                np.inf, np.inf, np.inf, 2.1043387, 2.11079535, 
+                np.inf, np.inf, np.inf, np.inf, np.inf, 
+                np.inf, np.inf, 2.11167682, np.inf, 2.1110106], 
+                [1.80228652, 0., np.inf, 1.94526241, 2.02981285, 
+                1.83859601, np.inf, np.inf, 2.07604353, 1.9175924, 
+                np.inf, np.inf, 2.09937029, 2.12976222, 1.86892062, 
+                2.02196734, np.inf, 2.07821032, 1.62355488, 2.08103295, 
+                2.06676868, np.inf, 2.10456343, 2.00485344, 1.92331847, 
+                np.inf, np.inf, np.inf, 2.01994659, np.inf], 
+                [np.inf, np.inf, 0., np.inf, 2.08073343, 
+                1.90662701, np.inf, 1.93106529, np.inf, 1.92936143, 
+                2.03553386, np.inf, np.inf, np.inf, 1.78853749, 
+                np.inf, np.inf, np.inf, 1.96554516, 1.96916365, 
+                1.76460679, 1.5744178, 1.66522464, np.inf, 1.80437197, 
+                1.88391299, 1.73906145, np.inf, 1.8218142, 1.69728584], 
+                [np.inf, 1.94526241, np.inf, 0., np.inf, 
+                1.92111627, np.inf, np.inf, np.inf, np.inf, 
+                np.inf, 2.01399102, np.inf, np.inf, np.inf, 
+                2.04745154, np.inf, np.inf, np.inf, np.inf, 
+                2.0833235, 1.72190977, np.inf, np.inf, np.inf, 
+                1.97865581, np.inf, 1.8984315, 1.93623271, 2.0627303], 
+                [np.inf, 2.02981285, 2.08073343, np.inf, 0., 
+                1.8522279, np.inf, 1.67310568, np.inf, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, 2.08999396, 
+                1.85467601, np.inf, 1.26861704, 2.0631058, np.inf, 
+                np.inf, 2.03634141, np.inf, np.inf, 2.1226082, 
+                np.inf, np.inf, np.inf, 1.99852203, np.inf], 
+                [1.91833945, 1.83859601, 1.90662701, 1.92111627, 1.8522279, 
+                0., 1.9001936, 1.82664469, np.inf, 1.52667629, 
+                np.inf, 1.52967592, 1.83183849, 1.72261977, np.inf, 
+                2.10275749, np.inf, 1.89113454, 1.81775979, 1.54681181, 
+                1.77039387, 1.79242218, 2.07190522, 2.05276916, 1.98898543, 
+                2.01491974, np.inf, 1.67175908, 1.810067, 1.99021942], 
+                [1.99248336, np.inf, np.inf, np.inf, np.inf, 
+                1.9001936, 0., 1.83609192, 1.7433296, 1.99602194, 
+                np.inf, 2.09875406, 1.53408302, 2.01505916, 1.8642151, 
+                2.07193442, np.inf, np.inf, 1.89719995, np.inf, 
+                np.inf, 2.00898883, 2.11568263, np.inf, 1.96732238, 
+                np.inf, np.inf, np.inf, np.inf, np.inf], 
+                [np.inf, np.inf, 1.93106529, np.inf, 1.67310568, 
+                1.82664469, 1.83609192, 0., np.inf, np.inf, 
+                np.inf, np.inf, 2.00462133, 1.95020222, 1.95957112, 
+                2.04819169, 1.63364612, 1.61489437, 1.99707495, 1.95790736, 
+                np.inf, 1.6535157, 2.12626524, np.inf, 1.95331963, 
+                np.inf, 1.95552299, np.inf, 1.9576723, 1.88255373], 
+                [np.inf, 2.07604353, np.inf, np.inf, np.inf, 
+                np.inf, 1.7433296, np.inf, 0., np.inf, 
+                np.inf, np.inf, 2.01206588, np.inf, 1.82833155, 
+                np.inf, np.inf, np.inf, 1.80224662, np.inf, 
+                2.09543087, np.inf, 2.0984859, np.inf, 1.96535652, 
+                1.98958983, np.inf, np.inf, np.inf, np.inf], 
+                [2.11992303, 1.9175924, 1.92936143, np.inf, np.inf, 
+                1.52667629, 1.99602194, np.inf, np.inf, 0., 
+                2.03897913, 1.9910622, 2.09063075, 1.59039113, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, np.inf, 
+                1.82399757, 1.82145362, np.inf, 1.99972439, np.inf, 
+                np.inf, np.inf, 2.12756609, 2.05036711, np.inf], 
+                [np.inf, np.inf, 2.03553386, np.inf, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, 2.03897913, 
+                0., 2.10014497, 1.95679896, 2.08448035, 1.96545479, 
+                1.76383274, np.inf, np.inf, np.inf, np.inf, 
+                1.7613113, 1.96926377, 2.07438453, 2.1135371, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, 1.96960958], 
+                [2.10936924, np.inf, np.inf, 2.01399102, np.inf, 
+                1.52967592, 2.09875406, np.inf, np.inf, 1.9910622, 
+                2.10014497, 0., 1.84901764, 2.08188016, 2.05378818, 
+                1.94797847, np.inf, np.inf, np.inf, 2.06898241, 
+                1.75685667, 1.97843245, 2.02949285, np.inf, 2.04234954, 
+                np.inf, np.inf, 1.41498653, 2.00385858, np.inf], 
+                [np.inf, 2.09937029, np.inf, np.inf, np.inf, 
+                1.83183849, 1.53408302, 2.00462133, 2.01206588, 2.09063075, 
+                1.95679896, 1.84901764, 0., np.inf, 1.80379412, 
+                1.82922673, np.inf, np.inf, 1.97803935, np.inf, 
+                2.06615844, 2.11179528, 1.97749854, 1.91731893, 1.82789134, 
+                2.05780789, np.inf, 1.99220716, np.inf, 2.06258126], 
+                [2.12862424, 2.12976222, np.inf, np.inf, np.inf, 
+                1.72261977, 2.01505916, 1.95020222, np.inf, 1.59039113, 
+                2.08448035, 2.08188016, np.inf, 0., 2.05812066, 
+                np.inf, np.inf, np.inf, np.inf, np.inf, 
+                1.91747912, 1.95650521, np.inf, 2.11856055, np.inf, 
+                1.7205144, np.inf, 2.00944667, np.inf, np.inf], 
+                [2.10298795, 1.86892062, 1.78853749, np.inf, 2.08999396, 
+                np.inf, 1.8642151, 1.95957112, 1.82833155, np.inf, 
+                1.96545479, 2.05378818, 1.80379412, 2.05812066, 0., 
+                2.01754712, np.inf, 1.91347413, 1.62524, np.inf, 
+                np.inf, 2.065511, 1.8849297, np.inf, 1.76613666, 
+                np.inf, 2.06741204, np.inf, np.inf, 1.93891831], 
+                [np.inf, 2.02196734, np.inf, 2.04745154, 1.85467601, 
+                2.10275749, 2.07193442, 2.04819169, np.inf, np.inf, 
+                1.76383274, 1.94797847, 1.82922673, np.inf, 2.01754712, 
+                0., 2.07583566, 1.88167525, 1.9898642, np.inf, 
+                1.93954268, 1.77903551, 1.6434466, 1.79869721, 2.00993342, 
+                np.inf, np.inf, np.inf, 2.00659534, np.inf], 
+                [np.inf, np.inf, np.inf, np.inf, np.inf, 
+                np.inf, np.inf, 1.63364612, np.inf, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, np.inf, 
+                2.07583566, 0., np.inf, np.inf, np.inf, 
+                np.inf, 1.86263887, np.inf, np.inf, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, np.inf], 
+                [np.inf, 2.07821032, np.inf, np.inf, 1.26861704, 
+                1.89113454, np.inf, 1.61489437, np.inf, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, 1.91347413, 
+                1.88167525, np.inf, 0., 1.93345711, 2.04297456, 
+                np.inf, 2.10734545, np.inf, np.inf, np.inf, 
+                np.inf, np.inf, np.inf, 2.12149901, np.inf], 
+                [2.1043387, 1.62355488, 1.96554516, np.inf, 2.0631058, 
+                1.81775979, 1.89719995, 1.99707495, 1.80224662, np.inf, 
+                np.inf, np.inf, 1.97803935, np.inf, 1.62524, 
+                1.9898642, np.inf, 1.93345711, 0., 2.09101175, 
+                np.inf, np.inf, 1.975591, 2.04261205, 1.80474179, 
+                np.inf, np.inf, 2.12084278, np.inf, np.inf], 
+                [2.11079535, 2.08103295, 1.96916365, np.inf, np.inf, 
+                1.54681181, np.inf, 1.95790736, np.inf, np.inf, 
+                np.inf, 2.06898241, np.inf, np.inf, np.inf, 
+                np.inf, np.inf, 2.04297456, 2.09101175, 0., 
+                2.09949479, 2.10096023, 1.94402212, np.inf, np.inf, 
+                np.inf, np.inf, 2.12281992, 1.94422885, np.inf], 
+                [np.inf, 2.06676868, 1.76460679, 2.0833235, np.inf, 
+                1.77039387, np.inf, np.inf, 2.09543087, 1.82399757, 
+                1.7613113, 1.75685667, 2.06615844, 1.91747912, np.inf, 
+                1.93954268, np.inf, np.inf, np.inf, 2.09949479, 
+                0., 1.78608872, 1.72590028, 1.88222374, 2.07638774, 
+                1.6594792, 2.0593176, 2.02380302, 1.84702462, 1.99664502], 
+                [np.inf, np.inf, 1.5744178, 1.72190977, 2.03634141, 
+                1.79242218, 2.00898883, 1.6535157, np.inf, 1.82145362, 
+                1.96926377, 1.97843245, 2.11179528, 1.95650521, 2.065511, 
+                1.77903551, 1.86263887, 2.10734545, np.inf, 2.10096023, 
+                1.78608872, 0., 2.08629036, 1.95191455, 2.01168801, 
+                1.97572675, 1.53918836, 2.02308933, 1.51848052, 1.9847826], 
+                [np.inf, 2.10456343, 1.66522464, np.inf, np.inf, 
+                2.07190522, 2.11568263, 2.12626524, 2.0984859, np.inf, 
+                2.07438453, 2.02949285, 1.97749854, np.inf, 1.8849297, 
+                1.6434466, np.inf, np.inf, 1.975591, 1.94402212, 
+                1.72590028, 2.08629036, 0., np.inf, 1.44497689, 
+                np.inf, 1.91815294, np.inf, np.inf, 1.78516767], 
+                [np.inf, 2.00485344, np.inf, np.inf, np.inf, 
+                2.05276916, np.inf, np.inf, np.inf, 1.99972439, 
+                2.1135371, np.inf, 1.91731893, 2.11856055, np.inf, 
+                1.79869721, np.inf, np.inf, 2.04261205, np.inf, 
+                1.88222374, 1.95191455, np.inf, 0., np.inf, 
+                np.inf, np.inf, np.inf, np.inf, np.inf], 
+                [np.inf, 1.92331847, 1.80437197, np.inf, 2.1226082, 
+                1.98898543, 1.96732238, 1.95331963, 1.96535652, np.inf, 
+                np.inf, 2.04234954, 1.82789134, np.inf, 1.76613666, 
+                2.00993342, np.inf, np.inf, 1.80474179, np.inf, 
+                2.07638774, 2.01168801, 1.44497689, np.inf, 0., 
+                np.inf, 2.07080401, np.inf, 1.95657436, 1.82814165], 
+                [np.inf, np.inf, 1.88391299, 1.97865581, np.inf, 
+                2.01491974, np.inf, np.inf, 1.98958983, np.inf, 
+                np.inf, np.inf, 2.05780789, 1.7205144, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, np.inf, 
+                1.6594792, 1.97572675, np.inf, np.inf, np.inf, 
+                0., np.inf, 2.00968306, np.inf, 2.09941115], 
+                [np.inf, np.inf, 1.73906145, np.inf, np.inf, 
+                np.inf, np.inf, 1.95552299, np.inf, np.inf, 
+                np.inf, np.inf, np.inf, np.inf, 2.06741204, 
+                np.inf, np.inf, np.inf, np.inf, np.inf, 
+                2.0593176, 1.53918836, 1.91815294, np.inf, 2.07080401, 
+                np.inf, 0., np.inf, np.inf, np.inf], 
+                [2.11167682, np.inf, np.inf, 1.8984315, np.inf, 
+                1.67175908, np.inf, np.inf, np.inf, 2.12756609, 
+                np.inf, 1.41498653, 1.99220716, 2.00944667, np.inf, 
+                np.inf, np.inf, np.inf, 2.12084278, 2.12281992, 
+                2.02380302, 2.02308933, np.inf, np.inf, np.inf, 
+                2.00968306, np.inf, 0., 2.00146837, np.inf], 
+                [np.inf, 2.01994659, 1.8218142, 1.93623271, 1.99852203, 
+                1.810067, np.inf, 1.9576723, np.inf, 2.05036711, 
+                np.inf, 2.00385858, np.inf, np.inf, np.inf, 
+                2.00659534, np.inf, 2.12149901, np.inf, 1.94422885, 
+                1.84702462, 1.51848052, np.inf, np.inf, 1.95657436, 
+                np.inf, np.inf, 2.00146837, 0., np.inf], 
+                [2.1110106, np.inf, 1.69728584, 2.0627303, np.inf, 
+                1.99021942, np.inf, 1.88255373, np.inf, np.inf, 
+                1.96960958, np.inf, 2.06258126, np.inf, 1.93891831, 
+                np.inf, np.inf, np.inf, np.inf, np.inf, 
+                1.99664502, 1.9847826, 1.78516767, np.inf, 1.82814165, 
+                2.09941115, np.inf, np.inf, np.inf, 0.]]))
+}
+
+radii: float = 2.13
+
+@pytest.mark.parametrize("key", dist_points.keys())
+def test__distance__single_points_no_radius_output(key: str):
+    if key in single_dist_sol.keys():
         assert np.allclose(distance(x_pts=dist_points[key], return_sp=False).data, single_dist_sol[key].data, rtol=test_rtol, atol=test_atol)
 
-def test__distance__double_points_no_radius_correct_output():
-    for key1 in dist_points.keys():
-        for key2 in dist_points.keys():
-            key1_to_second_underscore = key1[:key1[:key1.find("_")].find("_")]
-            key2_to_second_underscore = key2[:key2[:key2.find("_")].find("_")]
-            if key1_to_second_underscore == key2_to_second_underscore and f"{key1} {key2}" in double_dist_sol.keys():
-                assert np.allclose(
-                    distance(x_pts=dist_points[key1], y_pts=dist_points[key2], return_sp=False).data,
-                    double_dist_sol[f"{key1} {key2}"].data,
-                    rtol=test_rtol,
-                    atol=test_atol
-                )
+@pytest.mark.parametrize("key1", dist_points.keys())
+@pytest.mark.parametrize("key2", dist_points.keys())
+def test__distance__double_points_no_radius_output(key1: str, key2: str):
+    key1_to_second_underscore = key1[:key1[:key1.find("_")].find("_")]
+    key2_to_second_underscore = key2[:key2[:key2.find("_")].find("_")]
+    if key1_to_second_underscore == key2_to_second_underscore and f"{key1} {key2}" in double_dist_sol.keys():
+        assert np.allclose(
+            distance(x_pts=dist_points[key1], y_pts=dist_points[key2], return_sp=False).data,
+            double_dist_sol[f"{key1} {key2}"].data,
+            rtol=test_rtol,
+            atol=test_atol
+        )
+
+@pytest.mark.parametrize("dist_key", single_dist_sol.keys())
+def test__threshold_distance__radius_output(dist_key: str):
+    if dist_key in threshold_sol.keys():
+        assert np.allclose(threshold_distance(single_dist_sol[dist_key], radii).data, threshold_sol[dist_key].data, rtol=test_rtol, atol=test_atol)
+
+@pytest.mark.parametrize("rand_arr", rand_dense_arrays)
+def test__threshold_distance__in_place_behavior(rand_arr: MatrixArray):
+    arr_mean = np.mean(rand_arr.data)
+    dummy_dist = DistanceMatrix(rand_arr)
+    dummy_dist_threshold = threshold_distance(dummy_dist, arr_mean)
+    assert not np.shares_memory(dummy_dist.data, dummy_dist_threshold.data)
+    threshold_distance(dummy_dist, arr_mean, True)
+    assert np.allclose(dummy_dist.data, dummy_dist_threshold.data, rtol=test_rtol, atol=test_atol)

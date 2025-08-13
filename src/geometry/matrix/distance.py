@@ -3,6 +3,8 @@ from typing import Iterable, Iterator, Optional, Union
 import numpy as np
 from sklearn.metrics import pairwise_distances_chunked
 
+from src.array.dense import DenseArray
+
 from ...object.geometry_matrix import DistanceMatrix, MatrixArray
 from ...object.metadata import DistanceType
 from ...object.points import Points
@@ -67,9 +69,9 @@ def distance(
 
 def _threshold_de(data: MatrixArray[np.float64], radius: float, in_place: bool) -> MatrixArray[np.float64]:
     if in_place:
-        data[data > radius] = np.inf
+        data.storage[data.storage > radius] = np.inf
         return data
-    return np.where(data > radius, np.inf, data)
+    return DenseArray(np.where(data.storage > radius, np.inf, data.storage))
 
 
 def threshold_distance(

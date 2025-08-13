@@ -3,6 +3,7 @@ from typing import Dict, Tuple
 import numpy as np
 from scipy.sparse import csr_array
 
+from src.array.dense import DenseArray
 from src.object.geometry_matrix import DistanceMatrix
 from src.object.points import Points
 from tests.test_array.dummy_array import DummyArray
@@ -434,3 +435,14 @@ dist_points: Dict[str, Points] = {
             [0.72360773, 0.84239138, 0.9230797 , 0.55406465, 0.04378564,
                 0.56871886, 0.92069775, 0.62427272, 0.20125866, 0.64267813]]))
 }
+
+
+rand_dist_matrices = [
+    DistanceMatrix(np.random.rand(30, 30)),
+    DistanceMatrix(np.random.rand(20, 10))
+]
+
+rand_dense_arrays = [
+    DenseArray(np.random.rand(30, 30)),
+    DenseArray(np.random.rand(20, 10))
+]
