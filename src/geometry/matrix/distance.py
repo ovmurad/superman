@@ -102,7 +102,6 @@ def threshold_distance(
     )
 
 
-# TODO
 def threshold_distance_iter(
     dist_mat: DistanceMatrix,
     radii: Union[float, Iterable[float]],

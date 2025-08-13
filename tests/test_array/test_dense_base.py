@@ -4,7 +4,7 @@ from src.array.base import DenseArray
 from src.array.typing import _DTypeBound
 
 from .dummy_array import DummyArray
-from test_objects import dummy_array_groups
+from tests.test_utils import dummy_array_groups
 
 pytestmark = pytest.mark.fast
 
