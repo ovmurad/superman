@@ -65,7 +65,13 @@ def distance(
     return DistanceMatrix(dist_data, dist_type, radius, dist_name)
 
 
-# TODO
+def _threshold_de(data: MatrixArray[np.float64], radius: float, in_place: bool) -> MatrixArray[np.float64]:
+    if in_place:
+        data[data > radius] = np.inf
+        return data
+    return np.where(data > radius, np.inf, data)
+
+
 def threshold_distance(
     dist_mat: DistanceMatrix,
     radius: float,
@@ -84,7 +90,10 @@ def threshold_distance(
             f"`radius`={radius} is greater than the radius of the input distance matrix {dist_mat_radius}!"
         )
 
-    dist_data: MatrixArray[np.float64] = ...  # type: ignore
+    if dist_mat.data.is_sparse:
+        raise NotImplementedError()
+    else:
+        dist_data: MatrixArray[np.float64] = _threshold_de(dist_mat.data, radius, in_place)
 
     return DistanceMatrix(
         dist_data, dist_mat.metadata.dist_type, radius, dist_mat.metadata.name
