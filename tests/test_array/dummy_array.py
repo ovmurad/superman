@@ -7,6 +7,7 @@ from src.array.typing import Storage
 
 T = TypeVar("T")
 
+
 @dataclass
 class DummyArray(Generic[T]):
     array: T
@@ -28,4 +29,3 @@ class DummyArray(Generic[T]):
         return (self.array is array.raw_array) and all(
             getattr(self, prop) == getattr(array, prop) for prop in self.properties
         )
-

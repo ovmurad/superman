@@ -9,16 +9,20 @@ from ...object.geometry_matrix import DistanceMatrix, MatrixArray
 from ...object.metadata import DistanceType
 from ...object.points import Points
 
-def row_chunks_to_matrix(chunks: Iterator[np.ndarray], n_x: int, n_y: int) -> MatrixArray[np.float64]:
+
+def row_chunks_to_matrix(
+    chunks: Iterator[np.ndarray], n_x: int, n_y: int
+) -> MatrixArray[np.float64]:
     full_dist_matrix = np.zeros((n_x, n_y))
     start_idx = 0
 
     for chunk in chunks:
         chunk_rows = chunk.shape[0]
-        full_dist_matrix[start_idx:start_idx + chunk_rows, :] = chunk
+        full_dist_matrix[start_idx : start_idx + chunk_rows, :] = chunk
         start_idx += chunk_rows
 
     return full_dist_matrix
+
 
 def distance(
     x_pts: Points,
@@ -38,9 +42,9 @@ def distance(
     :param return_sp:
     :return:
     """
-    #chunked pairwise distance
-    #ndarray boolean mask
-    
+    # chunked pairwise distance
+    # ndarray boolean mask
+
     n_x = x_pts.npts
     n_y = n_x
 
@@ -50,7 +54,13 @@ def distance(
     if return_sp:
         raise NotImplementedError()
     else:
-        dist_data: MatrixArray[np.float64] = row_chunks_to_matrix(pairwise_distances_chunked(x_pts.data, y_pts if y_pts is None else y_pts.data), n_x, n_y)
+        dist_data: MatrixArray[np.float64] = row_chunks_to_matrix(
+            pairwise_distances_chunked(
+                x_pts.data, y_pts if y_pts is None else y_pts.data
+            ),
+            n_x,
+            n_y,
+        )
         if radius is not None:
             threshold(dist_data, radius, True)
 
@@ -65,7 +75,9 @@ def distance(
     return DistanceMatrix(dist_data, dist_type, radius, dist_name)
 
 
-def _threshold_de(data: MatrixArray[np.float64], radius: float, in_place: bool) -> MatrixArray[np.float64]:
+def _threshold_de(
+    data: MatrixArray[np.float64], radius: float, in_place: bool
+) -> MatrixArray[np.float64]:
     if in_place:
         data.storage[data.storage > radius] = np.inf
         return data
@@ -93,7 +105,9 @@ def threshold_distance(
     if dist_mat.data.is_sparse:
         raise NotImplementedError()
     else:
-        dist_data: MatrixArray[np.float64] = _threshold_de(dist_mat.data, radius, in_place)
+        dist_data: MatrixArray[np.float64] = _threshold_de(
+            dist_mat.data, radius, in_place
+        )
 
     return DistanceMatrix(
         dist_data, dist_mat.metadata.dist_type, radius, dist_mat.metadata.name

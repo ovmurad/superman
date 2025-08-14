@@ -11,18 +11,20 @@ from src.object.geometry_matrix import DistanceMatrix
 from src.object.points import Points
 from tests.test_array.dummy_array import DummyArray
 
+
 def load_test_npy():
     data = defaultdict(dict)
-    
+
     for root, _, files in os.walk("./tests/data"):
         for f in files:
-            if f.endswith('.npy') and '-' in f:
-                prefix = f.split('-')[0]
-                if f.startswith(prefix + '-'):
-                    file_key = f[f.find("-") + 1:f.find(".npy")]
+            if f.endswith(".npy") and "-" in f:
+                prefix = f.split("-")[0]
+                if f.startswith(prefix + "-"):
+                    file_key = f[f.find("-") + 1 : f.find(".npy")]
                     full_path = os.path.join(root, f)
                     data[prefix][file_key] = np.load(full_path)
     return data
+
 
 npy_dict: Dict[str, Dict[str, np.ndarray]] = load_test_npy()
 
@@ -72,14 +74,16 @@ dummy_points: Points = [
     Points(np.random.rand(10, 1)),
 ]
 
-dist_points: Dict[str, Points] = {key: Points(arr) for key, arr in npy_dict["points"].items()}
+dist_points: Dict[str, Points] = {
+    key: Points(arr) for key, arr in npy_dict["points"].items()
+}
 
 rand_dist_matrices = [
     DistanceMatrix(np.random.rand(30, 30)),
-    DistanceMatrix(np.random.rand(20, 10))
+    DistanceMatrix(np.random.rand(20, 10)),
 ]
 
 rand_dense_arrays = [
     DenseArray(np.random.rand(30, 30)),
-    DenseArray(np.random.rand(20, 10))
+    DenseArray(np.random.rand(20, 10)),
 ]
