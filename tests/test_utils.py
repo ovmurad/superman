@@ -27,7 +27,7 @@ def load_test_npy():
 npy_dict: Dict[str, Dict[str, np.ndarray]] = load_test_npy()
 
 test_rtol = 1e-5
-test_atol = 1e-08
+test_atol = 1e-8
 
 dense_dummy_arrays: Dict[str, DummyArray] = {
     "dense_1d_float": DummyArray(

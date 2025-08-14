@@ -68,7 +68,7 @@ def _affinity_out_of_place(
         raise NotImplementedError()
     return _de_affinity_out_of_place(dists, eps, dist_is_sq)
 
-# TODO
+
 def adjacency(
     dist_mat: DistanceMatrix,
     copy: bool = False,
@@ -79,7 +79,13 @@ def adjacency(
     :param copy: Whether to copy the indices of dist_mat.
     :return:
     """
-    adj_data: MatrixArray[np.bool_] = ...  # type: ignore
+    if dist_mat.data.is_sparse:
+        if copy:
+            raise NotImplementedError()
+        else:
+            raise NotImplementedError()
+    else:
+        adj_data: MatrixArray[np.bool_] = dist_mat.data != 0
     return AdjacencyMatrix(
         adj_data,
         dist_mat.metadata.dist_type,
