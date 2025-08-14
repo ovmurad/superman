@@ -9,8 +9,6 @@ from ...object.geometry_matrix import DistanceMatrix, MatrixArray
 from ...object.metadata import DistanceType
 from ...object.points import Points
 
-from .threshold import threshold
-
 def row_chunks_to_matrix(chunks: Iterator[np.ndarray], n_x: int, n_y: int) -> MatrixArray[np.float64]:
     full_dist_matrix = np.zeros((n_x, n_y))
     start_idx = 0
