@@ -3,7 +3,9 @@ import pytest
 from src.array.base import SparseArray
 from src.array.typing import _DTypeBound
 
-from .conftest import DummyArray, dummy_array_groups
+from tests.test_utils import dummy_array_groups
+
+from .dummy_array import DummyArray
 
 pytestmark = pytest.mark.fast
 
