@@ -3,7 +3,6 @@ from typing import Generic, Tuple, TypeVar
 
 import numpy as np
 from src.array.base import BaseArray
-from src.array.typing import Storage
 
 T = TypeVar("T")
 

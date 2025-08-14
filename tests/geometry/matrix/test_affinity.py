@@ -1,11 +1,12 @@
 from typing import Dict
+
 import numpy as np
 import pytest
-
 from src.geometry.matrix.affinity import adjacency, affinity
 from src.object.geometry_matrix import AffinityMatrix, DistanceMatrix, MatrixArray
+from tests.test_utils import npy_dict, test_atol, test_rtol
 
-from tests.test_utils import npy_dict, test_rtol, test_atol
+pytestmark = pytest.mark.slow
 
 threshold_sol: Dict[str, DistanceMatrix] = {
     key: DistanceMatrix(arr, "euclidean")

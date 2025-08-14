@@ -1,4 +1,7 @@
 from typing import Dict, Sequence
+
+import numpy as np
+import pytest
 from src.geometry.matrix.distance import (
     distance,
     threshold_distance,
@@ -8,13 +11,10 @@ from src.object.geometry_matrix import DistanceMatrix, MatrixArray
 from tests.test_utils import (
     dist_points,
     npy_dict,
-    test_rtol,
-    test_atol,
     rand_dense_arrays,
+    test_atol,
+    test_rtol,
 )
-
-import numpy as np
-import pytest
 
 pytestmark = pytest.mark.slow
 

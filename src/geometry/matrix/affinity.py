@@ -2,8 +2,6 @@ from typing import Optional
 
 import numpy as np
 
-from src.array.dense import DenseArray
-
 from ...object.geometry_matrix import (
     AdjacencyMatrix,
     AffinityMatrix,
