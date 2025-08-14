@@ -2,6 +2,8 @@ from typing import Optional
 
 import numpy as np
 
+from src.array.dense import DenseArray
+
 from ...object.geometry_matrix import (
     AdjacencyMatrix,
     AffinityMatrix,
@@ -12,11 +14,14 @@ from ...object.metadata import AffinityType
 
 
 def _de_affinity_in_place(
-        dists: MatrixArray,
+        dists: MatrixArray[np.float64],
         eps: float,
         dist_is_sq: bool
 ) -> MatrixArray[np.float64]:
-    #
+    #if dists is sequential
+    #   MatrixArray ^ 2
+    #MatrixArray / float
+    #exp(MatrixArray)
 
     if not dist_is_sq:
         np.power(dists, 2, out=dists)
@@ -29,15 +34,39 @@ def _de_affinity_in_place(
 
 
 def _de_affinity_out_of_place(
-        dists: MatrixArray,
+        dists:  MatrixArray[np.float64],
         eps: float,
         dist_is_sq: bool
-) -> MatrixArray[np.float64]:
+) ->  MatrixArray[np.float64]:
+    #if dists is sequential
+    #   MatrixArray / float
+    #   exp(MatrixArray)
+    #else
+    #   MatrixArray / float
+    #   MatrixArray ^ 2
+    #   exp(MatrixArray)
 
     if dist_is_sq:
         return np.exp(-(dists / (eps**2)))
     return np.exp(-((dists / eps) ** 2))
 
+def _affinity_in_place(
+    dists: MatrixArray[np.float64],
+    eps: float,
+    dist_is_sq: bool
+) -> MatrixArray[np.float64]:
+    if dists.is_sparse:
+        raise NotImplementedError()
+    return _de_affinity_in_place(dists, eps, dist_is_sq)
+
+def _affinity_out_of_place(
+    dists: MatrixArray[np.float64],
+    eps: float,
+    dist_is_sq: bool
+) -> MatrixArray[np.float64]:
+    if dists.is_sparse:
+        raise NotImplementedError()
+    return _de_affinity_out_of_place(dists, eps, dist_is_sq)
 
 # TODO
 def adjacency(
@@ -80,9 +109,9 @@ def affinity(
     dist_data = dist_mat.data
 
     if in_place:
-        aff_data = _de_affinity_in_place(dist_data, eps, dist_is_sq)
-
-    aff_data: MatrixArray[np.float64] = _de_affinity_out_of_place(dist_data, eps, dist_is_sq)
+        aff_data: MatrixArray[np.float64] = _affinity_in_place(dist_data, eps, dist_is_sq)
+    else:
+        aff_data: MatrixArray[np.float64] = _affinity_out_of_place(dist_data, eps, dist_is_sq)
 
     return AffinityMatrix(
         aff_data,

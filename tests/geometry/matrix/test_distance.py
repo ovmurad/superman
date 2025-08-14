@@ -1,5 +1,4 @@
 from typing import Dict, Sequence
-from src.array.base import BaseArray
 from src.geometry.matrix.distance import distance, threshold_distance, threshold_distance_iter
 from src.object.geometry_matrix import DistanceMatrix, MatrixArray
 from tests.test_utils import dist_points, npy_dict, test_rtol, test_atol, rand_dense_arrays
