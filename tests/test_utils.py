@@ -55,6 +55,7 @@ threshold_iter_sol: Dict[str, MatrixArray[np.float64]] = {
 sym_lap_sol: Dict[str, LaplacianMatrix] = {
     key: LaplacianMatrix(arr) for key, arr in npy_dict["symmetric_lap_sol"].items()
 }
+dense_square_float: MatrixArray[np.float64] = np.random.rand(30, 30)
 
 
 test_rtol = 1e-5
