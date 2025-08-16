@@ -10,26 +10,16 @@ from src.geometry.matrix.distance import (
 from src.object.geometry_matrix import DistanceMatrix, MatrixArray
 from tests.test_utils import (
     dist_points,
-    npy_dict,
+    double_dist_sol,
     rand_dense_arrays,
+    single_dist_sol,
     test_atol,
     test_rtol,
+    threshold_iter_sol,
+    threshold_sol,
 )
 
 pytestmark = pytest.mark.slow
-
-single_dist_sol: Dict[str, DistanceMatrix] = {
-    key: DistanceMatrix(arr) for key, arr in npy_dict["single_dist_sol"].items()
-}
-double_dist_sol: Dict[str, DistanceMatrix] = {
-    key: DistanceMatrix(arr) for key, arr in npy_dict["double_dist_sol"].items()
-}
-threshold_sol: Dict[str, DistanceMatrix] = {
-    key: DistanceMatrix(arr) for key, arr in npy_dict["threshold_sol"].items()
-}
-threshold_iter_sol: Dict[str, MatrixArray[np.float64]] = {
-    key: arrs for key, arrs in npy_dict["threshold_iter_sol"].items()
-}
 
 radii: Sequence[float] = [2.13, 1.23, 11.0, 1.72]
 
