@@ -1,26 +1,16 @@
-from typing import Dict
-
 import numpy as np
 import pytest
 from src.geometry.matrix.affinity import adjacency, affinity
-from src.object.geometry_matrix import AffinityMatrix, DistanceMatrix, MatrixArray
-from tests.test_utils import npy_dict, test_atol, test_rtol
+from tests.test_utils import (
+    adj_sol,
+    adj_test,
+    affinity_sol,
+    test_atol,
+    test_rtol,
+    threshold_sol,
+)
 
 pytestmark = pytest.mark.slow
-
-threshold_sol: Dict[str, DistanceMatrix] = {
-    key: DistanceMatrix(arr, "euclidean")
-    for key, arr in npy_dict["threshold_sol"].items()
-}
-affinity_sol: Dict[str, AffinityMatrix] = {
-    key: AffinityMatrix(arr) for key, arr in npy_dict["affinity_sol"].items()
-}
-adj_test: DistanceMatrix = DistanceMatrix(
-    np.array([[0, 0, 3.12], [2.0, 0, 1], [0, 5, 0]]), "euclidean"
-)
-adj_sol: MatrixArray[np.float64] = np.array(
-    [[False, False, True], [True, False, True], [False, True, False]]
-)
 
 eps = [3.67, 0.71, 0.57, 0.41]
 
