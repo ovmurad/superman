@@ -1,4 +1,5 @@
 from typing import Optional
+
 import numpy as np
 
 from ...object.geometry_matrix import (
@@ -13,7 +14,7 @@ def eps_adjustment(eps: float) -> float:
     return 4.0 / (eps**2)
 
 
-#TODO replace with proper method
+# TODO replace with proper method
 def _prepare_arr_degrees_and_out(
     arr: MatrixArray[np.float64],
     axis: int,
@@ -28,13 +29,13 @@ def _prepare_arr_degrees_and_out(
     return arr, degrees, out
 
 
-#TODO replace with proper method
+# TODO replace with proper method
 def _normalize_de(
     arr: MatrixArray[np.float64],
     axis: Optional[int] = 1,
     degree_exp: float = 1.0,
     sym_norm: bool = False,
-    in_place: bool = False
+    in_place: bool = False,
 ) -> MatrixArray[np.float64]:
 
     arr, degrees, out = _prepare_arr_degrees_and_out(
@@ -48,13 +49,13 @@ def _normalize_de(
     return arr
 
 
-#TODO replace with proper method
+# TODO replace with proper method
 def _normalize_arr(
     arr: MatrixArray[np.float64],
     axis: Optional[int] = 1,
     degree_exp: float = 1.0,
     sym_norm: bool = False,
-    in_place: bool = False
+    in_place: bool = False,
 ) -> MatrixArray[np.float64]:
     if arr.is_sparse:
         raise NotImplementedError()
@@ -86,15 +87,21 @@ def laplacian(
         raise ValueError("Affinity matrix does not have a bandwidth `eps`!")
 
     aff = aff_mat.data
-        
+
     match lap_type:
         case "geometric":
             aff = _normalize_arr(aff, sym_norm=True, in_place=in_place)
-            lap_arr: MatrixArray[np.float64] = _normalize_arr(aff, sym_norm=False, in_place=True)
+            lap_arr: MatrixArray[np.float64] = _normalize_arr(
+                aff, sym_norm=False, in_place=True
+            )
         case "random_walk":
-            lap_arr: MatrixArray[np.float64] = _normalize_arr(aff, sym_norm=False, in_place=in_place)
+            lap_arr: MatrixArray[np.float64] = _normalize_arr(
+                aff, sym_norm=False, in_place=in_place
+            )
         case "symmetric":
-            lap_arr: MatrixArray[np.float64] = _normalize_arr(aff, sym_norm=True, in_place=in_place, degree_exp=0.5)
+            lap_arr: MatrixArray[np.float64] = _normalize_arr(
+                aff, sym_norm=True, in_place=in_place, degree_exp=0.5
+            )
         case _:
             raise ValueError(f"Unknown laplacian type: {lap_type}!")
 
@@ -104,7 +111,7 @@ def laplacian(
         diag_add *= -1.0
 
     np.fill_diagonal(lap_arr, np.diag(lap_arr) + diag_add)
-    
+
     lap_arr *= eps_adjustment(eps)
 
     return LaplacianMatrix(

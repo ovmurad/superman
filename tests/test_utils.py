@@ -5,7 +5,12 @@ from typing import Dict, Tuple
 import numpy as np
 from scipy.sparse import csr_array
 from src.array.dense import DenseArray
-from src.object.geometry_matrix import AffinityMatrix, DistanceMatrix, LaplacianMatrix, MatrixArray
+from src.object.geometry_matrix import (
+    AffinityMatrix,
+    DistanceMatrix,
+    LaplacianMatrix,
+    MatrixArray,
+)
 from src.object.points import Points
 
 from tests.test_array.dummy_array import DummyArray

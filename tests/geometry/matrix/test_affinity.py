@@ -1,9 +1,6 @@
-from typing import Dict
-
 import numpy as np
 import pytest
 from src.geometry.matrix.affinity import adjacency, affinity
-from src.object.geometry_matrix import AffinityMatrix, DistanceMatrix, MatrixArray
 from tests.test_utils import (
     adj_sol,
     adj_test,
