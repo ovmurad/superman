@@ -16,7 +16,7 @@ from tests.test_utils import (
     test_atol,
     test_rtol,
     threshold_iter_sol,
-    threshold_sol,
+    threshold_sol_radius,
 )
 
 pytestmark = pytest.mark.slow
@@ -56,13 +56,14 @@ def test__distance__double_points_no_radius_output(key1: str, key2: str):
 
 @pytest.mark.parametrize("dist_key", single_dist_sol.keys())
 def test__threshold_distance__radius_output(dist_key: str):
-    if dist_key in threshold_sol.keys():
-        assert np.allclose(
-            threshold_distance(single_dist_sol[dist_key], radii[0]).data,
-            threshold_sol[dist_key].data,
-            rtol=test_rtol,
-            atol=test_atol,
-        )
+    if dist_key in threshold_sol_radius.keys():
+        for radius in threshold_sol_radius[dist_key].keys():
+            assert np.allclose(
+                threshold_distance(single_dist_sol[dist_key], radius).data,
+                threshold_sol_radius[dist_key][radius].data,
+                rtol=test_rtol,
+                atol=test_atol,
+            )
 
 
 @pytest.mark.parametrize("rand_arr", rand_dense_arrays)

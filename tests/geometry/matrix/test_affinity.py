@@ -7,7 +7,7 @@ from tests.test_utils import (
     affinity_sol,
     test_atol,
     test_rtol,
-    threshold_sol,
+    threshold_sol_radius,
 )
 
 pytestmark = pytest.mark.slow
@@ -15,25 +15,27 @@ pytestmark = pytest.mark.slow
 eps = [3.67, 0.71, 0.57, 0.41]
 
 
-@pytest.mark.parametrize("key", threshold_sol.keys())
-def test__distance__single_points_no_radius_output(key: str):
+@pytest.mark.parametrize("key", threshold_sol_radius.keys())
+def test__affinity__single_points_no_radius_output(key: str):
     if key in affinity_sol.keys():
-        aff = affinity(dist_mat=threshold_sol[key], eps=eps[1])
-        assert np.allclose(
-            aff.data, affinity_sol[key].data, rtol=test_rtol, atol=test_atol
-        )
+        for radius in threshold_sol_radius[key].keys():
+            aff = affinity(dist_mat=threshold_sol_radius[key][radius], eps=radius / 3)
+            assert np.allclose(
+                aff.data, affinity_sol[key].data, rtol=test_rtol, atol=test_atol
+            )
 
 
-@pytest.mark.parametrize("key", threshold_sol.keys())
-def test__distance__single_points_in_place_zero(key: str):
+@pytest.mark.parametrize("key", threshold_sol_radius.keys())
+def test__affinity__single_points_in_place_zero(key: str):
     if key in affinity_sol.keys():
-        dummy_dist = threshold_sol[key]
-        dummy_dist_threshold = affinity(dummy_dist, eps=eps[1], in_place=False)
-        assert not np.shares_memory(dummy_dist.data, dummy_dist_threshold.data)
-        affinity(dummy_dist, eps=eps[1], in_place=True)
-        assert np.allclose(
-            dummy_dist.data, dummy_dist_threshold.data, rtol=test_rtol, atol=test_atol
-        )
+        for radius in threshold_sol_radius[key].keys():
+            dummy_dist = threshold_sol_radius[key][radius]
+            dummy_dist_threshold = affinity(dummy_dist, eps=radius / 3, in_place=False)
+            assert not np.shares_memory(dummy_dist.data, dummy_dist_threshold.data)
+            affinity(dummy_dist, eps=radius / 3, in_place=True)
+            assert np.allclose(
+                dummy_dist.data, dummy_dist_threshold.data, rtol=test_rtol, atol=test_atol
+            )
 
 
 def test__adjacency__output():
