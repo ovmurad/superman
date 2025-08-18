@@ -9,4 +9,3 @@ __pycache__
 /data/*
 !/data/.gitkeep
 docs/build/
-*10000x10000*.npy
