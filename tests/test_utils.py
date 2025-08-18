@@ -26,16 +26,13 @@ def load_test_npy():
                 if f.startswith(prefix + "-"):
                     file_key = f[f.find("-") + 1 : f.find(".npy")]
                     full_path = os.path.join(root, f)
-                    data[prefix][file_key] = np.load(full_path)
+                    print(np.load(full_path, allow_pickle=True))
+                    data[prefix][file_key] = np.load(full_path, allow_pickle=True)
     return data
 
 
 npy_dict: Dict[str, Dict[str, np.ndarray]] = load_test_npy()
 
-threshold_sol: Dict[str, DistanceMatrix] = {
-    key: DistanceMatrix(arr, "euclidean")
-    for key, arr in npy_dict["threshold_sol"].items()
-}
 affinity_sol: Dict[str, AffinityMatrix] = {
     key: AffinityMatrix(arr, eps=0.71) for key, arr in npy_dict["affinity_sol"].items()
 }
@@ -51,8 +48,8 @@ single_dist_sol: Dict[str, DistanceMatrix] = {
 double_dist_sol: Dict[str, DistanceMatrix] = {
     key: DistanceMatrix(arr) for key, arr in npy_dict["double_dist_sol"].items()
 }
-threshold_sol: Dict[str, DistanceMatrix] = {
-    key: DistanceMatrix(arr) for key, arr in npy_dict["threshold_sol"].items()
+threshold_sol_radius: Dict[str, Dict[str, DistanceMatrix]] = {
+    key: {k: DistanceMatrix(d, "euclidean") for k, d in dict.item().items()} for key, dict in npy_dict["threshold_sol"].items()
 }
 threshold_iter_sol: Dict[str, MatrixArray[np.float64]] = {
     key: arrs for key, arrs in npy_dict["threshold_iter_sol"].items()

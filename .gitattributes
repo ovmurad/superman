@@ -1,0 +1,8 @@
+*10000x10000*.npy filter=lfs diff=lfs merge=lfs -text
+points-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
+affinity_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
+single_dist_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
+threshold_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
+symmetric_lap_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
+geometric_lap_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
+random_walk_lap_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
