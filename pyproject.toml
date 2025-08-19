@@ -18,6 +18,7 @@ seaborn = "^0.13.2"
 jupyter = "^1.1.1"
 numba = "^0.61.2"
 sparse = "^0.17.0"
+gdown = "^5.1.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.16.1"
