@@ -8,7 +8,6 @@ from tests.test_utils import (
     test_atol,
     test_rtol,
     threshold_sol_radius,
-
 )
 
 pytestmark = pytest.mark.slow
@@ -35,7 +34,10 @@ def test__affinity__single_points_in_place_zero(key: str):
             assert not np.shares_memory(dummy_dist.data, dummy_dist_threshold.data)
             affinity(dummy_dist, eps=radius / 3, in_place=True)
             assert np.allclose(
-                dummy_dist.data, dummy_dist_threshold.data, rtol=test_rtol, atol=test_atol
+                dummy_dist.data,
+                dummy_dist_threshold.data,
+                rtol=test_rtol,
+                atol=test_atol,
             )
 
 

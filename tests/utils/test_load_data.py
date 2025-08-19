@@ -1,11 +1,9 @@
 # test_loader.py
-import pytest
-import numpy as np
-from unittest.mock import patch, MagicMock
-from pathlib import Path
 from typing import Dict
-import builtins
+from unittest.mock import patch
 
+import numpy as np
+import pytest
 import src.utils.load_data as loader  # replace with the filename where your functions live
 
 
@@ -19,9 +17,9 @@ def test_load_gdrive_file(fake_numpy_array, tmp_path):
     fake_file = "file.npy"
     data_dir = tmp_path.as_posix() + "/"
 
-    with patch("gdown.download", return_value=fake_file) as mock_download, \
-         patch("shutil.move") as mock_move, \
-         patch("numpy.load", return_value=fake_numpy_array) as mock_npload:
+    with patch("gdown.download", return_value=fake_file) as mock_download, patch(
+        "shutil.move"
+    ) as mock_move, patch("numpy.load", return_value=fake_numpy_array) as mock_npload:
 
         arr = loader.load_gdrive_file(fid, np.ndarray, data_dir=data_dir)
 
@@ -41,10 +39,15 @@ def test_load_gdrive_folder(fake_numpy_array, tmp_path):
     ]
     data_dir = tmp_path.as_posix() + "/"
 
-    with patch("gdown.download_folder", return_value=fake_files) as mock_download_folder, \
-         patch("src.utils.load_data.load_gdrive_file", return_value=fake_numpy_array) as mock_load_file:
+    with patch(
+        "gdown.download_folder", return_value=fake_files
+    ) as mock_download_folder, patch(
+        "src.utils.load_data.load_gdrive_file", return_value=fake_numpy_array
+    ) as mock_load_file:
 
-        result: Dict[str, np.ndarray] = loader.load_gdrive_folder(fid, np.ndarray, data_dir=data_dir)
+        result: Dict[str, np.ndarray] = loader.load_gdrive_folder(
+            fid, np.ndarray, data_dir=data_dir
+        )
 
         mock_download_folder.assert_called_once_with(id=fid, skip_download=True)
         # should call load_gdrive_file twice
