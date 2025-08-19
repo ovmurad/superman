@@ -1,9 +1,7 @@
-import os
-import pytest
-import numpy as np
-from pathlib import Path
 from unittest.mock import ANY, patch
 
+import numpy as np
+import pytest
 import src.utils.load_data as load_data
 
 
@@ -19,10 +17,11 @@ def test_load_gdrive_file_new_download(tmp_path, dummy_array):
     data_dir = tmp_path.as_posix() + "/"
     fpath = data_dir + fname
 
-    with patch("gdown.download", return_value=fname) as mock_download, \
-         patch("shutil.move") as mock_move, \
-         patch("pathlib.Path.is_file", return_value=False), \
-         patch("numpy.load", return_value=dummy_array):
+    with patch("gdown.download", return_value=fname) as mock_download, patch(
+        "shutil.move"
+    ) as mock_move, patch("pathlib.Path.is_file", return_value=False), patch(
+        "numpy.load", return_value=dummy_array
+    ):
 
         out = load_data.load_gdrive_file(fid, np.ndarray, data_dir)
 
@@ -37,13 +36,14 @@ def test_load_gdrive_file_already_exists(tmp_path, dummy_array):
     fid = "fakeid"
     fname = "file.npy"
     data_dir = tmp_path.as_posix() + "/"
-    fpath = data_dir + fname
 
-    with patch("gdown.download", return_value=fname), \
-         patch("shutil.move") as mock_move, \
-         patch("pathlib.Path.is_file", return_value=True), \
-         patch("os.remove") as mock_remove, \
-         patch("numpy.load", return_value=dummy_array):
+    with patch("gdown.download", return_value=fname), patch(
+        "shutil.move"
+    ) as mock_move, patch("pathlib.Path.is_file", return_value=True), patch(
+        "os.remove"
+    ) as mock_remove, patch(
+        "numpy.load", return_value=dummy_array
+    ):
 
         out = load_data.load_gdrive_file(fid, np.ndarray, data_dir)
 
@@ -58,10 +58,11 @@ def test_load_gdrive_file_wrong_type(tmp_path):
     fname = "file.npy"
     data_dir = tmp_path.as_posix() + "/"
 
-    with patch("gdown.download", return_value=fname), \
-         patch("shutil.move"), \
-         patch("pathlib.Path.is_file", return_value=False), \
-         patch("numpy.load", return_value=123):  # wrong type
+    with patch("gdown.download", return_value=fname), patch("shutil.move"), patch(
+        "pathlib.Path.is_file", return_value=False
+    ), patch(
+        "numpy.load", return_value=123
+    ):  # wrong type
 
         with pytest.raises(TypeError):
             load_data.load_gdrive_file(fid, np.ndarray, data_dir)
@@ -73,8 +74,9 @@ def test_download_gdrive_folder_calls_loader(tmp_path, dummy_array):
     data_dir = tmp_path.as_posix() + "/"
     files = [("id1", "f1.npy"), ("id2", "f2.npy")]
 
-    with patch("gdown.download_folder", return_value=files) as mock_folder, \
-         patch("src.utils.load_data.load_gdrive_file", return_value=dummy_array) as mock_loader:
+    with patch("gdown.download_folder", return_value=files) as mock_folder, patch(
+        "src.utils.load_data.load_gdrive_file", return_value=dummy_array
+    ) as mock_loader:
 
         load_data.download_gdrive_folder(fid, data_dir)
 

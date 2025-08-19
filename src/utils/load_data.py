@@ -1,6 +1,6 @@
 import os
-from pathlib import Path
 import shutil
+from pathlib import Path
 from typing import Any, Type, TypeVar
 
 import gdown
@@ -31,4 +31,3 @@ def download_gdrive_folder(fid: str = DEFAULT_GDRIVE_FOLDER, data_dir: str = "da
     files = gdown.download_folder(id=fid, skip_download=True)
     for file in files:
         _ = load_gdrive_file(file[0], Any, data_dir + file[1])
-
