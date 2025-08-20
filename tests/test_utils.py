@@ -49,7 +49,8 @@ double_dist_sol: Dict[str, DistanceMatrix] = {
     key: DistanceMatrix(arr) for key, arr in npy_dict["double_dist_sol"].items()
 }
 threshold_sol_radius: Dict[str, Dict[str, DistanceMatrix]] = {
-    key: {k: DistanceMatrix(d, "euclidean") for k, d in dict.item().items()} for key, dict in npy_dict["threshold_sol"].items()
+    key: {k: DistanceMatrix(d, "euclidean") for k, d in dict.item().items()}
+    for key, dict in npy_dict["threshold_sol"].items()
 }
 threshold_iter_sol: Dict[str, MatrixArray[np.float64]] = {
     key: arrs for key, arrs in npy_dict["threshold_iter_sol"].items()

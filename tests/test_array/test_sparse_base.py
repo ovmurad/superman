@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from src.array.base import SparseArray
+from src.array.array import SparseArray
 from src.array.typing import _DTypeBound
 
 from tests.test_utils import dummy_array_groups
@@ -27,7 +27,7 @@ def test_astype_sparse(dummy_array: DummyArray, dtype: _DTypeBound) -> None:
 def test_copy_sparse(dummy_array: DummyArray) -> None:
     array = SparseArray(dummy_array.array).copy()
 
-    assert array.data is not dummy_array.array
-    assert not np.shares_memory(array.data, dummy_array.array.data)
+    assert array._data is not dummy_array.array
+    assert not np.shares_memory(array._data, dummy_array.array._data)
     assert not np.shares_memory(array.indptr, dummy_array.array.indptr)
     assert not np.shares_memory(array.indices, dummy_array.array.indices)

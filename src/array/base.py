@@ -3,122 +3,344 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from math import prod
 from typing import (
+    TYPE_CHECKING,
     Any,
-    Callable,
     ClassVar,
-    Dict,
+    Generic,
+    Literal,
     Optional,
-    Tuple,
+    Self,
+    Sequence,
 )
 
-import numpy as np
-from numpy.lib.mixins import NDArrayOperatorsMixin
+from ..storage import Data, Storage
 
-from .typing import Scalar, ScalarLikeType, ScalarType
+if TYPE_CHECKING:
+    from .dense import DenseArray
+    from .sparse import CsrArray
+
+ArrayFormat = Literal["dense", "csr"]
 
 
-class BaseArray(ABC, NDArrayOperatorsMixin):
-    storage: Any
+# ======================================================================
+# Utils
+# ======================================================================
+def unwrap(stg_like: Any) -> Any:
+    if isinstance(stg_like, BaseArray) and stg_like.is_dense:
+        return stg_like.values
+    return stg_like
 
-    _is_sparse: ClassVar[bool]
-    _wrap_types: ClassVar[Tuple[type, ...]] = tuple[type]()
 
+def unwrap_args(args: tuple) -> tuple:
+    return tuple(unwrap(arg) for arg in args)
+
+
+def unwrap_kwargs(kwargs: dict) -> dict[str, Any]:
+    return {kw: unwrap(arg) for kw, arg in kwargs.items()}
+
+
+class BaseArray(Generic[Data], ABC):
+    # ======================================================================
+    # Instance Vars
+    # ======================================================================
+    _values: Storage[Data]
+
+    # ======================================================================
+    # Class Vars
+    # ======================================================================
+    _format: ClassVar[ArrayFormat]
+
+    # ======================================================================
+    # Initialization
+    # ======================================================================
+    @abstractmethod
+    def __init__(self, *args: Any, **kwargs: Any) -> None: ...
+
+    # ======================================================================
+    # Constructors
+    # ======================================================================
     @classmethod
-    def _wrap(cls, out: Any) -> Any:
+    @abstractmethod
+    def as_array(cls, *args: Any, **kwargs: Any) -> Self: ...
 
-        if isinstance(out, cls._wrap_types):
-            return cls(out)
-        elif isinstance(out, (tuple, list)):
-            return out.__class__((cls._wrap(o) for o in out))
-        elif isinstance(out, dict):
-            return {k: cls._wrap(o) for k, o in out.items()}
-        else:
-            return out
-
-    @classmethod
-    def _unwrap(cls, inp: Any) -> Any:
-
-        if isinstance(inp, cls):
-            return inp.storage
-        elif isinstance(inp, (tuple, list)):
-            return inp.__class__((cls._unwrap(r) for r in inp))
-        elif isinstance(inp, dict):
-            return {k: cls._unwrap(r) for k, r in inp.items()}
-        else:
-            return inp
-
-    @classmethod
-    def _wrapped_call(cls, func: Callable, *args: Any, **kwargs: Any) -> Any:
-        args = cls._unwrap(args)
-        kwargs = cls._unwrap(kwargs)
-        result = func(*args, **kwargs)
-        return cls._wrap(result)
-
-    def __init__(self, storage: Any) -> None:
-        self.storage = storage
-
-    def __getattr__(self, attr: str) -> Any:
-        """Delegate attributes/methods to storage."""
-        attr_value = getattr(self.storage, attr)
-
-        # If the attribute is a function call and wrap the function
-        if callable(attr_value):
-
-            def _wrapped_attr(*args: Any, **kwargs: Any) -> Any:
-                return self._wrapped_call(attr_value, *args, **kwargs)
-
-            return _wrapped_attr
-        return attr_value
-
-    # --------------- Properties ---------------
-    # Reproduced for type hinting and IDE purpose(__getattr__ would handle everything)
-    # or for the purpose of implementing a common interface
+    # ======================================================================
+    # Introspection
+    # ======================================================================
     @property
-    def is_dense(self) -> bool:
-        return not self._is_sparse
+    def values(self) -> Storage[Data]:
+        return self._values
 
     @property
-    def is_sparse(self) -> bool:
-        return self._is_sparse
+    def format(self) -> ArrayFormat:
+        return self._format
 
     @property
-    def shape(self) -> Tuple[int, ...]:
-        return self.storage.shape
+    @abstractmethod
+    def shape(self) -> tuple[int, ...]: ...
+
+    @property
+    def dtype(self) -> type:
+        return self._values.dtype
 
     @property
     def ndim(self) -> int:
-        return self.storage.ndim
-
-    @property
-    def dtype(self) -> ScalarType:
-        return self.storage.dtype.type
-
-    @property
-    def nnz(self) -> int:
-        return self.storage.size
+        return len(self.shape)
 
     @property
     def size(self) -> int:
         return prod(self.shape)
 
-    # --------------- Numpy Interface ---------------
+    @property
+    def nnz(self) -> int:
+        return self._values.size
+
+    @property
+    def is_dense(self) -> bool:
+        return self._format == "dense"
+
+    @property
+    def is_sparse(self) -> bool:
+        return not self.is_dense
+
+    # ======================================================================
+    # Dunder
+    # ======================================================================
+
+    # ----------------------------------------------------------------------
+    # Get & Set items
+    # ----------------------------------------------------------------------
+    @abstractmethod
+    def __getitem__(self, key: Any) -> BaseArray[Data]: ...
 
     @abstractmethod
-    def __array__(
-        self, dtype: Optional[ScalarLikeType] = None
-    ) -> np.ndarray[Tuple[int, ...], np.dtype[Scalar]]: ...
+    def __setitem__(self, key: Any, values_like: Any) -> None: ...
 
-    def __array_ufunc__(
-        self, ufunc: np.ufunc, method: str, *args: Any, **kwargs: Any
-    ) -> Any:
-        func = getattr(ufunc, method)
-        return self._wrapped_call(func, *args, **kwargs)
+    # ----------------------------------------------------------------------
+    # Arithmetic
+    # ----------------------------------------------------------------------
+    @abstractmethod
+    def __add__(self, other: Any) -> BaseArray[Data]: ...
 
-    def __array_function__(
+    @abstractmethod
+    def __iadd__(self, other: Any) -> Self: ...
+
+    @abstractmethod
+    def __sub__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __isub__(self, other: Any) -> Self: ...
+
+    @abstractmethod
+    def __mul__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __imul__(self, other: Any) -> Self: ...
+
+    @abstractmethod
+    def __truediv__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __itruediv__(self, other: Any) -> Self: ...
+
+    @abstractmethod
+    def __mod__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __imod__(self, other: Any) -> Self: ...
+
+    @abstractmethod
+    def __floordiv__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __ifloordiv__(self, other: Any) -> Self: ...
+
+    @abstractmethod
+    def __pow__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __ipow__(self, other: Any) -> Self: ...
+
+    # ----------------------------------------------------------------------
+    # Logic & Comparison
+    # ----------------------------------------------------------------------
+    @abstractmethod
+    def __lt__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __le__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __gt__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __ge__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __eq__(self, other: Any) -> BaseArray[Data]:  # type: ignore
+        ...
+
+    @abstractmethod
+    def __ne__(self, other: Any) -> BaseArray[Data]:  # type: ignore
+        ...
+
+    @abstractmethod
+    def __invert__(self, other: Any) -> BaseArray[Data]:  # type: ignore
+        ...
+
+    # ----------------------------------------------------------------------
+    # Utils
+    # ----------------------------------------------------------------------
+    @abstractmethod
+    def __copy__(self) -> Self: ...
+
+    @abstractmethod
+    def __repr__(self) -> str: ...
+
+    # ======================================================================
+    # Shape Manipulation
+    # ======================================================================
+
+    @abstractmethod
+    def reshape(self, /, *, shape: int | Sequence[int]) -> Self: ...
+
+    @abstractmethod
+    def expand_dims(self, /, *, axis: int | Sequence[int]) -> Self: ...
+
+    @abstractmethod
+    def squeeze(self, /, *, axis: int | Sequence[int]) -> Self: ...
+
+    @abstractmethod
+    def broadcast_to(self, /, *, shape: int | Sequence[int]) -> Self: ...
+
+    @classmethod
+    @abstractmethod
+    def concat(cls, arrs: Sequence[Self], /, *, axis: int = 0) -> Self: ...
+
+    @classmethod
+    @abstractmethod
+    def stack(cls, arrs: Sequence[Self], /, *, axis: int = 0) -> Self: ...
+
+    # ======================================================================
+    # Type Casting
+    # ======================================================================
+    @abstractmethod
+    def as_type(self, *args: Any, **kwargs: Any) -> Self: ...
+
+    @abstractmethod
+    def as_dense(self, *args: Any, **kwargs: Any) -> DenseArray[Data]: ...
+
+    @abstractmethod
+    def as_csr(self, *args: Any, **kwargs: Any) -> CsrArray[Data]: ...
+
+    # ======================================================================
+    # Elementwise math functions (ufuncs)
+    # ======================================================================
+    @abstractmethod
+    def exp(self, *args: Any, **kwargs: Any) -> Self: ...
+
+    @abstractmethod
+    def iexp(self) -> Self: ...
+
+    @abstractmethod
+    def log(self, *args: Any, **kwargs: Any) -> Self: ...
+
+    @abstractmethod
+    def ilog(self) -> Self: ...
+
+    @abstractmethod
+    def sqrt(self, *args: Any, **kwargs: Any) -> Self: ...
+
+    @abstractmethod
+    def isqrt(self) -> Self: ...
+
+    @abstractmethod
+    def sin(self, *args: Any, **kwargs: Any) -> Self: ...
+
+    @abstractmethod
+    def isin(self) -> Self: ...
+
+    @abstractmethod
+    def cos(self, *args: Any, **kwargs: Any) -> Self: ...
+
+    @abstractmethod
+    def icos(self) -> Self: ...
+
+    # ======================================================================
+    # Reductions
+    # ======================================================================
+    @abstractmethod
+    def sum(
         self,
-        func: Callable,
-        types: Tuple[type, ...],
-        args: Tuple[Any, ...],
-        kwargs: Dict[str, Any],
-    ) -> Any:
-        return self._wrapped_call(func, *args, **kwargs)
+        /,
+        *,
+        axis: Optional[int | Sequence[int]] = None,
+        keepdims: bool = False,
+    ) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def mean(
+        self,
+        /,
+        *,
+        axis: Optional[int | Sequence[int]] = None,
+        keepdims: bool = False,
+    ) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def min(
+        self,
+        /,
+        *,
+        axis: Optional[int | Sequence[int]] = None,
+        keepdims: bool = False,
+    ) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def max(
+        self,
+        /,
+        *,
+        axis: Optional[int | Sequence[int]] = None,
+        keepdims: bool = False,
+    ) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def count_nonzero(
+        self,
+        /,
+        *,
+        axis: Optional[int | Sequence[int]] = None,
+        keepdims: bool = False,
+    ) -> BaseArray[Data]: ...
+
+    # ======================================================================
+    # Compression
+    # ======================================================================
+    @abstractmethod
+    def compress_axis(
+        self,
+        /,
+        *,
+        keep: Any,
+        axis: Optional[int] = 0,
+    ) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def compress(
+        self,
+        /,
+        *,
+        keep: Any | Sequence[Any],
+        axis: Optional[int | Sequence[int]] = 0,
+    ) -> BaseArray[Data]: ...
+
+    # ======================================================================
+    # Miscellaneous
+    # ======================================================================
+
+    @abstractmethod
+    def copy(self, *args: Any, **kwargs: Any) -> Self: ...
+
+    # ======================================================================
+    # Linear Algebra
+    # ======================================================================
