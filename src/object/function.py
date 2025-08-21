@@ -1,7 +1,10 @@
+from abc import ABC
 from math import prod
 from typing import FrozenSet, Literal, Optional
 
 import numpy as np
+
+from src.object.object_mixin import ObjectMixin
 
 from ..array.dense import DenseArray
 from .geometry_matrix import DISTANCE_TYPES, DistanceType
@@ -12,42 +15,44 @@ from .metadata import (
     IntTupleAttr,
     LiteralAttr,
 )
-from .object import Object
 
 DegreeType = Literal["adjacency", "affinity"]
 DEGREE_TYPES: FrozenSet[DegreeType] = frozenset(("adjacency", "affinity"))
 
 
-class Function(Object):
-    data: DenseArray
+class FunctionMixin(ObjectMixin, ABC):
+    ndim = 2  
+    dtype = np.float64
 
-    ndim = 2
-
-    def __init__(self, data: DenseArray, name: Optional[str] = None) -> None:
-        super().__init__(data, name)
+    def __init__(self, **metadata) -> None:
+        super().__init__(**metadata)
 
     @property
     def npts(self) -> int:
-        return self.data.shape[0]
+        return self.shape[0]
 
     @property
     def nfuncs(self) -> int:
-        return prod(self.data.shape[1:])
+        return prod(self.shape[1:])  
 
 
-class Coordinate(Function):
-    data: DenseArray[np.float64]
+class CoordinateMixin(FunctionMixin, ABC):
+    radii: np.float64
 
-    dtype = np.float64
-    radii = FloatTupleAttr(key="radii")
+    def __init__(self, radii, **metadata) -> None:
+        super().__init__(**metadata)
+        self.radii = radii
 
-    def __init__(
-        self,
-        data: DenseArray[np.float64],
-        radii: Optional[FloatLikeSeq] = None,
-        name: Optional[str] = None,
-    ) -> None:
-        super().__init__(data, name)
+
+class Coordinate(CoordinateMixin, ABC):
+    pass
+
+
+class DegreeMixin(FunctionMixin, ABC):
+    radii: np.float64
+
+    def __init__(self, radii, **metadata) -> None:
+        super().__init__(**metadata)
         self.radii = radii
 
 

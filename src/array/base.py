@@ -53,8 +53,8 @@ class BaseArray(Generic[Data], ABC):
     # ======================================================================
     # Initialization
     # ======================================================================
-    @abstractmethod
-    def __init__(self, *args: Any, **kwargs: Any) -> None: ...
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
 
     # ======================================================================
     # Constructors

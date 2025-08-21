@@ -1,37 +1,34 @@
+from abc import ABC
 from typing import Optional, Tuple, TypeAlias, Union
 
 import numpy as np
 
+from src.object.metadata import Metadata
+from src.object.object_mixin import ObjectMixin
+
 from ..array.dense import DenseArray
-from .object import Object
-
-PointsStorage: TypeAlias = np.ndarray[Tuple[int, int], np.dtype[np.float64]]
-PointsArray: TypeAlias = DenseArray[np.float64, Tuple[int, int]]
 
 
-class Points(Object):
-    data: PointsArray
+class PointsMixin(ObjectMixin, ABC):
+    metadata: Metadata
 
-    ndim = 2
-    dtype = np.float64
+    fixed_ndim = 2
+    fixed_dtype = np.float64
 
-    def __init__(
-        self, data: Union[PointsStorage, PointsArray], name: Optional[str] = None
-    ) -> None:
-        if isinstance(data, DenseArray):
-            super().__init__(data, name=name)
-        elif isinstance(data, np.ndarray):
-            super().__init__(DenseArray(data), name=name)
-        else:
-            raise TypeError(f"Cannot format {type(data)} as Points!")
+    def __init__(self, **metadata) -> None:
+        super().__init__(**metadata)
 
     @property
     def npts(self) -> int:
-        return self.data.shape[0]
+        return self.shape[0]
 
     @property
     def nfeats(self) -> int:
-        return self.data.shape[1]
+        return self.shape[1]
+
+
+class Points(DenseArray, PointsMixin):
+    pass
 
 
 class Data(Points):

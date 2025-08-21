@@ -67,9 +67,10 @@ class DenseArray(Generic[Data], BaseArray[Data]):
     # Initialization
     # ======================================================================
     def __init__(
-        self, arr_like: Any, /, *, dtype: Optional[type] = None, copy: bool = False
+        self, arr_like: Any, /, *, dtype: Optional[type] = None, copy: bool = False, **kwargs
     ) -> None:
         self._values = Storage.as_values(unwrap(arr_like), dtype=dtype, copy=copy)
+        super().__init__(**kwargs)
 
     # ======================================================================
     # Constructors

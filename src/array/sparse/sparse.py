@@ -59,6 +59,7 @@ class SparseArray(Generic[Data], BaseArray[Data]):
         dtype: Optional[type] = None,
         copy_values: bool = False,
         copy_index: bool = False,
+        **kwargs,
     ) -> None:
         self._values = Storage.as_values(
             unwrap(values_like), dtype=dtype, copy=copy_values, assert_flat=True
@@ -68,6 +69,7 @@ class SparseArray(Generic[Data], BaseArray[Data]):
             for axis_idx_like in index_like
         )
         self._shape = tuple(shape)
+        super().__init__(**kwargs)
 
     # ======================================================================
     # Constructors
