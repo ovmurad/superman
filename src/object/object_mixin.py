@@ -1,5 +1,7 @@
 from abc import ABC
 from typing import Any, ClassVar, Optional, Tuple
+
+import numpy as np
 from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
@@ -8,7 +10,7 @@ class ObjectMixin(ABC):
     metadata: Metadata
 
     fixed_ndim: ClassVar[int]
-    fixed_dtype: ClassVar[int]
+    fixed_dtype: ClassVar[np.dtype]
 
     def __init__(self, **metadata) -> None:
         if self.ndim != self.fixed_ndim:

@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Any, Generic, Optional, Tuple, TypeAlias, TypeVar, Union
+from typing import Any, ClassVar, Generic, Optional, Tuple, TypeAlias, TypeVar, Union
 
 import numpy as np
 from scipy.sparse import csr_array
@@ -43,10 +43,6 @@ class AdjacencyMatrixMixin(GeometryMatrixMixin, ABC):
     fixed_dtype = np.bool_
 
 
-class DenseDistanceMatrix(DenseArray, GeometryMatrixMixin):
-    pass
-
-
 class DenseAdjacencyMatrix(DenseArray, AdjacencyMatrixMixin):
     pass
 
@@ -56,10 +52,6 @@ class DenseAffinityMatrix(DenseArray, GeometryMatrixMixin):
 
 
 class DenseLaplacianMatrix(DenseArray, GeometryMatrixMixin):
-    pass
-
-
-class SparseDistanceMatrix(SparseArray, GeometryMatrixMixin):
     pass
 
 
