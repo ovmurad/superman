@@ -245,6 +245,7 @@ class Storage(Generic[Data]):
     expand_dims = _storage_op(BACKEND.expand_dims, in_place=False)
     squeeze = _storage_op(BACKEND.squeeze, in_place=False)
     broadcast_to = _storage_op(BACKEND.broadcast_to, in_place=False)
+    transpose = _storage_op(BACKEND.transpose, in_place=False)
 
     @staticmethod
     def concat(stgs: Sequence[Storage[Data]], /, *, axis: int = 0) -> Storage[Data]:

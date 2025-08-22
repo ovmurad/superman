@@ -151,7 +151,7 @@ class DenseDistanceMatrix(DistanceMatrix, DenseArray):
         dist_mat: DistanceMatrix = self if in_place else self.copy()
         dist_mat[dist_mat > radius] = np.inf
         return DistanceMatrix(dist_mat, radius=radius) if in_place else DistanceMatrix(dist_mat, radius=radius, metadata=self.metadata)
- 
+
 
 class CsrDistanceMatrix(DistanceMatrix, CsrArray):
     def _execute_threshold(

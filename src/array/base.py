@@ -211,6 +211,9 @@ class BaseArray(Generic[Data], ABC):
     @abstractmethod
     def broadcast_to(self, /, *, shape: int | Sequence[int]) -> Self: ...
 
+    @abstractmethod
+    def transpose(self) -> Self: ...
+
     @classmethod
     @abstractmethod
     def concat(cls, arrs: Sequence[Self], /, *, axis: int = 0) -> Self: ...

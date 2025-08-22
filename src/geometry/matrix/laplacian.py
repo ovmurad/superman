@@ -1,50 +1,75 @@
+from __future__ import annotations
 from typing import Optional
 
 import numpy as np
 
-from ...object.geometry_matrix import (
-    AffinityMatrix,
-    LaplacianMatrix,
-    LaplacianType,
-    MatrixArray,
-)
+from ...object.geometry_matrix import LaplacianType
+
+from abc import ABC, abstractmethod
+
+import numpy as np
+from src.array.base import BaseArray
+from src.array.dense.dense import DenseArray
+from src.array.sparse.csr import CsrArray
+from src.object.geometry_matrix import GeometryMatrixMixin
+
+
+class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
+    fixed_dtype = np.bool_
+
+    def __new__(cls, *args, **kwargs):
+        if cls is LaplacianMatrix:
+            if 'shape' in kwargs:
+                return CsrLaplacianMatrix(*args, **kwargs)
+            return DenseLaplacianMatrix(*args, **kwargs)
+        return super().__new__(cls)
+
+
+class LaplacianMatrix(LaplacianMatrixMixin, BaseArray, ABC):
+    pass
+
+
+class DenseLaplacianMatrix(LaplacianMatrix, DenseArray):
+    pass
+
+
+class CsrLaplacianMatrix(LaplacianMatrix, CsrArray):
+    pass
 
 
 def eps_adjustment(eps: float) -> float:
     return 4.0 / (eps**2)
 
 
-# TODO replace with proper method
 def _prepare_arr_degrees_and_out(
-    arr: MatrixArray[np.float64],
+    arr: BaseArray[np.float64],
     axis: int,
     degree_exp: float,
     keepdims: bool,
-    in_place: bool,
-) -> MatrixArray[np.float64]:
+) -> BaseArray[np.float64]:
 
-    degrees = np.sum(arr, axis=axis, keepdims=keepdims) ** degree_exp
-    out = arr if in_place else None
+    degrees = arr.sum(axis=axis, keepdims=keepdims) ** degree_exp
 
-    return arr, degrees, out
+    return arr, degrees
 
 
-# TODO replace with proper method
 def _normalize_de(
-    arr: MatrixArray[np.float64],
+    arr: BaseArray[np.float64],
     axis: Optional[int] = 1,
     degree_exp: float = 1.0,
     sym_norm: bool = False,
     in_place: bool = False,
-) -> MatrixArray[np.float64]:
+) -> BaseArray[np.float64]:
 
-    arr, degrees, out = _prepare_arr_degrees_and_out(
-        arr, axis, degree_exp=degree_exp, keepdims=True, in_place=in_place
-    )
+    degrees = arr.sum(axis=axis, keepdims=True) ** degree_exp
 
-    arr = np.divide(arr, degrees, out=out)
+    if in_place:
+        arr /= degrees
+    else:
+        arr = arr / degrees
+
     if sym_norm and axis is not None:
-        arr = np.divide(arr, degrees.T, out=arr)
+        arr.__itruediv__()
 
     return arr
 

@@ -101,6 +101,10 @@ class NumpyBackend(Backend[np.ndarray]):
         return np.squeeze(x, axis=axis)
 
     @staticmethod
+    def transpose(x: np.ndarray, /) -> np.ndarray:
+        return np.transpose(x)
+
+    @staticmethod
     def broadcast_to(x: np.ndarray, /, *, shape: int | Sequence[int]) -> np.ndarray:
         return np.broadcast_to(x, shape=shape)
 

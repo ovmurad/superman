@@ -171,6 +171,7 @@ class DenseArray(Generic[Data], BaseArray[Data]):
     expand_dims = _dense_op(Storage.expand_dims, in_place=False)
     squeeze = _dense_op(Storage.squeeze, in_place=False)
     broadcast_to = _dense_op(Storage.broadcast_to, in_place=False)
+    transpose = _dense_op(Storage.transpose, in_place=False)
 
     @staticmethod
     def concat(

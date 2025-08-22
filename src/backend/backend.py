@@ -67,6 +67,9 @@ class Backend(Protocol[Data]):
     def squeeze(x: Data, /, *, axis: int | Sequence[int]) -> Data: ...
 
     @staticmethod
+    def transpose(x: Data, /) -> Data: ...
+
+    @staticmethod
     def broadcast_to(x: Data, /, *, shape: int | Sequence[int]) -> Data: ...
 
     @staticmethod
