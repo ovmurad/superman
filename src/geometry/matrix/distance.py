@@ -1,26 +1,48 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import Any, Iterable, Iterator, Optional, Union
+from functools import singledispatch
+from typing import Any, Callable, ClassVar, Iterable, Iterator, Optional, Union
 
 import numpy as np
 from sklearn.metrics import pairwise_distances_chunked
 
 from src.array.base import BaseArray
 from src.array.dense.dense import DenseArray
+from src.array.sparse.csr import CsrArray
 from src.array.sparse.sparse import SparseArray
+from src.geometry.matrix.affinity import AffinityMatrix
 from src.object.geometry_matrix import GeometryMatrixMixin
 
-from ...object.metadata import DistanceType
+from ...object.metadata import AffinityType, DistanceType
 from ...object.points import Points
 
 
-class DistanceMatrix(BaseArray, GeometryMatrixMixin, ABC):
+#Adds factory functionality
+class DistanceMatrixMixin(GeometryMatrixMixin, ABC):
+    #__new__ allows us to use DistanceMatrixMixin's constructor as a factory to create Sparse and Dense DistanceMatrices
     def __new__(cls, *args, **kwargs):
         if cls is DistanceMatrix:
             if 'shape' in kwargs:
-                return SparseDistanceMatrix(*args, **kwargs)
+                return CsrDistanceMatrix(*args, **kwargs)
             return DenseDistanceMatrix(*args, **kwargs)
         return super().__new__(cls)
+
+
+#Adds basearray functionality shared by dense and sparse
+#ABC disallows constructing instances of DistanceMatrix which have no functionality because BaseArray has no functionality
+#Mixin gives factory functionality to create Sparse and Dense DistanceMatrices
+class DistanceMatrix(BaseArray, DistanceMatrixMixin, ABC):
+    _dispatch_affinity: ClassVar[dict[AffinityType, Callable]] = {}
+
+
+    @classmethod
+    def _register(cls, name: AffinityType):
+        """Decorator to register a class method in the dispatch table."""
+        def decorator(func: Callable):
+            cls._dispatch_affinity[name] = classmethod(func).__get__(None, cls)
+            return func
+        return decorator
+
 
     def threshold(
         self,
@@ -67,6 +89,62 @@ class DistanceMatrix(BaseArray, GeometryMatrixMixin, ABC):
             yield self.threshold(radius, in_place)
 
 
+    def affinity(
+        self,
+        aff_type: AffinityType = "gaussian",
+        eps: Optional[float] = None,
+        in_place: bool = False,
+    ) -> AffinityMatrix:
+        """
+        Corresponds to affinity.py in cryo_experiments. Can deduce dist_is_sq from the dist_type and set to default
+        False if distance is not 'sqeuclidean'. All distances can be found at
+        https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html#scipy.spatial.distance.pdist
+        :param dist_mat:
+        :param aff_type:
+        :param eps:
+        :param in_place:
+        :return:
+        """
+
+        dist_is_sq = self.metadata.dist_type == "sqeuclidean"
+
+        return self._dispatch_affinity[aff_type].__get__(self)(eps, dist_is_sq, in_place)
+
+
+@DistanceMatrix._register("gaussian")
+def gaussian(
+    dists: DistanceMatrix,
+    eps: Optional[float] = None,
+    dist_is_sq: bool = False,
+    in_place: bool = False,
+) -> AffinityMatrix:
+    if in_place:
+        return gaussian_in_place(dists, eps, dist_is_sq)
+    return gaussian_out_of_place(dists, eps, dist_is_sq)
+
+
+def gaussian_in_place(
+    dists: DistanceMatrix, eps: float, dist_is_sq: bool
+) -> AffinityMatrix:
+
+    if not dist_is_sq:
+        dists **= 2
+
+    dists /= eps**2
+    dists *= -1
+    dists.iexp()
+
+    return AffinityMatrix(dists)
+
+
+def gaussian_out_of_place(
+    dists: DistanceMatrix, eps: float, dist_is_sq: bool
+) -> AffinityMatrix:
+    if dist_is_sq:
+        return AffinityMatrix(-(dists / (eps**2)).exp())
+    return AffinityMatrix(-((dists / eps) ** 2).exp())
+
+
 class DenseDistanceMatrix(DenseArray, DistanceMatrix):
     def _execute_threshold(
         self, radius: float, in_place: bool
@@ -74,9 +152,9 @@ class DenseDistanceMatrix(DenseArray, DistanceMatrix):
         dist_mat = self if in_place else self.copy()
         dist_mat[dist_mat > radius] = np.inf
         return dist_mat
+ 
 
-
-class SparseDistanceMatrix(SparseArray, DistanceMatrix):
+class CsrDistanceMatrix(CsrArray, DistanceMatrix):
     def _execute_threshold(
         self, radius: float, in_place: bool
     ) -> DistanceMatrix:
