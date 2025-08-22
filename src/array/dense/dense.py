@@ -34,7 +34,6 @@ def _dense_op(
             )
             return self
 
-        print(stg_func(self._values, *unwrap_args(args), **unwrap_kwargs(kwargs)))
         return DenseArray(
             stg_func(self._values, *unwrap_args(args), **unwrap_kwargs(kwargs))
         )

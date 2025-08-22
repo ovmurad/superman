@@ -1,5 +1,5 @@
 from __future__ import annotations
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import Optional, Tuple, TypeAlias, Union
 
 import numpy as np
@@ -18,8 +18,17 @@ class PointsMixin(ObjectMixin, ABC):
     fixed_ndim = 2
     fixed_dtype = np.float64
 
-    def __init__(self, **metadata) -> None:
-        super().__init__(**metadata)
+    def __init__(self, *args, **metadata) -> None:
+        super().__init__(*args, **metadata)
+
+    
+    @abstractmethod
+    def distance(
+        self,
+        y_pts: Optional[Points] = None,
+        dist_type: DistanceType = "euclidean",
+    ) -> DistanceMatrix:
+        pass
 
     @property
     def npts(self) -> int:
@@ -30,7 +39,7 @@ class PointsMixin(ObjectMixin, ABC):
         return self.shape[1]
 
 
-class Points(DenseArray, PointsMixin):
+class Points(PointsMixin, DenseArray):
     def distance(
         self,
         y_pts: Optional[Points] = None,

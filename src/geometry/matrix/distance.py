@@ -133,24 +133,24 @@ def gaussian_in_place(
     dists *= -1.0
     dists.iexp()
 
-    return AffinityMatrix(dists)
+    return AffinityMatrix(dists, eps=eps, aff_type="gaussian")
 
 
 def gaussian_out_of_place(
     dists: DistanceMatrix, eps: float, dist_is_sq: bool
 ) -> AffinityMatrix:
     if dist_is_sq:
-        return AffinityMatrix(((dists / (eps**2)) * -1.0).exp(), metadata=dists.metadata)
-    return AffinityMatrix((((dists / eps) ** 2) * -1).exp(), metadata=dists.metadata)
+        return AffinityMatrix(((dists / (eps**2)) * -1.0).exp(), eps=eps, metadata=dists.metadata, aff_type="gaussian")
+    return AffinityMatrix((((dists / eps) ** 2) * -1).exp(), eps=eps, metadata=dists.metadata, aff_type="gaussian")
 
 
 class DenseDistanceMatrix(DistanceMatrix, DenseArray):
     def _execute_threshold(
         self, radius: float, in_place: bool
     ) -> DistanceMatrix:
-        dist_mat = self if in_place else self.copy()
+        dist_mat: DistanceMatrix = self if in_place else self.copy()
         dist_mat[dist_mat > radius] = np.inf
-        return dist_mat
+        return DistanceMatrix(dist_mat, radius=radius) if in_place else DistanceMatrix(dist_mat, radius=radius, metadata=self.metadata)
  
 
 class CsrDistanceMatrix(DistanceMatrix, CsrArray):

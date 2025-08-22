@@ -29,7 +29,7 @@ class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
         copy: bool = False,
     ) -> AdjacencyMatrix:
 
-        return self._execute_adjacency(copy)
+        return AdjacencyMatrix(self._execute_adjacency(copy), self.metadata)
 
     @abstractmethod
     def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
@@ -38,7 +38,7 @@ class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
 
 class DenseAffinityMatrix(AffinityMatrix, DenseArray):
     def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
-        return AdjacencyMatrix(self != 0, metadata=self.metadata)
+        return self != 0
 
 
 class CsrAffinityMatrix(AffinityMatrix, CsrArray):
