@@ -6,9 +6,6 @@ from scipy.sparse import csr_array
 
 from src.object.object_mixin import ObjectMixin
 
-from ..array.base import BaseArray
-from ..array.dense import DenseArray
-from ..array.sparse import SparseArray
 from .metadata import AffinityType, DistanceType, LaplacianType, Metadata
 
 class GeometryMatrixMixin(ObjectMixin, ABC):
@@ -37,31 +34,3 @@ class GeometryMatrixMixin(ObjectMixin, ABC):
         if self.is_square:
             return self.from_npts
         raise ValueError("Matrix is not square, so `npts` is not well defined!")
-
-
-class AdjacencyMatrixMixin(GeometryMatrixMixin, ABC):
-    fixed_dtype = np.bool_
-
-
-class DenseAdjacencyMatrix(DenseArray, AdjacencyMatrixMixin):
-    pass
-
-
-class DenseAffinityMatrix(DenseArray, GeometryMatrixMixin):
-    pass
-
-
-class DenseLaplacianMatrix(DenseArray, GeometryMatrixMixin):
-    pass
-
-
-class SparseAdjacencyMatrix(SparseArray, AdjacencyMatrixMixin):
-    pass
-
-
-class SparseAffinityMatrix(SparseArray, GeometryMatrixMixin):
-    pass
-
-
-class SparseLaplacianMatrix(SparseArray, GeometryMatrixMixin):
-    pass

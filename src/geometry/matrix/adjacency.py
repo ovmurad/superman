@@ -19,7 +19,7 @@ class AdjacencyMatrixMixin(GeometryMatrixMixin, ABC):
         return super().__new__(cls)
 
 
-class AdjacencyMatrix(BaseArray, AdjacencyMatrixMixin, ABC):
+class AdjacencyMatrix(AdjacencyMatrixMixin, ABC):
     pass
 
 

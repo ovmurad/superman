@@ -23,7 +23,7 @@ class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
         return super().__new__(cls)
 
 
-class AffinityMatrix(BaseArray, AffinityMatrixMixin, ABC):
+class AffinityMatrix(AffinityMatrixMixin, ABC):
     def adjacency(
         self,
         copy: bool = False,

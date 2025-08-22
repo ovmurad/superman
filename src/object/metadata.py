@@ -1,3 +1,5 @@
+from __future__ import annotations
+from dataclasses import dataclass, replace
 from typing import FrozenSet, Literal, Optional
 
 import attr
@@ -28,6 +30,7 @@ def _convert_to_float(value: float, ndigits=5) -> float:
 
 
 @attr.s(auto_attribs=True, slots=True)
+@dataclass
 class Metadata:
     name: Optional[str] = attr.ib(
         default=None,

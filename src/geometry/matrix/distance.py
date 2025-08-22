@@ -31,7 +31,7 @@ class DistanceMatrixMixin(GeometryMatrixMixin, ABC):
 #Adds basearray functionality shared by dense and sparse
 #ABC disallows constructing instances of DistanceMatrix which have no functionality because BaseArray has no functionality
 #Mixin gives factory functionality to create Sparse and Dense DistanceMatrices
-class DistanceMatrix(BaseArray, DistanceMatrixMixin, ABC):
+class DistanceMatrix(DistanceMatrixMixin, ABC):
     _dispatch_affinity: ClassVar[dict[AffinityType, Callable]] = {}
 
 

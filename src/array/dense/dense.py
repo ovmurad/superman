@@ -12,6 +12,8 @@ from typing import (
     Sequence,
 )
 
+from src.object.object_mixin import ObjectMixin
+
 from ...storage import Data, Storage
 from ..base import BaseArray, unwrap, unwrap_args, unwrap_kwargs
 
@@ -70,7 +72,11 @@ class DenseArray(Generic[Data], BaseArray[Data]):
         self, arr_like: Any, /, *, dtype: Optional[type] = None, copy: bool = False, **kwargs
     ) -> None:
         self._values = Storage.as_values(unwrap(arr_like), dtype=dtype, copy=copy)
-        super().__init__(**kwargs)
+
+        if isinstance(arr_like, ObjectMixin) and type(super()) == ObjectMixin:
+            super().__init__(metadata = arr_like.metadata, **kwargs)
+        else:
+            super().__init__(**kwargs)
 
     # ======================================================================
     # Constructors
