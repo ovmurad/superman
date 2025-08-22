@@ -128,10 +128,10 @@ def gaussian_in_place(
 ) -> AffinityMatrix:
 
     if not dist_is_sq:
-        dists **= 2
+        dists **= 2.0
 
     dists /= eps**2
-    dists *= -1
+    dists *= -1.0
     dists.iexp()
 
     return AffinityMatrix(dists)
@@ -141,8 +141,8 @@ def gaussian_out_of_place(
     dists: DistanceMatrix, eps: float, dist_is_sq: bool
 ) -> AffinityMatrix:
     if dist_is_sq:
-        return AffinityMatrix(-(dists / (eps**2)).exp())
-    return AffinityMatrix(-((dists / eps) ** 2).exp())
+        return AffinityMatrix(((dists / (eps**2)) * -1.0).exp())
+    return AffinityMatrix((((dists / eps) ** 2) * -1).exp())
 
 
 class DenseDistanceMatrix(DenseArray, DistanceMatrix):
