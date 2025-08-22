@@ -23,7 +23,7 @@ class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
         return super().__new__(cls)
 
 
-class AffinityMatrix(AffinityMatrixMixin, ABC):
+class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
     def adjacency(
         self,
         copy: bool = False,
@@ -36,11 +36,11 @@ class AffinityMatrix(AffinityMatrixMixin, ABC):
         pass
 
 
-class DenseAffinityMatrix(DenseArray, AffinityMatrix):
+class DenseAffinityMatrix(AffinityMatrix, DenseArray):
     def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
-        return AdjacencyMatrix(self != 0)
+        return AdjacencyMatrix(self != 0, metadata=self.metadata)
 
 
-class CsrAffinityMatrix(CsrArray, AffinityMatrix):
+class CsrAffinityMatrix(AffinityMatrix, CsrArray):
     def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
         raise NotImplementedError()

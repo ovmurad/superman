@@ -1,5 +1,4 @@
-from __future__ import annotations
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, replace, fields
 from typing import FrozenSet, Literal, Optional
 
 import attr
@@ -30,7 +29,6 @@ def _convert_to_float(value: float, ndigits=5) -> float:
 
 
 @attr.s(auto_attribs=True, slots=True)
-@dataclass
 class Metadata:
     name: Optional[str] = attr.ib(
         default=None,
@@ -66,3 +64,11 @@ class Metadata:
         converter=optional_conv(_convert_to_float),
         on_setattr=[convert, validate],
     )
+
+    def update_with(self, other: "Metadata") -> "Metadata":
+        """Return a new Metadata with non-None values from 'other' overriding self."""
+        updated_values = {k: v for k, v in attr.asdict(self).items()}
+        for k, v in attr.asdict(other).items():
+            if v is not None:
+                updated_values[k] = v
+        return Metadata(**updated_values)

@@ -14,7 +14,6 @@ from src.geometry.matrix.affinity import AffinityMatrix
 from src.object.geometry_matrix import GeometryMatrixMixin
 
 from ...object.metadata import AffinityType, DistanceType
-from ...object.points import Points
 
 
 #Adds factory functionality
@@ -31,7 +30,7 @@ class DistanceMatrixMixin(GeometryMatrixMixin, ABC):
 #Adds basearray functionality shared by dense and sparse
 #ABC disallows constructing instances of DistanceMatrix which have no functionality because BaseArray has no functionality
 #Mixin gives factory functionality to create Sparse and Dense DistanceMatrices
-class DistanceMatrix(DistanceMatrixMixin, ABC):
+class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
     _dispatch_affinity: ClassVar[dict[AffinityType, Callable]] = {}
 
 
@@ -141,11 +140,11 @@ def gaussian_out_of_place(
     dists: DistanceMatrix, eps: float, dist_is_sq: bool
 ) -> AffinityMatrix:
     if dist_is_sq:
-        return AffinityMatrix(((dists / (eps**2)) * -1.0).exp())
-    return AffinityMatrix((((dists / eps) ** 2) * -1).exp())
+        return AffinityMatrix(((dists / (eps**2)) * -1.0).exp(), metadata=dists.metadata)
+    return AffinityMatrix((((dists / eps) ** 2) * -1).exp(), metadata=dists.metadata)
 
 
-class DenseDistanceMatrix(DenseArray, DistanceMatrix):
+class DenseDistanceMatrix(DistanceMatrix, DenseArray):
     def _execute_threshold(
         self, radius: float, in_place: bool
     ) -> DistanceMatrix:
@@ -154,7 +153,7 @@ class DenseDistanceMatrix(DenseArray, DistanceMatrix):
         return dist_mat
  
 
-class CsrDistanceMatrix(CsrArray, DistanceMatrix):
+class CsrDistanceMatrix(DistanceMatrix, CsrArray):
     def _execute_threshold(
         self, radius: float, in_place: bool
     ) -> DistanceMatrix:

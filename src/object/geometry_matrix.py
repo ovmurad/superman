@@ -9,13 +9,11 @@ from src.object.object_mixin import ObjectMixin
 from .metadata import AffinityType, DistanceType, LaplacianType, Metadata
 
 class GeometryMatrixMixin(ObjectMixin, ABC):
-    metadata: Metadata
-
     fixed_ndim = 2
     fixed_dtype = np.float64
 
-    def __init__(self, **metadata) -> None:
-        super().__init__(**metadata)
+    def __init__(self, *args, **metadata) -> None:
+        super().__init__(*args, **metadata)
 
     @property
     def is_square(self) -> bool:

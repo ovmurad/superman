@@ -34,6 +34,7 @@ def _dense_op(
             )
             return self
 
+        print(stg_func(self._values, *unwrap_args(args), **unwrap_kwargs(kwargs)))
         return DenseArray(
             stg_func(self._values, *unwrap_args(args), **unwrap_kwargs(kwargs))
         )
@@ -72,11 +73,6 @@ class DenseArray(Generic[Data], BaseArray[Data]):
         self, arr_like: Any, /, *, dtype: Optional[type] = None, copy: bool = False, **kwargs
     ) -> None:
         self._values = Storage.as_values(unwrap(arr_like), dtype=dtype, copy=copy)
-
-        if isinstance(arr_like, ObjectMixin) and type(super()) == ObjectMixin:
-            super().__init__(metadata = arr_like.metadata, **kwargs)
-        else:
-            super().__init__(**kwargs)
 
     # ======================================================================
     # Constructors

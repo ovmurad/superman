@@ -19,13 +19,13 @@ class AdjacencyMatrixMixin(GeometryMatrixMixin, ABC):
         return super().__new__(cls)
 
 
-class AdjacencyMatrix(AdjacencyMatrixMixin, ABC):
+class AdjacencyMatrix(AdjacencyMatrixMixin, BaseArray, ABC):
     pass
 
 
-class DenseAdjacencyMatrix(DenseArray, AdjacencyMatrix):
+class DenseAdjacencyMatrix(AdjacencyMatrix, DenseArray):
     pass
 
 
-class CsrAdjacencyMatrix(CsrArray, AdjacencyMatrix):
+class CsrAdjacencyMatrix(AdjacencyMatrix, CsrArray):
     pass

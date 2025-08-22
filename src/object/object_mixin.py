@@ -1,4 +1,5 @@
-from dataclasses import replace
+from __future__ import annotations
+from dataclasses import replace, fields
 from abc import ABC
 from typing import Any, ClassVar, Optional, Tuple
 
@@ -7,13 +8,15 @@ from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
 
-class ObjectMixin(BaseArray, ABC):
+class ObjectMixin(ABC):
     metadata: Metadata
 
     fixed_ndim: ClassVar[int]
     fixed_dtype: ClassVar[np.dtype]
 
-    def __init__(self, metadata: Optional[Metadata] = None, **kwargs) -> None:
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args)
+
         if self.ndim != self.fixed_ndim:
             raise ValueError(
                 f"{self.__class__.__name__} object has `ndim`={self.ndim}, but expected {self.fixed_ndim}!"
@@ -23,8 +26,12 @@ class ObjectMixin(BaseArray, ABC):
                 f"{self.__class__.__name__} object has `dtype`={self.dtype}, but expected {self.fixed_dtype}!"
             )
 
-        if metadata is None:
+        if "metadata" in kwargs:
+            metadata: Metadata = kwargs.pop("metadata")
             self.metadata = Metadata(**kwargs)
+            self.metadata = self.metadata.update_with(metadata)
         else:
-            print(**kwargs)
-            self.metadata = replace(metadata, **kwargs)
+            self.metadata = Metadata(**kwargs)
+            
+        if isinstance(args[0], ObjectMixin):
+            self.metadata = self.metadata.update_with(args[0].metadata)
