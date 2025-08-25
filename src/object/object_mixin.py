@@ -6,12 +6,13 @@ from typing import Any, Callable, ClassVar, Type, TypeVar, get_type_hints
 import attr
 import numpy as np
 
+from src.array import BaseArray
 from src.object.metadata import Metadata
 
 
 T = TypeVar("T", bound=Metadata)
 
-class ObjectMixin(ABC):
+class ObjectMixin(BaseArray, ABC):
     """
     Abstract base class providing metadata handling and type/dimension
     validation.
