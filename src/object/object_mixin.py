@@ -6,7 +6,7 @@ from typing import Any, Callable, ClassVar, Type, TypeVar, get_type_hints
 import attr
 import numpy as np
 
-from src.array import BaseArray
+from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
 
