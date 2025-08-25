@@ -29,6 +29,6 @@ def normalize(
         arr = arr / degrees
 
     if sym_norm and axis is not None:
-        arr /= degrees.transpose()
+        arr /= degrees.reshape(shape=degrees.shape[::-1])
 
     return cls(arr, metadata=metadata) if object and not in_place else arr
