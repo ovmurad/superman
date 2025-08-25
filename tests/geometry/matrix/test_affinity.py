@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-from src.geometry.matrix.affinity import adjacency, affinity
 from tests.test_utils import (
     adj_sol,
     adj_test,
@@ -19,9 +18,9 @@ eps = [3.67, 0.71, 0.57, 0.41]
 def test__affinity__single_points_no_radius_output(key: str):
     if key in affinity_sol.keys():
         for radius in threshold_sol_radius[key].keys():
-            aff = affinity(dist_mat=threshold_sol_radius[key][radius], eps=radius / 3)
+            aff = threshold_sol_radius[key][radius].affinity(eps=radius / 3)
             assert np.allclose(
-                aff.data, affinity_sol[key].data, rtol=test_rtol, atol=test_atol
+                aff.as_nparray(), affinity_sol[key].as_nparray(), rtol=test_rtol, atol=test_atol
             )
 
 
@@ -30,16 +29,16 @@ def test__affinity__single_points_in_place_zero(key: str):
     if key in affinity_sol.keys():
         for radius in threshold_sol_radius[key].keys():
             dummy_dist = threshold_sol_radius[key][radius]
-            dummy_dist_threshold = affinity(dummy_dist, eps=radius / 3, in_place=False)
-            assert not np.shares_memory(dummy_dist.data, dummy_dist_threshold.data)
-            affinity(dummy_dist, eps=radius / 3, in_place=True)
+            dummy_dist_threshold = dummy_dist.affinity(eps=radius / 3, in_place=False)
+            assert not np.shares_memory(dummy_dist.as_nparray(), dummy_dist_threshold.as_nparray())
+            dummy_dist.affinity(eps=radius / 3, in_place=True)
             assert np.allclose(
-                dummy_dist.data,
-                dummy_dist_threshold.data,
+                dummy_dist.as_nparray(),
+                dummy_dist_threshold.as_nparray(),
                 rtol=test_rtol,
                 atol=test_atol,
             )
 
 
 def test__adjacency__output():
-    assert adjacency(adj_test).data == adj_sol
+    assert adj_test.adjacency() == adj_sol

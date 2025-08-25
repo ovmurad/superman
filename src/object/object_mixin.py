@@ -35,5 +35,4 @@ class ObjectMixin(ABC):
             self.metadata = self.metadata.update_with(kwargs["metadata"])
             
         if isinstance(args[0], ObjectMixin):
-            print("a")
             self.metadata = self.metadata.update_with(args[0].metadata)

@@ -105,6 +105,15 @@ class NumpyBackend(Backend[np.ndarray]):
         return np.transpose(x)
 
     @staticmethod
+    def diagonal(x: np.ndarray, /) -> np.ndarray:
+        return np.diagonal(x)
+
+    @staticmethod
+    def fill_diagonal(x: np.ndarray, y: Any) -> np.ndarray:
+        np.fill_diagonal(x, y)
+        return x
+
+    @staticmethod
     def broadcast_to(x: np.ndarray, /, *, shape: int | Sequence[int]) -> np.ndarray:
         return np.broadcast_to(x, shape=shape)
 
@@ -168,6 +177,12 @@ class NumpyBackend(Backend[np.ndarray]):
         x: np.ndarray, y: np.ndarray, /, *, out: Optional[np.ndarray] = None
     ) -> np.ndarray:
         return np.power(x, y, out=out)
+
+    @staticmethod
+    def absolute_value(
+        x: np.ndarray, /, *, out: Optional[np.ndarray] = None
+    ) -> np.ndarray:
+        return np.abs(x, out)
 
     # ======================================================================
     # Comparisons & logical ops

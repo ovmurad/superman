@@ -10,6 +10,7 @@ from src.array.base import BaseArray
 from src.array.dense.dense import DenseArray
 from src.array.sparse.csr import CsrArray
 from src.array.sparse.sparse import SparseArray
+from src.geometry.matrix.adjacency import AdjacencyMatrix
 from src.geometry.matrix.affinity import AffinityMatrix
 from src.object.geometry_matrix import GeometryMatrixMixin
 
@@ -33,6 +34,16 @@ class DistanceMatrixMixin(GeometryMatrixMixin, ABC):
 class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
     _dispatch_affinity: ClassVar[dict[AffinityType, Callable]] = {}
 
+    def adjacency(
+        self,
+        copy: bool = False,
+    ) -> AdjacencyMatrix:
+
+        return AdjacencyMatrix(self._execute_adjacency(copy), metadata=self.metadata)
+
+    @abstractmethod
+    def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
+        pass
 
     @classmethod
     def _register(cls, name: AffinityType):
@@ -152,9 +163,15 @@ class DenseDistanceMatrix(DistanceMatrix, DenseArray):
         dist_mat[dist_mat > radius] = np.inf
         return DistanceMatrix(dist_mat, radius=radius) if in_place else DistanceMatrix(dist_mat, radius=radius, metadata=self.metadata)
 
+    def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
+        return self != 0
+
 
 class CsrDistanceMatrix(DistanceMatrix, CsrArray):
     def _execute_threshold(
         self, radius: float, in_place: bool
     ) -> DistanceMatrix:
+        raise NotImplementedError()
+
+    def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
         raise NotImplementedError()

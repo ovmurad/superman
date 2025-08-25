@@ -78,6 +78,12 @@ class Backend(Protocol[Data]):
     @staticmethod
     def stack(xs: Sequence[Data], /, *, axis: int = 0) -> Data: ...
 
+    @staticmethod
+    def diagonal(x: Data, /) -> Data: ...
+
+    @staticmethod
+    def fill_diagonal(x: Data, y: Data) -> Data: ...
+
     # ======================================================================
     # Type casting
     # ======================================================================
@@ -108,6 +114,9 @@ class Backend(Protocol[Data]):
 
     @staticmethod
     def power(x: Data, y: Data, /, *, out: Optional[Data] = None) -> Data: ...
+
+    @staticmethod
+    def absolute_value(x: Data, /, *, out: Optional[Data] = None) -> Data: ...
 
     # ======================================================================
     # Comparisons & logical ops
