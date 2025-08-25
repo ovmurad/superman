@@ -1,135 +1,350 @@
-from typing import Iterable, Iterator, Optional, Union
+from __future__ import annotations
+
+from abc import ABC, abstractmethod
+from typing import Callable, ClassVar, Iterable, Iterator, Optional, Union
 
 import numpy as np
-from sklearn.metrics import pairwise_distances_chunked
 
-from ...object.geometry_matrix import DistanceMatrix, MatrixArray
-from ...object.metadata import DistanceType
-from ...object.points import Points
-
-
-def row_chunks_to_matrix(
-    chunks: Iterator[np.ndarray], n_x: int, n_y: int
-) -> MatrixArray[np.float64]:
-    full_dist_matrix = np.zeros((n_x, n_y))
-    start_idx = 0
-
-    for chunk in chunks:
-        chunk_rows = chunk.shape[0]
-        full_dist_matrix[start_idx : start_idx + chunk_rows, :] = chunk
-        start_idx += chunk_rows
-
-    return full_dist_matrix
+from src.array import BaseArray, CsrArray, DenseArray
+from src.geometry.matrix.adjacency import AdjacencyMatrix
+from src.geometry.matrix.affinity import AffinityMatrix
+from src.object import AffinityType
+from src.object.geometry_matrix_mixin import GeometryMatrixMixin
 
 
-def distance(
-    x_pts: Points,
-    y_pts: Optional[Points] = None,
-    dist_type: DistanceType = "euclidean",
-    radius: Optional[float] = None,
-    return_sp: bool = True,
-) -> DistanceMatrix:
+class DistanceMatrixMixin(GeometryMatrixMixin, ABC):
     """
-    Corresponds to dist in func_of_dist in the cryo_experiments. Will change the structure a bit because that
-    was a bit complex without much time saved. For now, we will just implement batched distance computation
-    without adding other functions on top like in func_of_dist
-    :param x_pts:
-    :param y_pts:
-    :param dist_type:
-    :param radius:
-    :param return_sp:
-    :return:
+    Mixin class that adds factory functionality to the DistanceMatrix
+    hierarchy.
+
+    This allows users to work with `DistanceMatrix` as an abstract
+    entry point without worrying about the underlying dense/sparse
+    representation.
     """
-    # chunked pairwise distance
-    # ndarray boolean mask
 
-    n_x = x_pts.npts
-    n_y = n_x
+    def __new__(cls, *args, **kwargs):
+        """
+        Factory constructor for DistanceMatrix subclasses.
 
-    if y_pts is not None:
-        n_y = y_pts.npts
+        The constructor returns an instance of either `DenseDistanceMatrix` or `CsrDistanceMatrix` depending on if constructed in `DenseArray` format or `CsrArray` format respectively.
 
-    if return_sp:
-        raise NotImplementedError()
-    else:
-        dist_data: MatrixArray[np.float64] = row_chunks_to_matrix(
-            pairwise_distances_chunked(
-                x_pts.data, y_pts if y_pts is None else y_pts.data
-            ),
-            n_x,
-            n_y,
+        :param args: Positional arguments forwarded to the chosen
+                     distance matrix subclass.
+        :type args: Any
+        :param kwargs: Keyword arguments forwarded to the chosen
+                       distance matrix subclass.
+        :type kwargs: Any
+        :return: A new `DenseDistanceMatrix` or `CsrDistanceMatrix`
+                 instance.
+        :rtype: DistanceMatrix
+        """
+        if cls is DistanceMatrix:
+            if "shape" in kwargs:
+                return CsrDistanceMatrix(*args, **kwargs)
+            return DenseDistanceMatrix(*args, **kwargs)
+        return super().__new__(cls)
+
+
+# Adds basearray functionality shared by dense and sparse
+# ABC disallows constructing instances of DistanceMatrix which have no functionality because BaseArray has no functionality
+# Mixin gives factory functionality to create Sparse and Dense DistanceMatrices
+class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
+    """
+    Abstract base class representing a distance matrix, with functionality to
+    derive adjacency and affinity matrices, and to threshold distances.
+
+    This class serves as a template for distance matrix operations and enforces
+    the implementation of adjacency and threshold execution methods in subclasses.
+    It also provides registration and dispatching mechanisms for affinity functions.
+    """
+
+    _dispatch_affinity: ClassVar[dict[AffinityType, Callable]] = {}
+
+    def adjacency(
+        self,
+        copy: bool = False,
+    ) -> AdjacencyMatrix:
+        """
+        Convert the distance matrix into an adjacency matrix.
+
+        :param copy: Whether to return a copy of the adjacency matrix or reuse existing data. (default: False
+        :type copy: bool
+        :return: The adjacency matrix corresponding to this distance matrix.
+        :rtype: AdjacencyMatrix
+        """
+
+        return AdjacencyMatrix(self._execute_adjacency(copy), metadata=self.metadata)
+
+    @abstractmethod
+    def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
+        """
+        Abstract method to execute the conversion to an adjacency matrix.
+        Must be implemented by subclasses.
+
+        :param copy: Whether to return a copy of the adjacency matrix or reuse existing data.
+        :type copy: bool
+        :return: The computed adjacency matrix.
+        :rtype: AdjacencyMatrix
+        """
+        pass
+
+    @classmethod
+    def _register(cls, name: AffinityType):
+        """
+        Decorator to register a class method in the affinity dispatch table.
+
+        :param name: The name of the affinity type to register.
+        :type name: AffinityType
+        :return: The decorator that registers the function.
+        :rtype: Callable
+        """
+
+        def decorator(func: Callable):
+            cls._dispatch_affinity[name] = classmethod(func).__get__(None, cls)
+            return func
+
+        return decorator
+
+    def threshold(
+        self,
+        radius: float,
+        in_place: bool = False,
+    ) -> DistanceMatrix:
+        """
+        Threshold the distance matrix by eliminating entries above a given radius.
+
+        :param radius: The maximum radius to retain distances. When dense, entries larger than
+                       this will be set to np.inf.
+        :type radius: float
+        :param in_place: If True, modify the existing distance matrix; otherwise,
+                         return a new one. (default: False)
+        :type in_place: bool
+        :raises ValueError: If the given radius is greater than the maximum radius
+                            defined in the matrix metadata.
+        :return: The thresholded distance matrix.
+        :rtype: DistanceMatrix
+        """
+
+        dist_mat_radius = self.metadata.radius
+        if dist_mat_radius is not None and radius > dist_mat_radius:
+            raise ValueError(
+                f"`radius`={radius} is greater than the radius of the input distance matrix {dist_mat_radius}!"
+            )
+
+        return self._execute_threshold(radius, in_place)
+
+    @abstractmethod
+    def _execute_threshold(
+        self, radius: float, in_place: bool = False
+    ) -> DistanceMatrix:
+        """
+        Abstract method to threshold the distance matrix by radius.
+        Must be implemented by subclasses.
+
+        :param radius: The maximum radius to retain distances. Entries larger than
+                       this will be eliminated.
+        :type radius: float
+        :param in_place: If True, modify the existing distance matrix; otherwise,
+                         return a new one. (default: False)
+        :type in_place: bool
+        :return: The thresholded distance matrix.
+        :rtype: DistanceMatrix
+        """
+        pass
+
+    def threshold_distance_iter(
+        self,
+        radii: Union[float, Iterable[float]],
+        in_place: bool = False,
+    ) -> Iterator[DistanceMatrix]:
+        """
+        Generate an iterator over thresholded distance matrices with a single radius or sequence of radii.
+
+        :param radii: A single radius or an iterable of radii with which to threshold
+                      the distance matrix.
+        :type radii: float or Iterable[float]
+        :param in_place: If True, modify the existing distance matrix with each radius (This will ultimately threshold with the largest radius);
+                         otherwise, return new matrices. (default: False)
+        :type in_place: bool
+        :return: An iterator over thresholded distance matrices.
+        :rtype: Iterator[DistanceMatrix]
+        """
+
+        if isinstance(radii, float):
+            radii = (radii,)
+
+        for radius in reversed(sorted(radii)):
+            yield self.threshold(radius, in_place)
+
+    def affinity(
+        self,
+        aff_type: AffinityType = "gaussian",
+        eps: Optional[float] = None,
+        in_place: bool = False,
+    ) -> AffinityMatrix:
+        """
+        Compute an affinity matrix from the distance matrix.
+
+        The operation can be computed either in place or out of place depending on
+        the 'in_place' flag. The distance matrix is assumed to contain squared distances
+        if the DistanceMatrix's `dist_type` metadata is 'sqeuclidean'.
+
+        :param aff_type: The type of affinity to compute (e.g., 'gaussian').
+        :type aff_type: AffinityType
+        :param eps: Optional scaling parameter for the affinity function. If None,
+                    a default is used. (default: None)
+        :type eps: Optional[float]
+        :param in_place: If True, modify the existing matrix; otherwise, return a new one. (default: False)
+        :type in_place: bool
+        :return: The computed affinity matrix.
+        :rtype: AffinityMatrix
+        """
+
+        dist_is_sq = self.metadata.dist_type == "sqeuclidean"
+
+        return self._dispatch_affinity[aff_type].__get__(self)(
+            eps, dist_is_sq, in_place
         )
-        if radius is not None:
-            threshold_distance(dist_data, radius, True)
-
-    x_pts_name = x_pts.metadata.name
-    y_pts_name = None if y_pts is None else y_pts.metadata.name
-    dist_name = (
-        None
-        if (x_pts_name is None or y_pts_name is None)
-        else x_pts_name + "_" + y_pts_name
-    )
-
-    return DistanceMatrix(dist_data, dist_type, radius, dist_name)
 
 
-def _threshold_de(
-    data: MatrixArray[np.float64], radius: float, in_place: bool
-) -> MatrixArray[np.float64]:
+@DistanceMatrix._register("gaussian")
+def gaussian(
+    dists: DistanceMatrix,
+    eps: Optional[float] = None,
+    dist_is_sq: bool = False,
+    in_place: bool = False,
+) -> AffinityMatrix:
+    """
+    Compute a Gaussian affinity matrix from a distance matrix.
+
+    :param dists: The distance matrix to convert into an affinity matrix.
+    :type dists: DistanceMatrix
+    :param eps: Scaling parameter for the Gaussian kernel. If None, a default
+                will be chosen downstream. (default: None)
+    :type eps: Optional[float]
+    :param dist_is_sq: Whether the distance matrix already contains squared
+                       distances. (default: False)
+    :type dist_is_sq: bool
+    :param in_place: If True, compute the affinity in place by modifying the
+                     given distance matrix; otherwise, compute out of place. (default: False)
+    :type in_place: bool
+    :return: The Gaussian affinity matrix.
+    :rtype: AffinityMatrix
+    """
+
     if in_place:
-        data.storage[data.storage > radius] = np.inf
-        return data
-    return np.where(data.storage > radius, np.inf, data.storage)
+        return _gaussian_in_place(dists, eps, dist_is_sq)
+    return _gaussian_out_of_place(dists, eps, dist_is_sq)
 
 
-def threshold_distance(
-    dist_mat: DistanceMatrix,
-    radius: float,
-    in_place: bool = False,
-) -> DistanceMatrix:
-    """
-    :param dist_mat:
-    :param radius:
-    :param in_place:
-    :return:
-    """
+def _gaussian_in_place(
+    dists: DistanceMatrix, eps: float, dist_is_sq: bool
+) -> AffinityMatrix:
 
-    dist_mat_radius = dist_mat.metadata.radius
-    if dist_mat_radius is not None and radius > dist_mat_radius:
-        raise ValueError(
-            f"`radius`={radius} is greater than the radius of the input distance matrix {dist_mat_radius}!"
+    if not dist_is_sq:
+        dists **= 2.0
+
+    dists /= eps**2
+    dists *= -1.0
+    dists.iexp()
+
+    return AffinityMatrix(dists, eps=eps, aff_type="gaussian")
+
+
+def _gaussian_out_of_place(
+    dists: DistanceMatrix, eps: float, dist_is_sq: bool
+) -> AffinityMatrix:
+    if dist_is_sq:
+        return AffinityMatrix(
+            ((dists / (eps**2)) * -1.0).exp(),
+            eps=eps,
+            metadata=dists.metadata,
+            aff_type="gaussian",
         )
-
-    if dist_mat.data.is_sparse:
-        raise NotImplementedError()
-    else:
-        dist_data: MatrixArray[np.float64] = _threshold_de(
-            dist_mat.data, radius, in_place
-        )
-
-    return DistanceMatrix(
-        dist_data, dist_mat.metadata.dist_type, radius, dist_mat.metadata.name
+    return AffinityMatrix(
+        (((dists / eps) ** 2) * -1).exp(),
+        eps=eps,
+        metadata=dists.metadata,
+        aff_type="gaussian",
     )
 
 
-def threshold_distance_iter(
-    dist_mat: DistanceMatrix,
-    radii: Union[float, Iterable[float]],
-    in_place: bool = False,
-) -> Iterator[DistanceMatrix]:
+class DenseDistanceMatrix(DistanceMatrix, DenseArray):
     """
-    Take a distance matrix and eliminate entries at the new radii. Note that we return an iterator
-    that could be used by other functions down stream without storing all matrices.
-    :param dist_mat:
-    :param radii:
-    :param in_place:
-    :return:
+    Implementation of a dense (NumPy-backed) distance matrix.
+    Provides thresholding and adjacency operations for dense arrays.
+
+    Typically not instantiated directly: instead, construct an
+    `DistanceMatrix` in `DenseArray` format which will return an instance.
     """
 
-    if isinstance(radii, float):
-        radii = (radii,)
+    def _execute_threshold(self, radius: float, in_place: bool) -> DistanceMatrix:
+        """
+        Threshold a dense distance matrix by eliminating entries larger
+        than a given radius.
 
-    for radius in reversed(sorted(radii)):
-        print(radius)
-        print(threshold_distance(dist_mat, radius, in_place).data.storage)
-        yield threshold_distance(dist_mat, radius, in_place)
+        :param radius: The maximum radius to retain distances. Entries
+                       greater than this are set to infinity.
+        :type radius: float
+        :param in_place: If True, modify the existing distance matrix;
+                         otherwise, operate on a copy.
+        :type in_place: bool
+        :return: The thresholded distance matrix.
+        :rtype: DistanceMatrix
+        """
+        dist_mat: DistanceMatrix = self if in_place else self.copy()
+        dist_mat[dist_mat > radius] = np.inf
+        return (
+            DistanceMatrix(dist_mat, radius=radius)
+            if in_place
+            else DistanceMatrix(dist_mat, radius=radius, metadata=self.metadata)
+        )
+
+    def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
+        """
+        Convert the dense distance matrix into an adjacency matrix by
+        checking for nonzero entries. Due to numpy matrices being immutable, always copies.
+
+        :param copy: Whether to return a copy or reuse existing data.
+        :type copy: bool
+        :return: The adjacency matrix.
+        :rtype: AdjacencyMatrix
+        """
+        return self != 0
+
+
+class CsrDistanceMatrix(DistanceMatrix, CsrArray):
+    """
+    Implementation of a sparse (CSR-backed) distance matrix.
+    Provides thresholding and adjacency operations for sparse arrays.
+
+    Typically not instantiated directly: instead, construct an
+    `DistanceMatrix` in `CsrArray` format which will return an instance.
+    """
+
+    def _execute_threshold(self, radius: float, in_place: bool) -> DistanceMatrix:
+        """
+        Threshold a sparse (CSR) distance matrix.
+
+        Currently not implemented.
+
+        :param radius: The maximum radius to retain distances.
+        :type radius: float
+        :param in_place: If True, modify the existing distance matrix;
+                         otherwise, operate on a copy.
+        :type in_place: bool
+        :raises NotImplementedError: Always, since this method is not yet implemented.
+        """
+        raise NotImplementedError()
+
+    def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
+        """
+        Convert the sparse distance matrix into an adjacency matrix.
+
+        Currently not implemented.
+
+        :param copy: Whether to return a copy or reuse existing data.
+        :type copy: bool
+        :raises NotImplementedError: Always, since this method is not yet implemented.
+        """
+        raise NotImplementedError()

@@ -1,125 +1,134 @@
-from typing import Optional
+from __future__ import annotations
 
-import numpy as np
+from abc import ABC
 
-from ...object.geometry_matrix import (
-    AdjacencyMatrix,
-    AffinityMatrix,
-    DistanceMatrix,
-    MatrixArray,
-)
-from ...object.metadata import AffinityType
+from src.array import BaseArray, CsrArray, DenseArray
+from src.geometry.matrix.laplacian import LaplacianMatrix, eps_adjustment
+from src.geometry.normalize import normalize
+from src.object import GeometryMatrixMixin, LaplacianType
 
 
-def _de_affinity_in_place(
-    dists: MatrixArray[np.float64], eps: float, dist_is_sq: bool
-) -> MatrixArray[np.float64]:
-    # if dists is sequential
-    #   MatrixArray ^ 2
-    # MatrixArray / float
-    # exp(MatrixArray)
-
-    if not dist_is_sq:
-        np.power(dists, 2, out=dists)
-
-    np.divide(dists, (eps**2), out=dists)
-    np.multiply(dists, -1, out=dists)
-    np.exp(dists, out=dists)
-
-    return dists
-
-
-def _de_affinity_out_of_place(
-    dists: MatrixArray[np.float64], eps: float, dist_is_sq: bool
-) -> MatrixArray[np.float64]:
-    # if dists is sequential
-    #   MatrixArray / float
-    #   exp(MatrixArray)
-    # else
-    #   MatrixArray / float
-    #   MatrixArray ^ 2
-    #   exp(MatrixArray)
-
-    if dist_is_sq:
-        return np.exp(-(dists / (eps**2)))
-    return np.exp(-((dists / eps) ** 2))
-
-
-def _affinity_in_place(
-    dists: MatrixArray[np.float64], eps: float, dist_is_sq: bool
-) -> MatrixArray[np.float64]:
-    if dists.is_sparse:
-        raise NotImplementedError()
-    return _de_affinity_in_place(dists, eps, dist_is_sq)
-
-
-def _affinity_out_of_place(
-    dists: MatrixArray[np.float64], eps: float, dist_is_sq: bool
-) -> MatrixArray[np.float64]:
-    if dists.is_sparse:
-        raise NotImplementedError()
-    return _de_affinity_out_of_place(dists, eps, dist_is_sq)
-
-
-def adjacency(
-    dist_mat: DistanceMatrix,
-    copy: bool = False,
-) -> AdjacencyMatrix:
+class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
     """
-    Will simply cast to dist_mat.data to bool. Same as neigh in func_of_dist.py in cryo_experiments
-    :param dist_mat:
-    :param copy: Whether to copy the indices of dist_mat.
-    :return:
+    Mixin class that adds factory functionality to the AffinityMatrix
+    hierarchy.
+
+    This allows users to work with `AffinityMatrix` as an abstract
+    entry point without needing to explicitly choose between dense or
+    sparse representations.
     """
-    if dist_mat.data.is_sparse:
-        if copy:
-            raise NotImplementedError()
+
+    def __new__(cls, *args, **kwargs):
+        """
+        Factory constructor for AffinityMatrix subclasses.
+
+        The constructor returns an instance of either `DenseAffinityMatrix` or `CsrAffinityMatrix` if constructed in `DenseArray` format or `CsrArray` format respectively.
+
+        :param args: Positional arguments forwarded to the chosen
+                     affinity matrix subclass.
+        :type args: Any
+        :param kwargs: Keyword arguments forwarded to the chosen
+                       affinity matrix subclass.
+        :type kwargs: Any
+        :return: A new `DenseAffinityMatrix` or `CsrAffinityMatrix`
+                 instance.
+        :rtype: AffinityMatrix
+        """
+        if cls is AffinityMatrix:
+            if "shape" in kwargs:
+                return CsrAffinityMatrix(*args, **kwargs)
+            return DenseAffinityMatrix(*args, **kwargs)
+        return super().__new__(cls)
+
+
+class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
+    def laplacian(
+        aff: AffinityMatrix,
+        lap_type: LaplacianType = "geometric",
+        diag_add: float = 1.0,
+        aff_minus_id: bool = True,
+        in_place: bool = False,
+    ) -> LaplacianMatrix:
+        """
+        Construct a graph Laplacian from an affinity matrix using the specified type. Uses aff's eps metadata for scaling.
+        Papers:
+            - geometric and symmetric: https://www.sciencedirect.com/science/article/pii/S1063520306000546
+            - random walk: https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf
+
+
+        :param affs: Affinity matrix.
+        :param eps: Optional scaling parameter. If provided, the resulting Laplacian is multiplied by 4 / eps^2. (default: None).
+        :param lap_type: Type of Laplacian to compute. (default: "geometric").
+                        - "geometric": normalized symmetric followed by random-walk-like normalization.
+                        - "random_walk": standard random walk Laplacian.
+                        - "symmetric": symmetric normalized Laplacian.
+        :param diag_add: Value to add to the diagonal after constructing the Laplacian.
+                        If `aff_minus_id` is True, this value is negated before being added.
+        :param aff_minus_id: Whether to subtract the identity matrix from the affinity matrix. (default: True)
+                            If True, computes `I - normalized_affs`. If False, negates the Laplacian directly.
+        :param in_place: Whether to modify the input affinity matrix in place during normalization. (default: False).
+
+        :return: The constructed Laplacian matrix.
+        """
+
+        eps = aff.metadata.eps
+        if eps is None:
+            raise ValueError("Affinity matrix does not have a bandwidth `eps`!")
+
+        match lap_type:
+            case "geometric":
+                aff = normalize(aff, sym_norm=True, in_place=in_place)
+                lap: LaplacianMatrix = LaplacianMatrix(
+                    normalize(aff, sym_norm=False, in_place=True), lap_type="geometric"
+                )
+            case "random_walk":
+                lap: LaplacianMatrix = LaplacianMatrix(
+                    normalize(aff, sym_norm=False, in_place=in_place),
+                    lap_type="random_walk",
+                )
+            case "symmetric":
+                lap: LaplacianMatrix = LaplacianMatrix(
+                    normalize(aff, sym_norm=True, in_place=in_place, degree_exp=0.5),
+                    lap_type="symmetric",
+                )
+            case _:
+                raise ValueError(f"Unknown laplacian type: {lap_type}!")
+
+        if not aff_minus_id:
+            lap *= -1.0
         else:
-            raise NotImplementedError()
-    else:
-        adj_data: MatrixArray[np.bool_] = dist_mat.data != 0
-    return AdjacencyMatrix(
-        adj_data,
-        dist_mat.metadata.dist_type,
-        dist_mat.metadata.radius,
-        dist_mat.metadata.name,
-    )
+            diag_add *= -1.0
+
+        lap.fill_diagonal(lap.diagonal() + diag_add)
+
+        lap *= eps_adjustment(eps)
+
+        return lap
 
 
-def affinity(
-    dist_mat: DistanceMatrix,
-    aff_type: AffinityType = "gaussian",
-    eps: Optional[float] = None,
-    in_place: bool = False,
-) -> AffinityMatrix:
+class DenseAffinityMatrix(AffinityMatrix, DenseArray):
     """
-    Corresponds to affinity.py in cryo_experiments. Can deduce dist_is_sq from the dist_type and set to default
-    False if distance is not 'sqeuclidean'. All distances can be found at
-    https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html#scipy.spatial.distance.pdist
-    :param dist_mat:
-    :param aff_type:
-    :param eps:
-    :param in_place:
-    :return:
+    Implementation of a dense (NumPy-backed) affinity matrix.
+
+    This class represents an affinity matrix stored in dense format,
+    providing fast element-wise operations at the cost of memory usage.
+
+    Typically not instantiated directly: instead, construct an
+    `AffinityMatrix` in `DenseArray` format which will return an instance.
     """
 
-    dist_is_sq = dist_mat.metadata.dist_type == "sqeuclidean"
-    dist_data = dist_mat.data
+    pass
 
-    if in_place:
-        aff_data: MatrixArray[np.float64] = _affinity_in_place(
-            dist_data, eps, dist_is_sq
-        )
-    else:
-        aff_data: MatrixArray[np.float64] = _affinity_out_of_place(
-            dist_data, eps, dist_is_sq
-        )
 
-    return AffinityMatrix(
-        aff_data,
-        dist_mat.metadata.dist_type,
-        aff_type,
-        dist_mat.metadata.radius,
-        eps,
-        dist_mat.metadata.name,
-    )
+class CsrAffinityMatrix(AffinityMatrix, CsrArray):
+    """
+    Implementation of a sparse (Csr-backed) affinity matrix.
+
+    This class represents an affinity matrix stored in sparse format,
+    providing fast element-wise operations at the cost of memory usage.
+
+    Typically not instantiated directly: instead, construct an
+    `AffinityMatrix` in `CsrArray` format which will return an instance.
+    """
+
+    pass

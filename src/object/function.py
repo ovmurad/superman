@@ -1,128 +1,67 @@
+from abc import ABC
 from math import prod
-from typing import FrozenSet, Literal, Optional
 
 import numpy as np
 
+from src.object.metadata import Metadata
+from src.object.object_mixin import ObjectMixin
+
 from ..array.dense import DenseArray
-from .geometry_matrix import DISTANCE_TYPES, DistanceType
-from .metadata import (
-    FloatLikeSeq,
-    FloatTupleAttr,
-    IntLikeSeq,
-    IntTupleAttr,
-    LiteralAttr,
-)
-from .object import Object
-
-DegreeType = Literal["adjacency", "affinity"]
-DEGREE_TYPES: FrozenSet[DegreeType] = frozenset(("adjacency", "affinity"))
 
 
-class Function(Object):
-    data: DenseArray
-
+class FunctionMixin(ObjectMixin, ABC):
     ndim = 2
+    dtype = np.float64
 
-    def __init__(self, data: DenseArray, name: Optional[str] = None) -> None:
-        super().__init__(data, name)
+    metadata: Metadata
+
+    def __init__(self, *args, **metadata) -> None:
+        super().__init__(*args, cls=Metadata, **metadata)
 
     @property
     def npts(self) -> int:
-        return self.data.shape[0]
+        return self.shape[0]
 
     @property
     def nfuncs(self) -> int:
-        return prod(self.data.shape[1:])
+        return prod(self.shape[1:])
 
 
-class Coordinate(Function):
-    data: DenseArray[np.float64]
-
-    dtype = np.float64
-    radii = FloatTupleAttr(key="radii")
-
-    def __init__(
-        self,
-        data: DenseArray[np.float64],
-        radii: Optional[FloatLikeSeq] = None,
-        name: Optional[str] = None,
-    ) -> None:
-        super().__init__(data, name)
-        self.radii = radii
+class CoordinateMixin(FunctionMixin, ABC):
+    pass
 
 
-class Degree(Function):
-    data: DenseArray[np.float64]
-
-    dtype = np.float64
-    dist_type = LiteralAttr[DistanceType](
-        key="dist_type", allowed_values=DISTANCE_TYPES
-    )
-    degree_type = LiteralAttr[DistanceType](
-        key="degree_type", allowed_values=DEGREE_TYPES
-    )
-    radii = FloatTupleAttr(key="radii")
-
-    def __init__(
-        self,
-        data: DenseArray[np.float64],
-        dist_type: Optional[DistanceType] = None,
-        degree_type: Optional[DegreeType] = None,
-        radii: Optional[FloatLikeSeq] = None,
-        name: Optional[str] = None,
-    ) -> None:
-        super().__init__(data, name)
-        self.dist_type = dist_type
-        self.degree_type = degree_type
-        self.radii = radii
+class Coordinate(CoordinateMixin, ABC):
+    pass
 
 
-class KNNDistance(Function):
-    data: DenseArray[np.float64]
-
-    dtype = np.float64
-    ks = IntTupleAttr(key="ks")
-
-    def __init__(
-        self,
-        data: DenseArray[np.float64],
-        ks: Optional[IntLikeSeq] = None,
-        name: Optional[str] = None,
-    ) -> None:
-        super().__init__(data, name)
-        self.ks = ks
+class DegreeMixin(FunctionMixin, ABC):
+    pass
 
 
-class NeighborCount(Function):
-    data: DenseArray[np.int64]
+class Degree(DegreeMixin, DenseArray):
+    pass
 
+
+class KNNDistanceMixin(FunctionMixin, ABC):
+    pass
+
+
+class KNNDistance(KNNDistanceMixin, DenseArray):
+    pass
+
+
+class NeighborCountMixin(FunctionMixin, ABC):
     dtype = np.int64
-    radii = FloatTupleAttr(key="radii")
-
-    def __init__(
-        self,
-        data: DenseArray[np.int64],
-        radii: Optional[FloatLikeSeq] = None,
-        name: Optional[str] = None,
-    ) -> None:
-        super().__init__(data, name)
-        self.radii = radii
 
 
-class LocalDistortion(Function):
-    data: DenseArray[np.float64]
+class NeighborCount(NeighborCountMixin, DenseArray):
+    pass
 
-    dtype = np.float64
-    radii = FloatTupleAttr(key="radii")
-    ds = IntTupleAttr(key="ds")
 
-    def __init__(
-        self,
-        data: DenseArray[np.float64],
-        radii: Optional[FloatLikeSeq] = None,
-        ds: Optional[IntLikeSeq] = None,
-        name: Optional[str] = None,
-    ) -> None:
-        super().__init__(data, name)
-        self.radii = radii
-        self.ds = ds
+class LocalDistortionMixin(FunctionMixin, ABC):
+    pass
+
+
+class LocalDistortion(LocalDistortionMixin, DenseArray):
+    pass

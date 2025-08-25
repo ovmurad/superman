@@ -1,125 +1,84 @@
-from typing import Optional
+from __future__ import annotations
 
-import numpy as np
+from abc import ABC
 
-from ...object.geometry_matrix import (
-    AffinityMatrix,
-    LaplacianMatrix,
-    LaplacianType,
-    MatrixArray,
-)
+from src.array import BaseArray, CsrArray, DenseArray
+from src.object import GeometryMatrixMixin
+
+
+class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
+    """
+    Mixin class that adds factory functionality to the LaplacianMatrix
+    hierarchy.
+
+    When instantiating `LaplacianMatrix` directly, this mixin intercepts
+    construction and returns either a `DenseLaplacianMatrix` or a
+    `CsrLaplacianMatrix` depending on the provided arguments.
+
+    This allows users to work with `LaplacianMatrix` as an abstract entry
+    point without explicitly choosing the dense or sparse representation.
+    """
+
+    def __new__(cls, *args, **kwargs):
+        """
+        The constructor returns an instance of either `DenseLaplacianMatrix` or `CsrLaplacianMatrix` depending on if constructed in `DenseArray` format or `CsrArray` format respectively.
+
+        :param args: Positional arguments forwarded to the chosen
+                     Laplacian matrix subclass.
+        :type args: Any
+        :param kwargs: Keyword arguments forwarded to the chosen
+                       Laplacian matrix subclass.
+                       If `shape` is present, a sparse CSR-backed
+                       matrix will be constructed.
+        :type kwargs: Any
+        :return: A new `DenseLaplacianMatrix` or `CsrLaplacianMatrix`
+                 instance.
+        :rtype: LaplacianMatrix
+        """
+        if cls is LaplacianMatrix:
+            if "shape" in kwargs:
+                return CsrLaplacianMatrix(*args, **kwargs)
+            return DenseLaplacianMatrix(*args, **kwargs)
+        return super().__new__(cls)
+
+
+class LaplacianMatrix(LaplacianMatrixMixin, BaseArray, ABC):
+    """
+    Abstract base class representing a Laplacian matrix.
+    """
+
+    pass
+
+
+class DenseLaplacianMatrix(LaplacianMatrix, DenseArray):
+    """
+    Implementation of a dense (NumPy-backed) Laplacian matrix.
+
+    This class provides a dense representation, offering fast
+    element-wise operations at the cost of memory usage.
+
+    Typically not instantiated directly; instead, construct a
+    `LaplacianMatrix` and let the `LaplacianMatrixMixin` factory
+    return a `DenseLaplacianMatrix` if constructed in a `DenseArray` format.
+    """
+
+    pass
+
+
+class CsrLaplacianMatrix(LaplacianMatrix, CsrArray):
+    """
+    Concrete implementation of a sparse (CSR-backed) Laplacian matrix.
+
+    This class provides a memory-efficient sparse representation,
+    especially useful for large, sparse graphs.
+
+    Typically not instantiated directly; instead, construct a
+    `LaplacianMatrix` and let the `LaplacianMatrixMixin` factory
+    return a `CsrLaplacianMatrix` if constructed in a `CsrArray` format.
+    """
+
+    pass
 
 
 def eps_adjustment(eps: float) -> float:
     return 4.0 / (eps**2)
-
-
-# TODO replace with proper method
-def _prepare_arr_degrees_and_out(
-    arr: MatrixArray[np.float64],
-    axis: int,
-    degree_exp: float,
-    keepdims: bool,
-    in_place: bool,
-) -> MatrixArray[np.float64]:
-
-    degrees = np.sum(arr, axis=axis, keepdims=keepdims) ** degree_exp
-    out = arr if in_place else None
-
-    return arr, degrees, out
-
-
-# TODO replace with proper method
-def _normalize_de(
-    arr: MatrixArray[np.float64],
-    axis: Optional[int] = 1,
-    degree_exp: float = 1.0,
-    sym_norm: bool = False,
-    in_place: bool = False,
-) -> MatrixArray[np.float64]:
-
-    arr, degrees, out = _prepare_arr_degrees_and_out(
-        arr, axis, degree_exp=degree_exp, keepdims=True, in_place=in_place
-    )
-
-    arr = np.divide(arr, degrees, out=out)
-    if sym_norm and axis is not None:
-        arr = np.divide(arr, degrees.T, out=arr)
-
-    return arr
-
-
-# TODO replace with proper method
-def _normalize_arr(
-    arr: MatrixArray[np.float64],
-    axis: Optional[int] = 1,
-    degree_exp: float = 1.0,
-    sym_norm: bool = False,
-    in_place: bool = False,
-) -> MatrixArray[np.float64]:
-    if arr.is_sparse:
-        raise NotImplementedError()
-    return _normalize_de(arr, axis, degree_exp, sym_norm, in_place)
-
-
-def laplacian(
-    aff_mat: AffinityMatrix,
-    lap_type: LaplacianType = "geometric",
-    diag_add: float = 1.0,
-    aff_minus_id: bool = True,
-    in_place: bool = False,
-) -> LaplacianMatrix:
-    """
-    Corresponds to laplacian.py in cryo_experiments. Note that eps will be store in aff_mat.metadata. If eps
-    is None, raise Error, so can ignore the branches in the previous code where eps is None. I don't think aff_minus_id
-    is ever set to False, so ignore that branch as well.
-    Papers:
-        - geometric and symmetric: https://www.sciencedirect.com/science/article/pii/S1063520306000546
-        - random walk: https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf
-
-    :param aff_mat:
-    :param lap_type:
-    :return:
-    """
-
-    eps = aff_mat.metadata.eps
-    if eps is None:
-        raise ValueError("Affinity matrix does not have a bandwidth `eps`!")
-
-    aff = aff_mat.data
-
-    match lap_type:
-        case "geometric":
-            aff = _normalize_arr(aff, sym_norm=True, in_place=in_place)
-            lap_arr: MatrixArray[np.float64] = _normalize_arr(
-                aff, sym_norm=False, in_place=True
-            )
-        case "random_walk":
-            lap_arr: MatrixArray[np.float64] = _normalize_arr(
-                aff, sym_norm=False, in_place=in_place
-            )
-        case "symmetric":
-            lap_arr: MatrixArray[np.float64] = _normalize_arr(
-                aff, sym_norm=True, in_place=in_place, degree_exp=0.5
-            )
-        case _:
-            raise ValueError(f"Unknown laplacian type: {lap_type}!")
-
-    if not aff_minus_id:
-        lap_arr *= -1.0
-    else:
-        diag_add *= -1.0
-
-    np.fill_diagonal(lap_arr, np.diag(lap_arr) + diag_add)
-
-    lap_arr *= eps_adjustment(eps)
-
-    return LaplacianMatrix(
-        lap_arr,
-        aff_mat.metadata.dist_type,
-        aff_mat.metadata.aff_type,
-        lap_type,
-        aff_mat.metadata.radius,
-        eps,
-        aff_mat.metadata.name,
-    )

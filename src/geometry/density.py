@@ -4,7 +4,7 @@ import numpy as np
 
 from ..array.base import DenseArray
 from ..object.function import Degree, DegreeType
-from ..object.geometry_matrix import AdjacencyMatrix, AffinityMatrix, DistanceType
+from ..object.geometry_matrix_mixin import AdjacencyMatrix, AffinityMatrix, DistanceType
 
 NeighborMatrix = Union[AffinityMatrix, AdjacencyMatrix]
 

@@ -5,13 +5,10 @@ from typing import Dict, Tuple
 import numpy as np
 from scipy.sparse import csr_array
 from src.array.dense import DenseArray
-from src.object.geometry_matrix import (
-    AffinityMatrix,
-    DistanceMatrix,
-    LaplacianMatrix,
-    MatrixArray,
-)
-from src.object.points import Points
+from src.geometry.matrix.affinity import AffinityMatrix
+from src.geometry.matrix.distance import DistanceMatrix
+from src.geometry.matrix.laplacian import LaplacianMatrix
+from src.geometry.points import Points
 
 from tests.test_array.dummy_array import DummyArray
 
@@ -19,14 +16,13 @@ from tests.test_array.dummy_array import DummyArray
 def load_test_npy():
     data = defaultdict(dict)
 
-    for root, _, files in os.walk("./tests/data"):
+    for root, _, files in os.walk("./tests/test_data"):
         for f in files:
             if f.endswith(".npy") and "-" in f:
                 prefix = f.split("-")[0]
                 if f.startswith(prefix + "-"):
                     file_key = f[f.find("-") + 1 : f.find(".npy")]
                     full_path = os.path.join(root, f)
-                    print(np.load(full_path, allow_pickle=True))
                     data[prefix][file_key] = np.load(full_path, allow_pickle=True)
     return data
 
@@ -37,9 +33,9 @@ affinity_sol: Dict[str, AffinityMatrix] = {
     key: AffinityMatrix(arr, eps=0.71) for key, arr in npy_dict["affinity_sol"].items()
 }
 adj_test: DistanceMatrix = DistanceMatrix(
-    np.array([[0, 0, 3.12], [2.0, 0, 1], [0, 5, 0]]), "euclidean"
+    np.array([[0, 0, 3.12], [2.0, 0, 1], [0, 5, 0]]), dist_type="euclidean"
 )
-adj_sol: MatrixArray[np.float64] = np.array(
+adj_sol: DenseArray[np.float64] = DenseArray(
     [[False, False, True], [True, False, True], [False, True, False]]
 )
 single_dist_sol: Dict[str, DistanceMatrix] = {
@@ -49,16 +45,16 @@ double_dist_sol: Dict[str, DistanceMatrix] = {
     key: DistanceMatrix(arr) for key, arr in npy_dict["double_dist_sol"].items()
 }
 threshold_sol_radius: Dict[str, Dict[str, DistanceMatrix]] = {
-    key: {k: DistanceMatrix(d, "euclidean") for k, d in dict.item().items()}
+    key: {k: DistanceMatrix(d, dist_type="euclidean") for k, d in dict.item().items()}
     for key, dict in npy_dict["threshold_sol"].items()
 }
-threshold_iter_sol: Dict[str, MatrixArray[np.float64]] = {
+threshold_iter_sol: Dict[str, DenseArray[np.float64]] = {
     key: arrs for key, arrs in npy_dict["threshold_iter_sol"].items()
 }
 sym_lap_sol: Dict[str, LaplacianMatrix] = {
     key: LaplacianMatrix(arr) for key, arr in npy_dict["symmetric_lap_sol"].items()
 }
-dense_square_float: MatrixArray[np.float64] = np.random.rand(30, 30)
+dense_square_float: DenseArray[np.float64] = DenseArray(np.random.rand(30, 30))
 
 
 test_rtol = 1e-5

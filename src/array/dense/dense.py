@@ -12,6 +12,8 @@ from typing import (
     Sequence,
 )
 
+import numpy as np
+
 from ...storage import Data, Storage
 from ..base import BaseArray, unwrap, unwrap_args, unwrap_kwargs
 
@@ -67,7 +69,13 @@ class DenseArray(Generic[Data], BaseArray[Data]):
     # Initialization
     # ======================================================================
     def __init__(
-        self, arr_like: Any, /, *, dtype: Optional[type] = None, copy: bool = False
+        self,
+        arr_like: Any,
+        /,
+        *,
+        dtype: Optional[type] = None,
+        copy: bool = False,
+        **kwargs,
     ) -> None:
         self._values = Storage.as_values(unwrap(arr_like), dtype=dtype, copy=copy)
 
@@ -124,19 +132,27 @@ class DenseArray(Generic[Data], BaseArray[Data]):
     # Arithmetic
     # ----------------------------------------------------------------------
     __add__ = _dense_op(Storage.__add__, in_place=False)
+    __radd__ = _dense_op(Storage.__radd__, in_place=False)
     __iadd__ = _dense_op(Storage.__iadd__, in_place=True)
     __sub__ = _dense_op(Storage.__sub__, in_place=False)
+    __rsub__ = _dense_op(Storage.__rsub__, in_place=False)
     __isub__ = _dense_op(Storage.__isub__, in_place=True)
     __mul__ = _dense_op(Storage.__mul__, in_place=False)
+    __rmul__ = _dense_op(Storage.__rmul__, in_place=False)
     __imul__ = _dense_op(Storage.__imul__, in_place=True)
     __truediv__ = _dense_op(Storage.__truediv__, in_place=False)
+    __rtruediv__ = _dense_op(Storage.__rtruediv__, in_place=False)
     __itruediv__ = _dense_op(Storage.__itruediv__, in_place=True)
     __mod__ = _dense_op(Storage.__mod__, in_place=False)
+    __rmod__ = _dense_op(Storage.__rmod__, in_place=False)
     __imod__ = _dense_op(Storage.__imod__, in_place=True)
     __floordiv__ = _dense_op(Storage.__floordiv__, in_place=False)
+    __rfloordiv__ = _dense_op(Storage.__rfloordiv__, in_place=False)
     __ifloordiv__ = _dense_op(Storage.__ifloordiv__, in_place=True)
     __pow__ = _dense_op(Storage.__pow__, in_place=False)
+    __rpow__ = _dense_op(Storage.__rpow__, in_place=False)
     __ipow__ = _dense_op(Storage.__ipow__, in_place=True)
+    __abs__ = _dense_op(Storage.__abs__, in_place=False)
 
     # ----------------------------------------------------------------------
     # Logic & Comparison
@@ -169,6 +185,8 @@ class DenseArray(Generic[Data], BaseArray[Data]):
     expand_dims = _dense_op(Storage.expand_dims, in_place=False)
     squeeze = _dense_op(Storage.squeeze, in_place=False)
     broadcast_to = _dense_op(Storage.broadcast_to, in_place=False)
+    diagonal = _dense_op(Storage.diagonal, in_place=False)
+    fill_diagonal = _dense_op(Storage.fill_diagonal, in_place=True)
 
     @staticmethod
     def concat(
@@ -195,6 +213,9 @@ class DenseArray(Generic[Data], BaseArray[Data]):
         raise NotImplementedError(
             "Cannot not transform a DenseArray to CsrArray directly!"
         )
+
+    def as_nparray(self):
+        return np.array(self.values.data)
 
     # ======================================================================
     # Elementwise math functions (ufuncs)

@@ -13,6 +13,8 @@ from typing import (
     Sequence,
 )
 
+import numpy as np
+
 from ..storage import Data, Storage
 
 if TYPE_CHECKING:
@@ -122,10 +124,16 @@ class BaseArray(Generic[Data], ABC):
     def __add__(self, other: Any) -> BaseArray[Data]: ...
 
     @abstractmethod
+    def __radd__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
     def __iadd__(self, other: Any) -> Self: ...
 
     @abstractmethod
     def __sub__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __rsub__(self, other: Any) -> BaseArray[Data]: ...
 
     @abstractmethod
     def __isub__(self, other: Any) -> Self: ...
@@ -134,10 +142,16 @@ class BaseArray(Generic[Data], ABC):
     def __mul__(self, other: Any) -> BaseArray[Data]: ...
 
     @abstractmethod
+    def __rmul__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
     def __imul__(self, other: Any) -> Self: ...
 
     @abstractmethod
     def __truediv__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
+    def __rtruediv__(self, other: Any) -> BaseArray[Data]: ...
 
     @abstractmethod
     def __itruediv__(self, other: Any) -> Self: ...
@@ -152,13 +166,22 @@ class BaseArray(Generic[Data], ABC):
     def __floordiv__(self, other: Any) -> BaseArray[Data]: ...
 
     @abstractmethod
+    def __rfloordiv__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
     def __ifloordiv__(self, other: Any) -> Self: ...
 
     @abstractmethod
     def __pow__(self, other: Any) -> BaseArray[Data]: ...
 
     @abstractmethod
+    def __rpow__(self, other: Any) -> BaseArray[Data]: ...
+
+    @abstractmethod
     def __ipow__(self, other: Any) -> Self: ...
+
+    @abstractmethod
+    def __abs__(self, other: Any) -> BaseArray[Data]: ...
 
     # ----------------------------------------------------------------------
     # Logic & Comparison
@@ -212,6 +235,12 @@ class BaseArray(Generic[Data], ABC):
     @abstractmethod
     def broadcast_to(self, /, *, shape: int | Sequence[int]) -> Self: ...
 
+    @abstractmethod
+    def diagonal(self) -> Self: ...
+
+    @abstractmethod
+    def fill_diagonal(self, arr_like: Any) -> Self: ...
+
     @classmethod
     @abstractmethod
     def concat(cls, arrs: Sequence[Self], /, *, axis: int = 0) -> Self: ...
@@ -231,6 +260,9 @@ class BaseArray(Generic[Data], ABC):
 
     @abstractmethod
     def as_csr(self, *args: Any, **kwargs: Any) -> CsrArray[Data]: ...
+
+    @abstractmethod
+    def as_nparray(self, *args: Any, **kwargs: Any) -> np.ndarray[Data]: ...
 
     # ======================================================================
     # Elementwise math functions (ufuncs)
