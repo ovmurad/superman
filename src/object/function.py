@@ -8,7 +8,6 @@ from src.object.metadata import FunctionMetadata
 from src.object.object_mixin import ObjectMixin
 
 from ..array.dense import DenseArray
-from .geometry_matrix_mixin import DistanceType
 
 
 class FunctionMixin(ObjectMixin, ABC):
@@ -93,9 +92,6 @@ class KNNDistance(Function):
 
 class NeighborCount(FunctionMixin, DenseArray):
     dtype = np.int64
-
-    dtype = np.int64
-    radii = FloatTupleAttr(key="radii")
 
     def __init__(
         self,

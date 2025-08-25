@@ -31,7 +31,7 @@ class PointsMixin(ObjectMixin, ABC):
         :param args: Positional arguments forwarded to the base class.
         :param metadata: Keyword arguments representing metadata fields.
         """
-        super().__init__(*args, **metadata)
+        super().__init__(*args, cls=GeometryMetadata, **metadata)
 
     @abstractmethod
     def distance(
