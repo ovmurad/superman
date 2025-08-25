@@ -18,7 +18,30 @@ from ...object.geometry_matrix import (
 
 
 class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
+    """
+    Mixin class that adds factory functionality to the AffinityMatrix
+    hierarchy.
+
+    This allows users to work with `AffinityMatrix` as an abstract
+    entry point without needing to explicitly choose between dense or
+    sparse representations.
+    """
     def __new__(cls, *args, **kwargs):
+        """
+        Factory constructor for AffinityMatrix subclasses.
+
+        The constructor returns an instance of either `DenseAffinityMatrix` or `CsrAffinityMatrix` if constructed in `DenseArray` format or `CsrArray` format respectively.
+
+        :param args: Positional arguments forwarded to the chosen
+                     affinity matrix subclass.
+        :type args: Any
+        :param kwargs: Keyword arguments forwarded to the chosen
+                       affinity matrix subclass.
+        :type kwargs: Any
+        :return: A new `DenseAffinityMatrix` or `CsrAffinityMatrix`
+                 instance.
+        :rtype: AffinityMatrix
+        """
         if cls is AffinityMatrix:
             if 'shape' in kwargs:
                 return CsrAffinityMatrix(*args, **kwargs)
@@ -35,16 +58,25 @@ class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
         in_place: bool = False,
     ) -> LaplacianMatrix:
         """
-        Corresponds to laplacian.py in cryo_experiments. Note that eps will be store in aff_mat.metadata. If eps
-        is None, raise Error, so can ignore the branches in the previous code where eps is None. I don't think aff_minus_id
-        is ever set to False, so ignore that branch as well.
+        Construct a graph Laplacian from an affinity matrix using the specified type. Uses aff's eps metadata for scaling.
         Papers:
             - geometric and symmetric: https://www.sciencedirect.com/science/article/pii/S1063520306000546
             - random walk: https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf
 
-        :param aff_mat:
-        :param lap_type:
-        :return:
+
+        :param affs: Affinity matrix.
+        :param eps: Optional scaling parameter. If provided, the resulting Laplacian is multiplied by 4 / eps^2. (default: None).
+        :param lap_type: Type of Laplacian to compute. (default: "geometric").
+                        - "geometric": normalized symmetric followed by random-walk-like normalization.
+                        - "random_walk": standard random walk Laplacian.
+                        - "symmetric": symmetric normalized Laplacian.
+        :param diag_add: Value to add to the diagonal after constructing the Laplacian.
+                        If `aff_minus_id` is True, this value is negated before being added.
+        :param aff_minus_id: Whether to subtract the identity matrix from the affinity matrix. (default: True)
+                            If True, computes `I - normalized_affs`. If False, negates the Laplacian directly.
+        :param in_place: Whether to modify the input affinity matrix in place during normalization. (default: False).
+
+        :return: The constructed Laplacian matrix.
         """
 
         eps = aff.metadata.eps
@@ -80,10 +112,26 @@ class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
 
 
 class DenseAffinityMatrix(AffinityMatrix, DenseArray):
-    def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
-        return self != 0
+    """
+    Implementation of a dense (NumPy-backed) affinity matrix.
+
+    This class represents an affinity matrix stored in dense format,
+    providing fast element-wise operations at the cost of memory usage.
+
+    Typically not instantiated directly: instead, construct an
+    `AffinityMatrix` in `DenseArray` format which will return an instance.
+    """
+    pass
 
 
 class CsrAffinityMatrix(AffinityMatrix, CsrArray):
-    def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
-        raise NotImplementedError()
+    """
+    Implementation of a sparse (Csr-backed) affinity matrix.
+
+    This class represents an affinity matrix stored in sparse format,
+    providing fast element-wise operations at the cost of memory usage.
+
+    Typically not instantiated directly: instead, construct an
+    `AffinityMatrix` in `CsrArray` format which will return an instance.
+    """
+    pass

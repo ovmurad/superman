@@ -13,12 +13,24 @@ from ..array.dense import DenseArray
 
 
 class PointsMixin(ObjectMixin, ABC):
+    """
+    Mixin class for point cloud objects.
+
+    Adds fixed dimensionality and dtype constraints, metadata handling,
+    and distance computation functionality to point cloud classes.
+    """
     metadata: Metadata
 
     fixed_ndim = 2
     fixed_dtype = np.float64
 
     def __init__(self, *args, **metadata) -> None:
+        """
+        Initialize a Points object with optional metadata.
+
+        :param args: Positional arguments forwarded to the base class.
+        :param metadata: Keyword arguments representing metadata fields.
+        """
         super().__init__(*args, **metadata)
 
     
@@ -28,14 +40,38 @@ class PointsMixin(ObjectMixin, ABC):
         y_pts: Optional[Points] = None,
         dist_type: DistanceType = "euclidean",
     ) -> DistanceMatrix:
+        """
+        Compute a distance matrix between this point set and another set of points.
+
+        :param y_pts: Optional second point set to compute distances to. If None,
+                      compute pairwise distances within the current point set. (default: None)
+        :type y_pts: Optional[Points]
+        :param dist_type: Type of distance metric to compute. Options include
+                          "euclidean", "sqeuclidean", "cityblock", etc. (default: "euclidean")
+        :type dist_type: DistanceType
+        :return: Distance matrix representing pairwise distances.
+        :rtype: DistanceMatrix
+        """
         pass
 
     @property
     def npts(self) -> int:
+        """
+        Number of points in the point set.
+
+        :return: Number of points.
+        :rtype: int
+        """
         return self.shape[0]
 
     @property
     def nfeats(self) -> int:
+        """
+        Number of features (dimensions) per point.
+
+        :return: Number of features per point.
+        :rtype: int
+        """
         return self.shape[1]
 
 
@@ -45,6 +81,21 @@ class Points(PointsMixin, DenseArray):
         y_pts: Optional[Points] = None,
         dist_type: DistanceType = "euclidean",
     ) -> DistanceMatrix:
+        """
+        Compute the pairwise distance matrix between points.
+
+        If `y_pts` is provided, computes distances between `self` and `y_pts`.
+        Otherwise, computes distances among points in `self`.
+
+        :param y_pts: Another `Points` object to compute distances to. If None, 
+                    distances are computed within `self`.
+        :type y_pts: Optional[Points]
+        :param dist_type: The type of distance metric to use ("euclidean", "cityblock", "sqeuclidian"). Name of metric is stored in metadata. (default: "euclidian")
+        :type dist_type: DistanceType
+        :return: A `DistanceMatrix` containing pairwise distances. The matrix name
+                is constructed from the metadata of the points involved.
+        :rtype: DistanceMatrix
+        """
 
         x_pts_name = self.metadata.name
         y_pts_name = None if y_pts is None else y_pts.metadata.name
