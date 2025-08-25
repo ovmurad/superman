@@ -9,6 +9,7 @@ from .metadata import (
     LaplacianType,
 )
 from .object_mixin import ObjectMixin
+from .function import FunctionMixin
 
 __all__ = [
     "GeometryMatrixMixin",
@@ -20,4 +21,5 @@ __all__ = [
     "DISTANCE_TYPES",
     "AFFINITY_TYPES",
     "LAPLACIAN_TYPES",
+    "FunctionMixin",
 ]

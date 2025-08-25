@@ -16,7 +16,7 @@ from tests.test_array.dummy_array import DummyArray
 def load_test_npy():
     data = defaultdict(dict)
 
-    for root, _, files in os.walk("./tests/data"):
+    for root, _, files in os.walk("./tests/test_data"):
         for f in files:
             if f.endswith(".npy") and "-" in f:
                 prefix = f.split("-")[0]

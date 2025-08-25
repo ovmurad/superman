@@ -127,7 +127,7 @@ class Embedding(Points):
         return self.nfeats
 
 
-class Coordinates(Points):
+class Coordinates(PointsMixin, FunctionMixin, DenseArray):
 
     @property
     def d(self) -> int:

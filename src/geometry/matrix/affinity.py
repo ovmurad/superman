@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC
 
 from src.array import BaseArray, CsrArray, DenseArray
-from src.array.linalg.normalize import normalize
+from src.geometry import normalize
 from src.geometry.matrix.laplacian import LaplacianMatrix, eps_adjustment
 from src.object import GeometryMatrixMixin, LaplacianType
 
