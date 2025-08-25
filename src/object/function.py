@@ -1,24 +1,24 @@
 from abc import ABC
 from math import prod
-from typing import FrozenSet, Literal, Optional
+from typing import Optional
 
 import numpy as np
 
+from src.object.metadata import FunctionMetadata
 from src.object.object_mixin import ObjectMixin
 
 from ..array.dense import DenseArray
 from .geometry_matrix_mixin import DistanceType
 
-DegreeType = Literal["adjacency", "affinity"]
-DEGREE_TYPES: FrozenSet[DegreeType] = frozenset(("adjacency", "affinity"))
-
 
 class FunctionMixin(ObjectMixin, ABC):
     ndim = 2
     dtype = np.float64
+    
+    metadata: FunctionMetadata
 
     def __init__(self, **metadata) -> None:
-        super().__init__(**metadata)
+        super().__init__(cls=FunctionMetadata, **metadata)
 
     @property
     def npts(self) -> int:
@@ -91,8 +91,8 @@ class KNNDistance(Function):
         self.ks = ks
 
 
-class NeighborCount(Function):
-    data: DenseArray[np.int64]
+class NeighborCount(FunctionMixin, DenseArray):
+    dtype = np.int64
 
     dtype = np.int64
     radii = FloatTupleAttr(key="radii")

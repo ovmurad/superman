@@ -1,5 +1,5 @@
 from .matrix import AdjacencyMatrix, AffinityMatrix, DistanceMatrix, LaplacianMatrix
-from .points import Points, Embedding, Data, Coordinates
+from .points import Coordinates, Data, Embedding, Points
 
 __all__ = [
     "AdjacencyMatrix",
