@@ -26,7 +26,7 @@ def test__laplacian__output(key: str, type: str):
 
 @pytest.mark.parametrize("type", get_args(LaplacianType))
 def test__laplacian__in_place_behavior(type: str):
-    aff = AffinityMatrix(dense_square_float, eps=0.71)
+    aff = AffinityMatrix(dense_square_float.copy(), eps=0.71)
     dummy_aff = AffinityMatrix(dense_square_float.copy(), eps=0.71)
     dummy_lap = dummy_aff.laplacian(type, in_place=False)
     assert np.allclose(

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC
 
-from src.array.base import BaseArray, CsrArray, DenseArray
+from src.array import BaseArray, CsrArray, DenseArray
 from src.object import GeometryMatrixMixin
 
 

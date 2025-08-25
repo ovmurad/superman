@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+from src.geometry.matrix.distance import DistanceMatrix
 from tests.test_utils import (
     adj_sol,
     adj_test,
@@ -31,7 +32,7 @@ def test__affinity__single_points_no_radius_output(key: str):
 def test__affinity__single_points_in_place_zero(key: str):
     if key in affinity_sol.keys():
         for radius in threshold_sol_radius[key].keys():
-            dummy_dist = threshold_sol_radius[key][radius]
+            dummy_dist = DistanceMatrix(threshold_sol_radius[key][radius].copy(), metadata=threshold_sol_radius[key][radius].metadata)
             dummy_dist_threshold = dummy_dist.affinity(eps=radius / 3, in_place=False)
             assert not np.shares_memory(
                 dummy_dist.as_nparray(), dummy_dist_threshold.as_nparray()

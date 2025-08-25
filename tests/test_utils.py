@@ -8,7 +8,7 @@ from src.array.dense import DenseArray
 from src.geometry.matrix.affinity import AffinityMatrix
 from src.geometry.matrix.distance import DistanceMatrix
 from src.geometry.matrix.laplacian import LaplacianMatrix
-from src.object.points import Points
+from src.geometry.points import Points
 
 from tests.test_array.dummy_array import DummyArray
 

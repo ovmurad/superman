@@ -6,7 +6,7 @@ from typing import Optional
 import numpy as np
 
 from src.array import DenseArray
-from src.geometry.matrix.distance import DistanceMatrix
+from src.geometry.matrix import DistanceMatrix
 from src.object.metadata import DistanceType, Metadata
 from src.object.object_mixin import ObjectMixin
 
@@ -18,7 +18,6 @@ class PointsMixin(ObjectMixin, ABC):
     Adds fixed dimensionality and dtype constraints, metadata handling,
     and distance computation functionality to point cloud classes.
     """
-
     metadata: Metadata
 
     fixed_ndim = 2
@@ -33,6 +32,7 @@ class PointsMixin(ObjectMixin, ABC):
         """
         super().__init__(*args, **metadata)
 
+    
     @abstractmethod
     def distance(
         self,
@@ -86,7 +86,7 @@ class Points(PointsMixin, DenseArray):
         If `y_pts` is provided, computes distances between `self` and `y_pts`.
         Otherwise, computes distances among points in `self`.
 
-        :param y_pts: Another `Points` object to compute distances to. If None,
+        :param y_pts: Another `Points` object to compute distances to. If None, 
                     distances are computed within `self`.
         :type y_pts: Optional[Points]
         :param dist_type: The type of distance metric to use ("euclidean", "cityblock", "sqeuclidian"). Name of metric is stored in metadata. (default: "euclidian")
@@ -104,11 +104,7 @@ class Points(PointsMixin, DenseArray):
             else x_pts_name + "_" + y_pts_name
         )
 
-        dist_mat = (
-            DenseArray.distance(self, self, dist_type=dist_type)
-            if y_pts is None
-            else DenseArray.distance(self, y_pts, dist_type=dist_type)
-        )
+        dist_mat = DenseArray.distance(self, self, dist_type=dist_type) if y_pts is None else DenseArray.distance(self, y_pts, dist_type=dist_type)
 
         return DistanceMatrix(dist_mat, dist_type=dist_type, name=dist_name)
 

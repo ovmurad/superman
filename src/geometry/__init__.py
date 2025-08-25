@@ -1,10 +1,13 @@
-from .density import degree
 from .matrix import AdjacencyMatrix, AffinityMatrix, DistanceMatrix, LaplacianMatrix
+from .points import Points, Embedding, Data, Coordinates
 
 __all__ = [
     "AdjacencyMatrix",
     "AffinityMatrix",
     "DistanceMatrix",
     "LaplacianMatrix",
-    "degree",
+    "Points",
+    "Embedding",
+    "Data",
+    "Coordinates",
 ]

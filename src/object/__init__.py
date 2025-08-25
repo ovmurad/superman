@@ -9,15 +9,10 @@ from .metadata import (
     Metadata,
 )
 from .object_mixin import ObjectMixin
-from .points import Coordinates, Data, Embedding, Points
 
 __all__ = [
     "GeometryMatrixMixin",
     "ObjectMixin",
-    "Points",
-    "Data",
-    "Embedding",
-    "Coordinates",
     "Metadata",
     "DistanceType",
     "AffinityType",
