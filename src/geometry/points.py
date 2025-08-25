@@ -7,7 +7,7 @@ import numpy as np
 
 from src.array import DenseArray
 from src.geometry.matrix import DistanceMatrix
-from src.object.metadata import DistanceType, Metadata
+from src.object.metadata import DistanceType, GeometryMetadata
 from src.object.object_mixin import ObjectMixin
 
 
@@ -19,7 +19,7 @@ class PointsMixin(ObjectMixin, ABC):
     and distance computation functionality to point cloud classes.
     """
 
-    metadata: Metadata
+    metadata: GeometryMetadata
 
     fixed_ndim = 2
     fixed_dtype = np.float64
@@ -31,7 +31,7 @@ class PointsMixin(ObjectMixin, ABC):
         :param args: Positional arguments forwarded to the base class.
         :param metadata: Keyword arguments representing metadata fields.
         """
-        super().__init__(*args, **metadata)
+        super().__init__(*args, cls=GeometryMetadata, **metadata)
 
     @abstractmethod
     def distance(

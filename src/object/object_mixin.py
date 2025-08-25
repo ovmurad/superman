@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from abc import ABC
-from typing import ClassVar
+from abc import ABC, abstractmethod
+from typing import Any, Callable, ClassVar, Type, TypeVar, get_type_hints
 
 import attr
 import numpy as np
@@ -9,6 +9,8 @@ import numpy as np
 from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
+
+T = TypeVar("T", bound=Metadata)
 
 class ObjectMixin(BaseArray, ABC):
     """
@@ -21,7 +23,7 @@ class ObjectMixin(BaseArray, ABC):
     fixed_ndim: ClassVar[int]
     fixed_dtype: ClassVar[np.dtype]
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args, cls: Type[T], **kwargs) -> None:
         """
         Initialize an object with metadata and enforce
         fixed dimensionality and dtype.
@@ -48,11 +50,15 @@ class ObjectMixin(BaseArray, ABC):
                 f"{self.__class__.__name__} object has `dtype`={self.dtype}, but expected {self.fixed_dtype}!"
             )
 
+        self._init_metadata(cls, args, kwargs)
+
+    def _init_metadata(self, cls: Type[T], args: Any, kwargs: Any):
         metadata_args = tuple(
-            kwargs[f.name] if f.name in kwargs else None for f in attr.fields(Metadata)
+            kwargs[f.name] if f.name in kwargs else None
+            for f in attr.fields(cls)
         )
 
-        self.metadata = Metadata(*metadata_args)
+        self.metadata = cls(*metadata_args)
 
         if "metadata" in kwargs:
             self.metadata = self.metadata.update_with(kwargs["metadata"])
