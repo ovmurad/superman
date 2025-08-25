@@ -1,12 +1,11 @@
 from typing import Optional, TypeVar
 
 import numpy as np
-
 from src.array.base import BaseArray
-from src.object.object_mixin import ObjectMixin
-
+from src.object import ObjectMixin
 
 T = TypeVar("T")
+
 
 def normalize(
     arr: BaseArray[np.float64],

@@ -2,8 +2,8 @@ from typing import Sequence
 
 import numpy as np
 import pytest
-from src.array.dense.dense import DenseArray
-from src.geometry.matrix.distance import DistanceMatrix
+from src.array import DenseArray
+from src.geometry import DistanceMatrix
 from tests.test_utils import (
     dist_points,
     double_dist_sol,
@@ -65,10 +65,15 @@ def test__threshold_distance__in_place_behavior(rand_arr: DenseArray[np.float64]
     arr_mean = rand_arr.mean().as_nparray()
     dummy_dist = DistanceMatrix(rand_arr)
     dummy_dist_threshold = dummy_dist.threshold(arr_mean)
-    assert not np.shares_memory(dummy_dist.as_nparray(), dummy_dist_threshold.as_nparray())
+    assert not np.shares_memory(
+        dummy_dist.as_nparray(), dummy_dist_threshold.as_nparray()
+    )
     dummy_dist.threshold(arr_mean, True)
     assert np.allclose(
-        dummy_dist.as_nparray(), dummy_dist_threshold.as_nparray(), rtol=test_rtol, atol=test_atol
+        dummy_dist.as_nparray(),
+        dummy_dist_threshold.as_nparray(),
+        rtol=test_rtol,
+        atol=test_atol,
     )
 
 

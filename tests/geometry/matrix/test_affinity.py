@@ -20,7 +20,10 @@ def test__affinity__single_points_no_radius_output(key: str):
         for radius in threshold_sol_radius[key].keys():
             aff = threshold_sol_radius[key][radius].affinity(eps=radius / 3)
             assert np.allclose(
-                aff.as_nparray(), affinity_sol[key].as_nparray(), rtol=test_rtol, atol=test_atol
+                aff.as_nparray(),
+                affinity_sol[key].as_nparray(),
+                rtol=test_rtol,
+                atol=test_atol,
             )
 
 
@@ -30,7 +33,9 @@ def test__affinity__single_points_in_place_zero(key: str):
         for radius in threshold_sol_radius[key].keys():
             dummy_dist = threshold_sol_radius[key][radius]
             dummy_dist_threshold = dummy_dist.affinity(eps=radius / 3, in_place=False)
-            assert not np.shares_memory(dummy_dist.as_nparray(), dummy_dist_threshold.as_nparray())
+            assert not np.shares_memory(
+                dummy_dist.as_nparray(), dummy_dist_threshold.as_nparray()
+            )
             dummy_dist.affinity(eps=radius / 3, in_place=True)
             assert np.allclose(
                 dummy_dist.as_nparray(),

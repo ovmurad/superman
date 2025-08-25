@@ -7,21 +7,14 @@ import numpy as np
 from src.object.object_mixin import ObjectMixin
 
 from ..array.dense import DenseArray
-from .geometry_matrix import DISTANCE_TYPES, DistanceType
-from .metadata import (
-    FloatLikeSeq,
-    FloatTupleAttr,
-    IntLikeSeq,
-    IntTupleAttr,
-    LiteralAttr,
-)
+from .geometry_matrix_mixin import DistanceType
 
 DegreeType = Literal["adjacency", "affinity"]
 DEGREE_TYPES: FrozenSet[DegreeType] = frozenset(("adjacency", "affinity"))
 
 
 class FunctionMixin(ObjectMixin, ABC):
-    ndim = 2  
+    ndim = 2
     dtype = np.float64
 
     def __init__(self, **metadata) -> None:
@@ -33,7 +26,7 @@ class FunctionMixin(ObjectMixin, ABC):
 
     @property
     def nfuncs(self) -> int:
-        return prod(self.shape[1:])  
+        return prod(self.shape[1:])
 
 
 class CoordinateMixin(FunctionMixin, ABC):

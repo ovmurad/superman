@@ -5,7 +5,6 @@ from typing import Dict, Tuple
 import numpy as np
 from scipy.sparse import csr_array
 from src.array.dense import DenseArray
-
 from src.geometry.matrix.affinity import AffinityMatrix
 from src.geometry.matrix.distance import DistanceMatrix
 from src.geometry.matrix.laplacian import LaplacianMatrix

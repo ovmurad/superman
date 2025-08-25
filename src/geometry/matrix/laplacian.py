@@ -1,20 +1,9 @@
 from __future__ import annotations
-from typing import Optional, Type, TypeVar
 
-import numpy as np
+from abc import ABC
 
-from src.array.linalg import normalize
-from src.object.object_mixin import ObjectMixin
-
-from ...object.geometry_matrix import LaplacianType
-
-from abc import ABC, abstractmethod
-
-import numpy as np
-from src.array.base import BaseArray
-from src.array.dense.dense import DenseArray
-from src.array.sparse.csr import CsrArray
-from src.object.geometry_matrix import GeometryMatrixMixin
+from src.array.base import BaseArray, CsrArray, DenseArray
+from src.object import GeometryMatrixMixin
 
 
 class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
@@ -29,6 +18,7 @@ class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
     This allows users to work with `LaplacianMatrix` as an abstract entry
     point without explicitly choosing the dense or sparse representation.
     """
+
     def __new__(cls, *args, **kwargs):
         """
         The constructor returns an instance of either `DenseLaplacianMatrix` or `CsrLaplacianMatrix` depending on if constructed in `DenseArray` format or `CsrArray` format respectively.
@@ -46,7 +36,7 @@ class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
         :rtype: LaplacianMatrix
         """
         if cls is LaplacianMatrix:
-            if 'shape' in kwargs:
+            if "shape" in kwargs:
                 return CsrLaplacianMatrix(*args, **kwargs)
             return DenseLaplacianMatrix(*args, **kwargs)
         return super().__new__(cls)
@@ -56,6 +46,7 @@ class LaplacianMatrix(LaplacianMatrixMixin, BaseArray, ABC):
     """
     Abstract base class representing a Laplacian matrix.
     """
+
     pass
 
 
@@ -70,6 +61,7 @@ class DenseLaplacianMatrix(LaplacianMatrix, DenseArray):
     `LaplacianMatrix` and let the `LaplacianMatrixMixin` factory
     return a `DenseLaplacianMatrix` if constructed in a `DenseArray` format.
     """
+
     pass
 
 
@@ -84,6 +76,7 @@ class CsrLaplacianMatrix(LaplacianMatrix, CsrArray):
     `LaplacianMatrix` and let the `LaplacianMatrixMixin` factory
     return a `CsrLaplacianMatrix` if constructed in a `CsrArray` format.
     """
+
     pass
 
 

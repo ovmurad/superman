@@ -1,20 +1,11 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import Optional
 
-import numpy as np
+from abc import ABC
 
-from src.array.base import BaseArray
-from src.array.dense.dense import DenseArray
+from src.array import BaseArray, CsrArray, DenseArray
 from src.array.linalg.normalize import normalize
-from src.array.sparse.csr import CsrArray
-from src.geometry.matrix.adjacency import AdjacencyMatrix
 from src.geometry.matrix.laplacian import LaplacianMatrix, eps_adjustment
-from src.object.metadata import LaplacianType
-
-from ...object.geometry_matrix import (
-    GeometryMatrixMixin,
-)
+from src.object import GeometryMatrixMixin, LaplacianType
 
 
 class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
@@ -26,6 +17,7 @@ class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
     entry point without needing to explicitly choose between dense or
     sparse representations.
     """
+
     def __new__(cls, *args, **kwargs):
         """
         Factory constructor for AffinityMatrix subclasses.
@@ -43,7 +35,7 @@ class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
         :rtype: AffinityMatrix
         """
         if cls is AffinityMatrix:
-            if 'shape' in kwargs:
+            if "shape" in kwargs:
                 return CsrAffinityMatrix(*args, **kwargs)
             return DenseAffinityMatrix(*args, **kwargs)
         return super().__new__(cls)
@@ -86,16 +78,19 @@ class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
         match lap_type:
             case "geometric":
                 aff = normalize(aff, sym_norm=True, in_place=in_place)
-                lap: LaplacianMatrix = LaplacianMatrix(normalize(
-                    aff, sym_norm=False, in_place=True), lap_type = "geometric")
+                lap: LaplacianMatrix = LaplacianMatrix(
+                    normalize(aff, sym_norm=False, in_place=True), lap_type="geometric"
+                )
             case "random_walk":
-                lap: LaplacianMatrix =  LaplacianMatrix(normalize(
-                    aff, sym_norm=False, in_place=in_place
-                ), lap_type = "random_walk")
+                lap: LaplacianMatrix = LaplacianMatrix(
+                    normalize(aff, sym_norm=False, in_place=in_place),
+                    lap_type="random_walk",
+                )
             case "symmetric":
-                lap: LaplacianMatrix = LaplacianMatrix(normalize(
-                    aff, sym_norm=True, in_place=in_place, degree_exp=0.5
-                ), lap_type = "symmetric")
+                lap: LaplacianMatrix = LaplacianMatrix(
+                    normalize(aff, sym_norm=True, in_place=in_place, degree_exp=0.5),
+                    lap_type="symmetric",
+                )
             case _:
                 raise ValueError(f"Unknown laplacian type: {lap_type}!")
 
@@ -121,6 +116,7 @@ class DenseAffinityMatrix(AffinityMatrix, DenseArray):
     Typically not instantiated directly: instead, construct an
     `AffinityMatrix` in `DenseArray` format which will return an instance.
     """
+
     pass
 
 
@@ -134,4 +130,5 @@ class CsrAffinityMatrix(AffinityMatrix, CsrArray):
     Typically not instantiated directly: instead, construct an
     `AffinityMatrix` in `CsrArray` format which will return an instance.
     """
+
     pass

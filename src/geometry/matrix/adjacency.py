@@ -1,11 +1,11 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
+
+from abc import ABC
 
 import numpy as np
-from src.array.base import BaseArray
-from src.array.dense.dense import DenseArray
-from src.array.sparse.csr import CsrArray
-from src.object.geometry_matrix import GeometryMatrixMixin
+
+from src.array import BaseArray, CsrArray, DenseArray
+from src.object import GeometryMatrixMixin
 
 
 class AdjacencyMatrixMixin(GeometryMatrixMixin, ABC):
@@ -13,7 +13,7 @@ class AdjacencyMatrixMixin(GeometryMatrixMixin, ABC):
 
     def __new__(cls, *args, **kwargs):
         if cls is AdjacencyMatrix:
-            if 'shape' in kwargs:
+            if "shape" in kwargs:
                 return CsrAdjacencyMatrix(*args, **kwargs)
             return DenseAdjacencyMatrix(*args, **kwargs)
         return super().__new__(cls)

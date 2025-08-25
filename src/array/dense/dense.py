@@ -14,8 +14,6 @@ from typing import (
 
 import numpy as np
 
-from src.object.object_mixin import ObjectMixin
-
 from ...storage import Data, Storage
 from ..base import BaseArray, unwrap, unwrap_args, unwrap_kwargs
 
@@ -71,7 +69,13 @@ class DenseArray(Generic[Data], BaseArray[Data]):
     # Initialization
     # ======================================================================
     def __init__(
-        self, arr_like: Any, /, *, dtype: Optional[type] = None, copy: bool = False, **kwargs
+        self,
+        arr_like: Any,
+        /,
+        *,
+        dtype: Optional[type] = None,
+        copy: bool = False,
+        **kwargs,
     ) -> None:
         self._values = Storage.as_values(unwrap(arr_like), dtype=dtype, copy=copy)
 

@@ -1,20 +1,15 @@
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from functools import singledispatch
-from typing import Any, Callable, ClassVar, Iterable, Iterator, Optional, Union
+from typing import Callable, ClassVar, Iterable, Iterator, Optional, Union
 
 import numpy as np
-from sklearn.metrics import pairwise_distances_chunked
 
-from src.array.base import BaseArray
-from src.array.dense.dense import DenseArray
-from src.array.sparse.csr import CsrArray
-from src.array.sparse.sparse import SparseArray
+from src.array import BaseArray, CsrArray, DenseArray
 from src.geometry.matrix.adjacency import AdjacencyMatrix
 from src.geometry.matrix.affinity import AffinityMatrix
-from src.object.geometry_matrix import GeometryMatrixMixin
-
-from ...object.metadata import AffinityType, DistanceType
+from src.object import AffinityType
+from src.object.geometry_matrix_mixin import GeometryMatrixMixin
 
 
 class DistanceMatrixMixin(GeometryMatrixMixin, ABC):
@@ -44,15 +39,15 @@ class DistanceMatrixMixin(GeometryMatrixMixin, ABC):
         :rtype: DistanceMatrix
         """
         if cls is DistanceMatrix:
-            if 'shape' in kwargs:
+            if "shape" in kwargs:
                 return CsrDistanceMatrix(*args, **kwargs)
             return DenseDistanceMatrix(*args, **kwargs)
         return super().__new__(cls)
 
 
-#Adds basearray functionality shared by dense and sparse
-#ABC disallows constructing instances of DistanceMatrix which have no functionality because BaseArray has no functionality
-#Mixin gives factory functionality to create Sparse and Dense DistanceMatrices
+# Adds basearray functionality shared by dense and sparse
+# ABC disallows constructing instances of DistanceMatrix which have no functionality because BaseArray has no functionality
+# Mixin gives factory functionality to create Sparse and Dense DistanceMatrices
 class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
     """
     Abstract base class representing a distance matrix, with functionality to
@@ -62,6 +57,7 @@ class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
     the implementation of adjacency and threshold execution methods in subclasses.
     It also provides registration and dispatching mechanisms for affinity functions.
     """
+
     _dispatch_affinity: ClassVar[dict[AffinityType, Callable]] = {}
 
     def adjacency(
@@ -102,11 +98,12 @@ class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
         :return: The decorator that registers the function.
         :rtype: Callable
         """
+
         def decorator(func: Callable):
             cls._dispatch_affinity[name] = classmethod(func).__get__(None, cls)
             return func
-        return decorator
 
+        return decorator
 
     def threshold(
         self,
@@ -137,7 +134,9 @@ class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
         return self._execute_threshold(radius, in_place)
 
     @abstractmethod
-    def _execute_threshold(self, radius: float, in_place: bool = False) -> DistanceMatrix:
+    def _execute_threshold(
+        self, radius: float, in_place: bool = False
+    ) -> DistanceMatrix:
         """
         Abstract method to threshold the distance matrix by radius.
         Must be implemented by subclasses.
@@ -152,7 +151,7 @@ class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
         :rtype: DistanceMatrix
         """
         pass
-    
+
     def threshold_distance_iter(
         self,
         radii: Union[float, Iterable[float]],
@@ -176,7 +175,6 @@ class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
 
         for radius in reversed(sorted(radii)):
             yield self.threshold(radius, in_place)
-
 
     def affinity(
         self,
@@ -204,7 +202,9 @@ class DistanceMatrix(DistanceMatrixMixin, BaseArray, ABC):
 
         dist_is_sq = self.metadata.dist_type == "sqeuclidean"
 
-        return self._dispatch_affinity[aff_type].__get__(self)(eps, dist_is_sq, in_place)
+        return self._dispatch_affinity[aff_type].__get__(self)(
+            eps, dist_is_sq, in_place
+        )
 
 
 @DistanceMatrix._register("gaussian")
@@ -255,8 +255,18 @@ def _gaussian_out_of_place(
     dists: DistanceMatrix, eps: float, dist_is_sq: bool
 ) -> AffinityMatrix:
     if dist_is_sq:
-        return AffinityMatrix(((dists / (eps**2)) * -1.0).exp(), eps=eps, metadata=dists.metadata, aff_type="gaussian")
-    return AffinityMatrix((((dists / eps) ** 2) * -1).exp(), eps=eps, metadata=dists.metadata, aff_type="gaussian")
+        return AffinityMatrix(
+            ((dists / (eps**2)) * -1.0).exp(),
+            eps=eps,
+            metadata=dists.metadata,
+            aff_type="gaussian",
+        )
+    return AffinityMatrix(
+        (((dists / eps) ** 2) * -1).exp(),
+        eps=eps,
+        metadata=dists.metadata,
+        aff_type="gaussian",
+    )
 
 
 class DenseDistanceMatrix(DistanceMatrix, DenseArray):
@@ -267,9 +277,8 @@ class DenseDistanceMatrix(DistanceMatrix, DenseArray):
     Typically not instantiated directly: instead, construct an
     `DistanceMatrix` in `DenseArray` format which will return an instance.
     """
-    def _execute_threshold(
-        self, radius: float, in_place: bool
-    ) -> DistanceMatrix:
+
+    def _execute_threshold(self, radius: float, in_place: bool) -> DistanceMatrix:
         """
         Threshold a dense distance matrix by eliminating entries larger
         than a given radius.
@@ -285,7 +294,11 @@ class DenseDistanceMatrix(DistanceMatrix, DenseArray):
         """
         dist_mat: DistanceMatrix = self if in_place else self.copy()
         dist_mat[dist_mat > radius] = np.inf
-        return DistanceMatrix(dist_mat, radius=radius) if in_place else DistanceMatrix(dist_mat, radius=radius, metadata=self.metadata)
+        return (
+            DistanceMatrix(dist_mat, radius=radius)
+            if in_place
+            else DistanceMatrix(dist_mat, radius=radius, metadata=self.metadata)
+        )
 
     def _execute_adjacency(self, copy: bool) -> AdjacencyMatrix:
         """
@@ -309,9 +322,7 @@ class CsrDistanceMatrix(DistanceMatrix, CsrArray):
     `DistanceMatrix` in `CsrArray` format which will return an instance.
     """
 
-    def _execute_threshold(
-        self, radius: float, in_place: bool
-    ) -> DistanceMatrix:
+    def _execute_threshold(self, radius: float, in_place: bool) -> DistanceMatrix:
         """
         Threshold a sparse (CSR) distance matrix.
 
