@@ -236,9 +236,6 @@ class BaseArray(Generic[Data], ABC):
     def broadcast_to(self, /, *, shape: int | Sequence[int]) -> Self: ...
 
     @abstractmethod
-    def transpose(self) -> Self: ...
-
-    @abstractmethod
     def diagonal(self) -> Self: ...
 
     @abstractmethod

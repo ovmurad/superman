@@ -253,7 +253,6 @@ class Storage(Generic[Data]):
     expand_dims = _storage_op(BACKEND.expand_dims, in_place=False)
     squeeze = _storage_op(BACKEND.squeeze, in_place=False)
     broadcast_to = _storage_op(BACKEND.broadcast_to, in_place=False)
-    transpose = _storage_op(BACKEND.transpose, in_place=False)
     diagonal = _storage_op(BACKEND.diagonal, in_place=False)
     fill_diagonal = _storage_op(BACKEND.fill_diagonal, in_place=False)
 

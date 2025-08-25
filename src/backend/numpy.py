@@ -101,10 +101,6 @@ class NumpyBackend(Backend[np.ndarray]):
         return np.squeeze(x, axis=axis)
 
     @staticmethod
-    def transpose(x: np.ndarray, /) -> np.ndarray:
-        return np.transpose(x)
-
-    @staticmethod
     def diagonal(x: np.ndarray, /) -> np.ndarray:
         return np.diagonal(x)
 
