@@ -28,6 +28,8 @@ def load_gdrive_file(fid: str, cls: Type[T], data_dir: str = "data/") -> T:
 
 
 def download_gdrive_folder(fid: str = DEFAULT_GDRIVE_FOLDER, data_dir: str = "data/"):
-    files: List[gdown.GoogleDriveFileToDownload] = gdown.download_folder(id=fid, skip_download=True)
+    files: List[gdown.GoogleDriveFileToDownload] = gdown.download_folder(
+        id=fid, skip_download=True
+    )
     for file in files:
         _ = load_gdrive_file(file[0], Any, data_dir + file[1])

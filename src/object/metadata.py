@@ -1,4 +1,3 @@
-from abc import ABC
 from typing import FrozenSet, Literal, Optional, Tuple
 
 import attr
@@ -35,7 +34,7 @@ def _convert_to_tuple_of_floats(value: Tuple[float]):
 
 
 @attr.s(auto_attribs=True, slots=True)
-class Metadata():
+class Metadata:
     name: Optional[str] = attr.ib(
         default=None,
         validator=optional_val(instance_of(str)),
@@ -73,7 +72,7 @@ class Metadata():
         converter=optional_conv(_convert_to_float),
         on_setattr=[convert, validate],
     )
-    
+
     ks: Optional[Tuple[int]] = attr.ib(
         default=(),
         validator=optional_val(instance_of(Tuple[int])),

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from typing import Any, Callable, ClassVar, Tuple, Type, TypeVar, get_type_hints
+from abc import ABC
+from typing import Any, ClassVar, Tuple, Type, TypeVar
 
 import attr
 import numpy as np
@@ -9,8 +9,8 @@ import numpy as np
 from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
-
 T = TypeVar("T", bound=Metadata)
+
 
 class ObjectMixin(BaseArray, ABC):
     """
@@ -55,8 +55,7 @@ class ObjectMixin(BaseArray, ABC):
 
     def _init_metadata(self, cls: Type[T], args: Any, kwargs: Any):
         metadata_args = tuple(
-            kwargs[f.name] if f.name in kwargs else None
-            for f in attr.fields(cls)
+            kwargs[f.name] if f.name in kwargs else None for f in attr.fields(cls)
         )
 
         self.metadata = cls(*metadata_args)

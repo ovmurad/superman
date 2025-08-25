@@ -1,3 +1,4 @@
+from .function import FunctionMixin
 from .geometry_matrix_mixin import GeometryMatrixMixin
 from .metadata import (
     AFFINITY_TYPES,
@@ -5,11 +6,10 @@ from .metadata import (
     LAPLACIAN_TYPES,
     AffinityType,
     DistanceType,
-    Metadata,
     LaplacianType,
+    Metadata,
 )
 from .object_mixin import ObjectMixin
-from .function import FunctionMixin
 
 __all__ = [
     "GeometryMatrixMixin",

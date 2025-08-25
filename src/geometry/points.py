@@ -1,15 +1,13 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import Optional
 
 import numpy as np
 
 from src.array import DenseArray
 from src.geometry import DistanceMatrix
-from src.object import FunctionMixin
-from src.object import DistanceType, Metadata
-from src.object import ObjectMixin
+from src.object import DistanceType, Metadata, ObjectMixin
 
 
 class PointsMixin(ObjectMixin, ABC):

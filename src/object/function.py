@@ -1,6 +1,5 @@
 from abc import ABC
 from math import prod
-from typing import Optional
 
 import numpy as np
 
@@ -13,7 +12,7 @@ from ..array.dense import DenseArray
 class FunctionMixin(ObjectMixin, ABC):
     ndim = 2
     dtype = np.float64
-    
+
     metadata: Metadata
 
     def __init__(self, *args, **metadata) -> None:
