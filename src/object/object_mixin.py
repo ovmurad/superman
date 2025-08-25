@@ -6,10 +6,11 @@ from typing import ClassVar
 import attr
 import numpy as np
 
+from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
 
-class ObjectMixin(ABC):
+class ObjectMixin(BaseArray, ABC):
     """
     Abstract base class providing metadata handling and type/dimension
     validation.
