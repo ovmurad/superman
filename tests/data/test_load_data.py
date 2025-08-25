@@ -26,7 +26,7 @@ from src.data.load_data import (
 def test_load_gdrive_file(mock_np_load, mock_os_remove, mock_shutil_move, mock_is_file, mock_gdown_download):
     mock_gdown_download.return_value = "file.npy"
     mock_is_file.return_value = True
-    mock_np_load.return_value = np.array([1, 2, 3])
+    mock_np_load.return_value = np.array([[1.0, 2.0, 3.0], [1.0, 2.0, 3.0]])
 
     result = load_gdrive_file("dummy_fid", cls=Points)
 
@@ -34,7 +34,7 @@ def test_load_gdrive_file(mock_np_load, mock_os_remove, mock_shutil_move, mock_i
     mock_np_load.assert_called_once_with("data/file.npy", allow_pickle=True)
     mock_os_remove.assert_called_once_with("file.npy")
     assert isinstance(result, Points)
-    np.testing.assert_array_equal(result.data, np.array([1, 2, 3]))
+    np.testing.assert_array_equal(result.as_nparray(), np.array([[1.0, 2.0, 3.0], [1.0, 2.0, 3.0]]))
 
 # ------------------------------
 # Test download_gdrive_folder
@@ -54,7 +54,7 @@ def test_download_gdrive_folder(mock_download_folder, mock_load_gdrive_file):
 # Test load_swiss_roll
 # ------------------------------
 def test_load_swiss_roll():
-    points, coords = load_swiss_roll(n_samples=50, noise=0.1)
+    points, coords = load_swiss_roll(50, noise=0.1)
     assert isinstance(points, Points)
     assert isinstance(coords, Coordinates)
     assert points.shape[0] == 50
@@ -64,7 +64,7 @@ def test_load_swiss_roll():
 # Test load_s_curve
 # ------------------------------
 def test_load_s_curve():
-    points, coords = load_s_curve(n_samples=60, noise=0.2)
+    points, coords = load_s_curve(60, noise=0.2)
     assert isinstance(points, Points)
     assert isinstance(coords, Coordinates)
     assert points.shape[0] == 60
@@ -75,8 +75,8 @@ def test_load_s_curve():
 # ------------------------------
 @patch("src.data.load_data.np.load")
 def test_load_file(mock_np_load):
-    mock_np_load.return_value = np.array([[1, 2], [3, 4]])
+    mock_np_load.return_value = np.array([[1.0, 2.0], [3.0, 4.0]])
     points = load_file("dummy_path.npy")
     mock_np_load.assert_called_once_with("dummy_path.npy", allow_pickle=True)
     assert isinstance(points, Points)
-    np.testing.assert_array_equal(points.data, np.array([[1, 2], [3, 4]]))
+    np.testing.assert_array_equal(points.as_nparray(), np.array([[1.0, 2.0], [3.0, 4.0]]))

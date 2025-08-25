@@ -4,7 +4,7 @@ from typing import Optional
 
 import numpy as np
 
-from src.object.metadata import FunctionMetadata
+from src.object.metadata import Metadata
 from src.object.object_mixin import ObjectMixin
 
 from ..array.dense import DenseArray
@@ -14,10 +14,10 @@ class FunctionMixin(ObjectMixin, ABC):
     ndim = 2
     dtype = np.float64
     
-    metadata: FunctionMetadata
+    metadata: Metadata
 
     def __init__(self, *args, **metadata) -> None:
-        super().__init__(*args, cls=FunctionMetadata, **metadata)
+        super().__init__(*args, cls=Metadata, **metadata)
 
     @property
     def npts(self) -> int:

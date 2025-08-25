@@ -6,9 +6,10 @@ from typing import Optional
 import numpy as np
 
 from src.array import DenseArray
-from src.geometry.matrix import DistanceMatrix
-from src.object.metadata import DistanceType, GeometryMetadata
-from src.object.object_mixin import ObjectMixin
+from src.geometry import DistanceMatrix
+from src.object import FunctionMixin
+from src.object import DistanceType, Metadata
+from src.object import ObjectMixin
 
 
 class PointsMixin(ObjectMixin, ABC):
@@ -19,7 +20,7 @@ class PointsMixin(ObjectMixin, ABC):
     and distance computation functionality to point cloud classes.
     """
 
-    metadata: GeometryMetadata
+    metadata: Metadata
 
     fixed_ndim = 2
     fixed_dtype = np.float64
@@ -31,27 +32,7 @@ class PointsMixin(ObjectMixin, ABC):
         :param args: Positional arguments forwarded to the base class.
         :param metadata: Keyword arguments representing metadata fields.
         """
-        super().__init__(*args, cls=GeometryMetadata, **metadata)
-
-    @abstractmethod
-    def distance(
-        self,
-        y_pts: Optional[Points] = None,
-        dist_type: DistanceType = "euclidean",
-    ) -> DistanceMatrix:
-        """
-        Compute a distance matrix between this point set and another set of points.
-
-        :param y_pts: Optional second point set to compute distances to. If None,
-                      compute pairwise distances within the current point set. (default: None)
-        :type y_pts: Optional[Points]
-        :param dist_type: Type of distance metric to compute. Options include
-                          "euclidean", "sqeuclidean", "cityblock", etc. (default: "euclidean")
-        :type dist_type: DistanceType
-        :return: Distance matrix representing pairwise distances.
-        :rtype: DistanceMatrix
-        """
-        pass
+        super().__init__(*args, cls=Metadata, **metadata)
 
     @property
     def npts(self) -> int:
@@ -127,7 +108,7 @@ class Embedding(Points):
         return self.nfeats
 
 
-class Coordinates(PointsMixin, FunctionMixin, DenseArray):
+class Coordinates(PointsMixin, DenseArray):
 
     @property
     def d(self) -> int:

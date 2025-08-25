@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable, ClassVar, Type, TypeVar, get_type_hints
+from typing import Any, Callable, ClassVar, Tuple, Type, TypeVar, get_type_hints
 
 import attr
 import numpy as np
@@ -19,6 +19,7 @@ class ObjectMixin(BaseArray, ABC):
     """
 
     metadata: Metadata
+    _attrs_to_save: Tuple[str]
 
     fixed_ndim: ClassVar[int]
     fixed_dtype: ClassVar[np.dtype]

@@ -35,12 +35,7 @@ def _convert_to_tuple_of_floats(value: Tuple[float]):
 
 
 @attr.s(auto_attribs=True, slots=True)
-class Metadata(ABC):
-    pass
-
-
-@attr.s(auto_attribs=True, slots=True)
-class GeometryMetadata(Metadata):
+class Metadata():
     name: Optional[str] = attr.ib(
         default=None,
         validator=optional_val(instance_of(str)),
@@ -52,11 +47,13 @@ class GeometryMetadata(Metadata):
         validator=optional_val(in_(DISTANCE_TYPES)),
         on_setattr=[validate],
     )
+
     aff_type: Optional[AffinityType] = attr.ib(
         default=None,
         validator=optional_val(in_(AFFINITY_TYPES)),
         on_setattr=[validate],
     )
+
     lap_type: Optional[LaplacianType] = attr.ib(
         default=None,
         validator=optional_val(in_(LAPLACIAN_TYPES)),
@@ -69,49 +66,78 @@ class GeometryMetadata(Metadata):
         converter=optional_conv(_convert_to_float),
         on_setattr=[convert, validate],
     )
+
     eps: Optional[float] = attr.ib(
         default=None,
         validator=optional_val(instance_of(float)),
         converter=optional_conv(_convert_to_float),
         on_setattr=[convert, validate],
     )
-
-    def update_with(self, other: "GeometryMetadata") -> "GeometryMetadata":
-        """Return a new Metadata with non-None values from 'other' overriding self."""
-        updated_values = {k: v for k, v in attr.asdict(self).items()}
-        for k, v in attr.asdict(other).items():
-            if v is not None:
-                updated_values[k] = v
-        return GeometryMetadata(**updated_values)
-
-
-@attr.s(auto_attribs=True, slots=True)
-class FunctionMetadata(Metadata):
+    
     ks: Optional[Tuple[int]] = attr.ib(
         default=(),
         validator=optional_val(instance_of(Tuple[int])),
         converter=optional_conv(_convert_to_tuple_of_floats),
         on_setattr=[convert, validate],
     )
+
     radii: Optional[float] = attr.ib(
         default=None,
         validator=optional_val(instance_of(float)),
         converter=optional_conv(_convert_to_float),
         on_setattr=[convert, validate],
     )
+
     ds: Optional[Tuple[int]] = attr.ib(
         default=(),
         validator=optional_val(instance_of(Tuple[int])),
         converter=optional_conv(_convert_to_tuple_of_floats),
         on_setattr=[convert, validate],
     )
+
     dist_type: Optional[DistanceType] = attr.ib(
         default=None,
         validator=optional_val(in_(DISTANCE_TYPES)),
         on_setattr=[validate],
     )
+
     degree_type: Optional[DegreeType] = attr.ib(
         default=None,
         validator=optional_val(in_(DEGREE_TYPES)),
         on_setattr=[validate],
     )
+
+    ks: Optional[Tuple[int]] = attr.ib(
+        default=(),
+        validator=optional_val(instance_of(Tuple[int])),
+        converter=optional_conv(_convert_to_tuple_of_floats),
+        on_setattr=[convert, validate],
+    )
+
+    radii: Optional[float] = attr.ib(
+        default=None,
+        validator=optional_val(instance_of(float)),
+        converter=optional_conv(_convert_to_float),
+        on_setattr=[convert, validate],
+    )
+
+    ds: Optional[Tuple[int]] = attr.ib(
+        default=(),
+        validator=optional_val(instance_of(Tuple[int])),
+        converter=optional_conv(_convert_to_tuple_of_floats),
+        on_setattr=[convert, validate],
+    )
+
+    degree_type: Optional[DegreeType] = attr.ib(
+        default=None,
+        validator=optional_val(in_(DEGREE_TYPES)),
+        on_setattr=[validate],
+    )
+
+    def update_with(self, other: "Metadata") -> "Metadata":
+        """Return a new Metadata with non-None values from 'other' overriding self."""
+        updated_values = {k: v for k, v in attr.asdict(self).items()}
+        for k, v in attr.asdict(other).items():
+            if v is not None:
+                updated_values[k] = v
+        return Metadata(**updated_values)

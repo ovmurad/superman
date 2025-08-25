@@ -2,7 +2,7 @@ from abc import ABC
 
 import numpy as np
 
-from src.object.metadata import GeometryMetadata
+from src.object.metadata import Metadata
 from src.object.object_mixin import ObjectMixin
 
 
@@ -17,7 +17,7 @@ class GeometryMatrixMixin(ObjectMixin, ABC):
 
     fixed_ndim = 2
     fixed_dtype = np.float64
-    metadata: GeometryMetadata
+    metadata: Metadata
 
     def __init__(self, *args, **metadata) -> None:
         """
@@ -27,7 +27,7 @@ class GeometryMatrixMixin(ObjectMixin, ABC):
         :param args: Positional arguments forwarded to ObjectMixin.
         :param metadata: Keyword arguments representing metadata fields.
         """
-        super().__init__(*args, cls=GeometryMetadata, **metadata)
+        super().__init__(*args, cls=Metadata, **metadata)
 
     @property
     def is_square(self) -> bool:

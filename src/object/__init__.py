@@ -5,7 +5,7 @@ from .metadata import (
     LAPLACIAN_TYPES,
     AffinityType,
     DistanceType,
-    GeometryMetadata,
+    Metadata,
     LaplacianType,
 )
 from .object_mixin import ObjectMixin
@@ -14,7 +14,7 @@ from .function import FunctionMixin
 __all__ = [
     "GeometryMatrixMixin",
     "ObjectMixin",
-    "GeometryMetadata",
+    "Metadata",
     "DistanceType",
     "AffinityType",
     "LaplacianType",
