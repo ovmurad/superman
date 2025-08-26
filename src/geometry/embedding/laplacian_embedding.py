@@ -1,13 +1,66 @@
-# import numpy as np
-#
-# from ...object.geometry_matrix import AffinityMatrix, LaplacianType, LaplacianMatrix, MatrixArray
-#
-# def laplacian_embedding(
-#     lap: LaplacianMatrix,
-#     ncomp: int,
-#     eigen_solver: EigenSolver = "amg",
-#     drop_first: bool = True,
-#     check_connected: bool = True,
-#     in_place: bool = False,
-#     **kwargs,
-# ) -> Tuple[RealDeArr, RealDeArr]:
+from typing import Tuple, TypeVar
+import numpy as np
+
+from src.array.dense.dense import DenseArray
+from src.array.linalg import SYM_EIGEN_SOLVERS, EigenSolver, eigen_decomp
+from src.geometry import LaplacianMatrix
+from src.geometry.matrix import SYM_LAPLACIAN_TYPES, NON_SYM_LAPLACIAN_TYPES
+from src.geometry.matrix import AffinityMatrix
+from src.geometry import normalize
+from src.geometry.matrix.laplacian import eps_adjustment
+from src.object import LaplacianType
+
+_DIAG_ADD = 2.0
+
+Eigen = TypeVar(Tuple[DenseArray, DenseArray])
+
+
+def laplacian_embedding(
+    aff: AffinityMatrix,
+    ncomp: int,
+    eigen_solver: EigenSolver = "amg",
+    drop_first: bool = True,
+    check_connected: bool = True,
+    in_place: bool = False,
+    **kwargs,
+) -> Eigen:
+    degrees = None
+
+    if eigen_solver in SYM_EIGEN_SOLVERS and lap_type in NON_SYM_LAPLACIAN_TYPES:
+
+        if lap_type == "geometric":
+            affs = normalize(affs, sym_norm=True, in_place=in_place)
+            in_place = True
+
+        degrees = aff.sum(axis=1, keepdims=True)
+
+        lap_type: LaplacianType = "symmetric"
+
+    lap = aff.laplacian(
+        eps=aff.metadata.eps,
+        lap_type=lap_type,
+        diag_add=_DIAG_ADD + 1.0,
+        aff_minus_id=False,
+        in_place=in_place,
+    )
+
+    eigvals, eigvecs = eigen_decomp(
+        arr=lap,
+        ncomp=ncomp + int(drop_first),
+        eigen_solver=eigen_solver,
+        is_symmetric=lap_type in SYM_LAPLACIAN_TYPES,
+        largest=False,
+        **kwargs,
+    )
+
+    eigvals -= _DIAG_ADD if aff.metadata.eps is None else (_DIAG_ADD * eps_adjustment(aff.metadata.eps))
+
+    if degrees is not None:
+        eigvecs /= np.sqrt(degrees)
+        eigvecs /= np.linalg.norm(eigvecs, axis=0)
+
+    if drop_first:
+        eigvals = eigvals[1:]
+        eigvecs = eigvecs[:, 1:]
+
+    return eigvals, eigvecs

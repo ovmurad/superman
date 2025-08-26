@@ -1,6 +1,7 @@
 from .matrix import AdjacencyMatrix, AffinityMatrix, DistanceMatrix, LaplacianMatrix
 from .normalize import normalize
 from .points import Coordinates, Data, Embedding, Points
+from .density import degree
 
 __all__ = [
     "AdjacencyMatrix",
@@ -12,4 +13,5 @@ __all__ = [
     "Data",
     "Coordinates",
     "normalize",
+    "degree",
 ]

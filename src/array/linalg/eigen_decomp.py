@@ -2,7 +2,7 @@ from typing import Literal, Optional, TypeAlias
 
 import numpy as np
 
-from ..typing import Storage
+from src.storage import Storage
 
 EigenSolver: TypeAlias = Literal["dense", "arpack", "lobpcg", "amg"]
 
