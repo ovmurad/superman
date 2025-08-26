@@ -3,6 +3,8 @@ from __future__ import annotations
 from abc import ABC
 from typing import Any
 
+import numpy as np
+
 from src.array import BaseArray, CsrArray, DenseArray
 from src.geometry.matrix.laplacian import LaplacianMatrix, eps_adjustment
 from src.geometry.normalize import normalize
@@ -19,30 +21,34 @@ class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
     sparse representations.
     """
 
-    def __new__(cls, *args: Any, **kwargs: Any):
+    def __new__(cls, *args: Any, **kwargs: Any) -> AffinityMatrix:
         """
-        Factory constructor for AffinityMatrix subclasses.
-
-        The constructor returns an instance of either `DenseAffinityMatrix` or `CsrAffinityMatrix` if constructed in `DenseArray` format or `CsrArray` format respectively.
+        The constructor returns an instance of either `DenseLaplacianMatrix` or `CsrLaplacianMatrix` depending on if constructed in `DenseArray` format or `CsrArray` format respectively.
 
         :param args: Positional arguments forwarded to the chosen
-                     affinity matrix subclass.
+                     Laplacian matrix subclass.
         :type args: Any
         :param kwargs: Keyword arguments forwarded to the chosen
-                       affinity matrix subclass.
+                       Laplacian matrix subclass.
+                       If `shape` is present, a sparse CSR-backed
+                       matrix will be constructed.
         :type kwargs: Any
-        :return: A new `DenseAffinityMatrix` or `CsrAffinityMatrix`
+        :return: A new `DenseLaplacianMatrix` or `CsrLaplacianMatrix`
                  instance.
-        :rtype: AffinityMatrix
+        :rtype: LaplacianMatrix
         """
         if cls is AffinityMatrix:
-            if "shape" in kwargs:
-                return CsrAffinityMatrix(*args, **kwargs)
-            return DenseAffinityMatrix(*args, **kwargs)
-        return super().__new__(cls)
+            return cls.create(*args, **kwargs)
+        return super().__new__(cls)  #type: ignore
+
+    @classmethod
+    def create(cls, *args: Any, **kwargs: Any) -> AffinityMatrix:
+        if "shape" in kwargs:
+            return CsrAffinityMatrix(*args, **kwargs)
+        return DenseAffinityMatrix(*args, **kwargs)
 
 
-class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
+class AffinityMatrix(AffinityMatrixMixin, ABC):
     def laplacian(
         aff: AffinityMatrix,
         lap_type: LaplacianType = "geometric",
@@ -78,17 +84,17 @@ class AffinityMatrix(AffinityMatrixMixin, BaseArray, ABC):
 
         match lap_type:
             case "geometric":
-                aff = normalize(aff, sym_norm=True, in_place=in_place)
-                lap: LaplacianMatrix = LaplacianMatrix(
-                    normalize(aff, sym_norm=False, in_place=True), lap_type="geometric"
+                aff_arr: BaseArray[np.float64] = normalize(aff, sym_norm=True, in_place=in_place)
+                lap: LaplacianMatrix = LaplacianMatrix.create(
+                    normalize(aff_arr, sym_norm=False, in_place=True), lap_type="geometric"
                 )
             case "random_walk":
-                lap: LaplacianMatrix = LaplacianMatrix(
+                lap = LaplacianMatrix.create(
                     normalize(aff, sym_norm=False, in_place=in_place),
                     lap_type="random_walk",
                 )
             case "symmetric":
-                lap: LaplacianMatrix = LaplacianMatrix(
+                lap = LaplacianMatrix.create(
                     normalize(aff, sym_norm=True, in_place=in_place, degree_exp=0.5),
                     lap_type="symmetric",
                 )

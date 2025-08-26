@@ -105,7 +105,7 @@ class NumpyBackend(Backend[np.ndarray]):
         return np.diagonal(x)
 
     @staticmethod
-    def fill_diagonal(x: np.ndarray, y: Any) -> np.ndarray:
+    def fill_diagonal(x: np.ndarray, y: np.ndarray, /) -> np.ndarray:
         np.fill_diagonal(x, y)
         return x
 

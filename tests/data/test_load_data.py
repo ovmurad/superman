@@ -54,7 +54,7 @@ def test_download_gdrive_folder(mock_download_folder, mock_load_gdrive_file):
 
     mock_download_folder.assert_called_once()
     mock_load_gdrive_file.assert_called_once_with(
-        "file_id_1", Any, "data/subdir/file1.npy"
+        "file_id_1", None, "data/subdir/file1.npy"
     )
 
 

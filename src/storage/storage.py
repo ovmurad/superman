@@ -204,27 +204,19 @@ class Storage(Generic[Data]):
     # Arithmetic
     # ----------------------------------------------------------------------
     __add__ = _storage_op(BACKEND.add, in_place=False)
-    __radd__ = _storage_op(BACKEND.add, in_place=False)
     __iadd__ = _storage_op(BACKEND.add, in_place=True)
     __sub__ = _storage_op(BACKEND.subtract, in_place=False)
-    __rsub__ = _storage_op(BACKEND.subtract, in_place=False)
     __isub__ = _storage_op(BACKEND.subtract, in_place=True)
     __mul__ = _storage_op(BACKEND.multiply, in_place=False)
-    __rmul__ = _storage_op(BACKEND.multiply, in_place=False)
     __imul__ = _storage_op(BACKEND.multiply, in_place=True)
     __truediv__ = _storage_op(BACKEND.divide, in_place=False)
-    __rtruediv__ = _storage_op(BACKEND.divide, in_place=False)
     __itruediv__ = _storage_op(BACKEND.divide, in_place=True)
     __mod__ = _storage_op(BACKEND.mod, in_place=False)
-    __rmod__ = _storage_op(BACKEND.mod, in_place=False)
     __imod__ = _storage_op(BACKEND.mod, in_place=True)
     __floordiv__ = _storage_op(BACKEND.floor_divide, in_place=False)
-    __rfloordiv__ = _storage_op(BACKEND.floor_divide, in_place=False)
     __ifloordiv__ = _storage_op(BACKEND.floor_divide, in_place=True)
     __pow__ = _storage_op(BACKEND.power, in_place=False)
-    __rpow__ = _storage_op(BACKEND.power, in_place=False)
     __ipow__ = _storage_op(BACKEND.power, in_place=True)
-    __abs__ = _storage_op(BACKEND.absolute_value, in_place=False)
 
     # ----------------------------------------------------------------------
     # Logic & Comparison

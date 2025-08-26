@@ -24,7 +24,7 @@ radii: Sequence[float] = [2.13, 1.23, 11.0, 1.72]
 def test__distance__single_points_no_radius_output(key: str):
     if key in single_dist_sol.keys():
         assert np.allclose(
-            dist_points[key].distance().as_nparray(),
+            dist_points[key].pairwise_distance().as_nparray(),
             single_dist_sol[key].as_nparray(),
             rtol=test_rtol,
             atol=test_atol,
@@ -41,7 +41,7 @@ def test__distance__double_points_no_radius_output(key1: str, key2: str):
         and f"{key1} {key2}" in double_dist_sol.keys()
     ):
         assert np.allclose(
-            dist_points[key1].distance(dist_points[key2]).as_nparray(),
+            dist_points[key1].pairwise_distance(dist_points[key2]).as_nparray(),
             double_dist_sol[f"{key1} {key2}"].as_nparray(),
             rtol=test_rtol,
             atol=test_atol,

@@ -28,7 +28,7 @@ class GeometryMatrixMixin(ObjectMixin, ABC):
         :param args: Positional arguments forwarded to ObjectMixin.
         :param metadata: Keyword arguments representing metadata fields.
         """
-        super().__init__(*args, cls=Metadata, **metadata)
+        super().__init__(*args, **metadata)
 
     @property
     def is_square(self) -> bool:

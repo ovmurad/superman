@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from abc import ABC
-from typing import Optional
+from abc import ABC, abstractmethod
+from typing import Any, Optional, overload
 
 import numpy as np
 
@@ -23,7 +23,7 @@ class PointsMixin(ObjectMixin, ABC):
     fixed_ndim = 2
     fixed_dtype = np.float64
 
-    def __init__(self, *args, **metadata) -> None:
+    def __init__(self, *args: Any, **metadata: Any) -> None:
         """
         Initialize a Points object with optional metadata.
 
@@ -54,7 +54,7 @@ class PointsMixin(ObjectMixin, ABC):
 
 
 class Points(PointsMixin, DenseArray):
-    def distance(
+    def pairwise_distance(
         self,
         y_pts: Optional[Points] = None,
         dist_type: DistanceType = "euclidean",
@@ -89,7 +89,7 @@ class Points(PointsMixin, DenseArray):
             else DenseArray.distance(self, y_pts, dist_type=dist_type)
         )
 
-        return DistanceMatrix(dist_mat, dist_type=dist_type, name=dist_name)
+        return DistanceMatrix.create(dist_mat, dist_type=dist_type, name=dist_name)
 
 
 class Data(Points):

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any
+from typing import Any, Self, TypeAlias, Union
 
 from src.array import BaseArray, CsrArray, DenseArray
 from src.object import GeometryMatrixMixin
@@ -20,7 +20,7 @@ class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
     point without explicitly choosing the dense or sparse representation.
     """
 
-    def __new__(cls, *args: Any, **kwargs: Any) -> None:
+    def __new__(cls, *args: Any, **kwargs: Any) -> LaplacianMatrix:
         """
         The constructor returns an instance of either `DenseLaplacianMatrix` or `CsrLaplacianMatrix` depending on if constructed in `DenseArray` format or `CsrArray` format respectively.
 
@@ -37,13 +37,17 @@ class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
         :rtype: LaplacianMatrix
         """
         if cls is LaplacianMatrix:
-            if "shape" in kwargs:
-                return CsrLaplacianMatrix(*args, **kwargs)
-            return DenseLaplacianMatrix(*args, **kwargs)
-        return super().__new__(cls)
+            return cls.create(*args, **kwargs)
+        return super().__new__(cls)  #type: ignore
+
+    @classmethod
+    def create(cls, *args: Any, **kwargs: Any) -> LaplacianMatrix:
+        if "shape" in kwargs:
+            return CsrLaplacianMatrix(*args, **kwargs)
+        return DenseLaplacianMatrix(*args, **kwargs)
 
 
-class LaplacianMatrix(LaplacianMatrixMixin, BaseArray, ABC):
+class LaplacianMatrix(LaplacianMatrixMixin, BaseArray):
     """
     Abstract base class representing a Laplacian matrix.
     """
@@ -66,7 +70,7 @@ class DenseLaplacianMatrix(LaplacianMatrix, DenseArray):
     pass
 
 
-class CsrLaplacianMatrix(LaplacianMatrix, CsrArray):
+class CsrLaplacianMatrix(LaplacianMatrix, CsrArray):  
     """
     Concrete implementation of a sparse (CSR-backed) Laplacian matrix.
 

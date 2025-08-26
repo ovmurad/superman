@@ -75,7 +75,7 @@ class DenseArray(Generic[Data], BaseArray[Data]):
         *,
         dtype: Optional[type] = None,
         copy: bool = False,
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         self._values = Storage.as_values(unwrap(arr_like), dtype=dtype, copy=copy)
 
@@ -178,7 +178,7 @@ class DenseArray(Generic[Data], BaseArray[Data]):
     squeeze = _dense_op(Storage.squeeze, in_place=False)
     broadcast_to = _dense_op(Storage.broadcast_to, in_place=False)
     diagonal = _dense_op(Storage.diagonal, in_place=False)
-    fill_diagonal = _dense_op(Storage.fill_diagonal, in_place=True)
+    fill_diagonal = _dense_op(Storage.fill_diagonal, in_place=False)
 
     @staticmethod
     def concat(
@@ -206,7 +206,7 @@ class DenseArray(Generic[Data], BaseArray[Data]):
             "Cannot not transform a DenseArray to CsrArray directly!"
         )
 
-    def as_nparray(self):
+    def as_nparray(self) -> np.ndarray:
         return np.array(self.values.data)
 
     # ======================================================================

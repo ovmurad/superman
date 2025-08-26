@@ -5,7 +5,7 @@ from typing import Any, List, NoReturn, Optional, Tuple, Type, TypeVar
 
 import gdown  # type: ignore
 import numpy as np
-import sklearn.datasets
+import sklearn.datasets  # type: ignore
 from src.array.base import BaseArray
 from src.geometry import Coordinates, Points
 
@@ -27,7 +27,7 @@ def load_gdrive_file(fid: str, cls: Type[T] | None, data_dir: str = "data/") -> 
     return cls(np.load(path, allow_pickle=True)) if cls is not None else None
 
 
-def download_gdrive_folder(fid: str = DEFAULT_GDRIVE_FOLDER, data_dir: str = "data/") -> NoReturn:
+def download_gdrive_folder(fid: str = DEFAULT_GDRIVE_FOLDER, data_dir: str = "data/") -> None:
     files: List[gdown.GoogleDriveFileToDownload] = gdown.download_folder(
         id=fid, skip_download=True
     ) # type: ignore

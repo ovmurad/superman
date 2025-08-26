@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any, Generic, NoReturn, Optional, Sequence
 
+import numpy as np
+
 from ...storage import BACKEND, Data, Storage
 from ..base import BaseArray, unwrap
 from ..dense import DenseArray
@@ -123,6 +125,12 @@ class CsrArray(Generic[Data], SparseArray[Data]):
         raise NotImplementedError("TODO")
 
     def __setitem__(self, key: Any, values_like: Any) -> None:
+        raise NotImplementedError("TODO")
+
+    def diagonal(self) -> BaseArray[Data]:
+        raise NotImplementedError("TODO")
+
+    def fill_diagonal(self, other: Any) -> CsrArray[Data]:
         raise NotImplementedError("TODO")
 
     # ----------------------------------------------------------------------
@@ -267,6 +275,9 @@ class CsrArray(Generic[Data], SparseArray[Data]):
     # ======================================================================
 
     as_csr = SparseArray.copy
+
+    def as_nparray(self) -> np.ndarray:
+        raise NotImplementedError("TODO")
 
     # ======================================================================
     # Elementwise math functions (ufuncs)

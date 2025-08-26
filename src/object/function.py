@@ -17,7 +17,7 @@ class FunctionMixin(ObjectMixin, ABC):
     metadata: Metadata
 
     def __init__(self, *args: Any, **metadata: Any) -> None:
-        super().__init__(*args, cls=Metadata, **metadata)
+        super().__init__(*args, **metadata)
 
     @property
     def npts(self) -> int:
