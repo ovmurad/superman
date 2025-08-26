@@ -37,7 +37,9 @@ def _convert_to_tuple_of_ints(value: Tuple[int, ...]) -> Tuple[int, ...]:
     return tuple(val for val in value)
 
 
-def optional_tuple_of_floats(instance: object, attribute: attr.Attribute, value: Optional[Tuple[float, ...]]) -> None:
+def optional_tuple_of_floats(
+    instance: object, attribute: attr.Attribute, value: Optional[Tuple[float, ...]]
+) -> None:
     if value is None:
         return
     if not isinstance(value, tuple):
@@ -46,7 +48,9 @@ def optional_tuple_of_floats(instance: object, attribute: attr.Attribute, value:
         raise TypeError(f"All elements of {attribute.name} must be floats")
 
 
-def optional_tuple_of_ints(instance: object, attribute: attr.Attribute, value: Optional[Tuple[int, ...]]) -> None:
+def optional_tuple_of_ints(
+    instance: object, attribute: attr.Attribute, value: Optional[Tuple[int, ...]]
+) -> None:
     if value is None:
         return
     if not isinstance(value, tuple):

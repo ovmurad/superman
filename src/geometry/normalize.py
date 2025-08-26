@@ -1,7 +1,5 @@
 from typing import Optional, TypeVar
 
-import numpy as np
-
 from src.array.base import BaseArray
 from src.object import ObjectMixin
 

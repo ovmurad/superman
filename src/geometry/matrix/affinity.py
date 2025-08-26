@@ -39,7 +39,7 @@ class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
         """
         if cls is AffinityMatrix:
             return cls.create(*args, **kwargs)
-        return super().__new__(cls)  #type: ignore
+        return super().__new__(cls)  # type: ignore
 
     @classmethod
     def create(cls, *args: Any, **kwargs: Any) -> AffinityMatrix:
@@ -84,9 +84,12 @@ class AffinityMatrix(AffinityMatrixMixin, ABC):
 
         match lap_type:
             case "geometric":
-                aff_arr: BaseArray[np.float64] = normalize(aff, sym_norm=True, in_place=in_place)
+                aff_arr: BaseArray[np.float64] = normalize(
+                    aff, sym_norm=True, in_place=in_place
+                )
                 lap: LaplacianMatrix = LaplacianMatrix.create(
-                    normalize(aff_arr, sym_norm=False, in_place=True), lap_type="geometric"
+                    normalize(aff_arr, sym_norm=False, in_place=True),
+                    lap_type="geometric",
                 )
             case "random_walk":
                 lap = LaplacianMatrix.create(

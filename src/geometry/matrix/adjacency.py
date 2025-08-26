@@ -5,7 +5,7 @@ from typing import Any
 
 import numpy as np
 
-from src.array import BaseArray, CsrArray, DenseArray
+from src.array import CsrArray, DenseArray
 from src.object import GeometryMatrixMixin
 
 
@@ -30,7 +30,7 @@ class AdjacencyMatrixMixin(GeometryMatrixMixin, ABC):
         """
         if cls is AdjacencyMatrix:
             return cls.create(*args, **kwargs)
-        return super().__new__(cls)  #type: ignore
+        return super().__new__(cls)  # type: ignore
 
     @classmethod
     def create(cls, *args: Any, **kwargs: Any) -> AdjacencyMatrix:

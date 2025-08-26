@@ -241,7 +241,9 @@ class BaseArray(Generic[Data], ABC):
     def as_csr(self, *args: Any, **kwargs: Any) -> CsrArray[Data]: ...
 
     @abstractmethod
-    def as_nparray(self, *args: Any, **kwargs: Any) -> np.ndarray[tuple[int, ...], Data]: ...
+    def as_nparray(
+        self, *args: Any, **kwargs: Any
+    ) -> np.ndarray[tuple[int, ...], Data]: ...
 
     # ======================================================================
     # Elementwise math functions (ufuncs)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any, ClassVar, Tuple, Type, TypeVar
+from typing import Any, Type
 
 import attr
 import numpy as np
@@ -37,7 +37,7 @@ class ObjectMixin(BaseArray, ABC):
         :raises ValueError: If the object's ndim or dtype does not match
                             the fixed expected values.
         """
-        super().__init__(*args, **kwargs)  #type: ignore
+        super().__init__(*args, **kwargs)  # type: ignore
 
         if self.ndim != self.fixed_ndim:
             raise ValueError(

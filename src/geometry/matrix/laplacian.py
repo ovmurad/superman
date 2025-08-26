@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any, Self, TypeAlias, Union
+from typing import Any
 
 from src.array import BaseArray, CsrArray, DenseArray
 from src.object import GeometryMatrixMixin
@@ -38,7 +38,7 @@ class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
         """
         if cls is LaplacianMatrix:
             return cls.create(*args, **kwargs)
-        return super().__new__(cls)  #type: ignore
+        return super().__new__(cls)  # type: ignore
 
     @classmethod
     def create(cls, *args: Any, **kwargs: Any) -> LaplacianMatrix:
@@ -70,7 +70,7 @@ class DenseLaplacianMatrix(LaplacianMatrix, DenseArray):
     pass
 
 
-class CsrLaplacianMatrix(LaplacianMatrix, CsrArray):  
+class CsrLaplacianMatrix(LaplacianMatrix, CsrArray):
     """
     Concrete implementation of a sparse (CSR-backed) Laplacian matrix.
 

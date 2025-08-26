@@ -55,6 +55,7 @@ class KNNDistance(KNNDistanceMixin, DenseArray):
 class NeighborCountMixin(FunctionMixin, ABC):
     fixed_dtype = np.int64
 
+
 class NeighborCount(NeighborCountMixin, DenseArray):
     pass
 
