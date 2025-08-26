@@ -1,19 +1,20 @@
 import os
 import shutil
 from pathlib import Path
-from typing import Any, List, Optional, Tuple, Type, TypeVar
+from typing import Any, List, NoReturn, Optional, Tuple, Type, TypeVar
 
-import gdown
+import gdown  # type: ignore
 import numpy as np
 import sklearn.datasets
+from src.array.base import BaseArray
 from src.geometry import Coordinates, Points
 
 DEFAULT_GDRIVE_FOLDER = "1NGfGcVpBarNtFMmdvQhq28hWBlVuxdQz"
 
-T = TypeVar("T")
+T = TypeVar("T", bound=BaseArray)
 
 
-def load_gdrive_file(fid: str, cls: Type[T], data_dir: str = "data/") -> T:
+def load_gdrive_file(fid: str, cls: Type[T] | None, data_dir: str = "data/") -> T | None:
     name: str = gdown.download(id=fid, quiet=False, fuzzy=True)
     path: str = data_dir + name
 
@@ -23,15 +24,15 @@ def load_gdrive_file(fid: str, cls: Type[T], data_dir: str = "data/") -> T:
     else:
         shutil.move(name, path)
 
-    return cls(np.load(path, allow_pickle=True))
+    return cls(np.load(path, allow_pickle=True)) if cls is not None else None
 
 
-def download_gdrive_folder(fid: str = DEFAULT_GDRIVE_FOLDER, data_dir: str = "data/"):
+def download_gdrive_folder(fid: str = DEFAULT_GDRIVE_FOLDER, data_dir: str = "data/") -> NoReturn:
     files: List[gdown.GoogleDriveFileToDownload] = gdown.download_folder(
         id=fid, skip_download=True
-    )
+    ) # type: ignore
     for file in files:
-        _ = load_gdrive_file(file[0], Any, data_dir + file[1])
+        _ = load_gdrive_file(file[0], None, data_dir + file[1])
 
 
 def load_swiss_roll(

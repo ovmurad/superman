@@ -9,8 +9,6 @@ import numpy as np
 from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
-T = TypeVar("T", bound=Metadata)
-
 
 class ObjectMixin(BaseArray, ABC):
     """
@@ -19,12 +17,11 @@ class ObjectMixin(BaseArray, ABC):
     """
 
     metadata: Metadata
-    _attrs_to_save: Tuple[str]
 
-    fixed_ndim: ClassVar[int]
-    fixed_dtype: ClassVar[np.dtype]
+    fixed_ndim: int
+    fixed_dtype: Type[np.generic]
 
-    def __init__(self, *args, cls: Type[T], **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
         Initialize an object with metadata and enforce
         fixed dimensionality and dtype.
@@ -40,7 +37,7 @@ class ObjectMixin(BaseArray, ABC):
         :raises ValueError: If the object's ndim or dtype does not match
                             the fixed expected values.
         """
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)  #type: ignore
 
         if self.ndim != self.fixed_ndim:
             raise ValueError(
@@ -51,14 +48,11 @@ class ObjectMixin(BaseArray, ABC):
                 f"{self.__class__.__name__} object has `dtype`={self.dtype}, but expected {self.fixed_dtype}!"
             )
 
-        self._init_metadata(cls, args, kwargs)
-
-    def _init_metadata(self, cls: Type[T], args: Any, kwargs: Any):
         metadata_args = tuple(
-            kwargs[f.name] if f.name in kwargs else None for f in attr.fields(cls)
+            kwargs[f.name] if f.name in kwargs else None for f in attr.fields(Metadata)
         )
 
-        self.metadata = cls(*metadata_args)
+        self.metadata = Metadata(*metadata_args)
 
         if "metadata" in kwargs:
             self.metadata = self.metadata.update_with(kwargs["metadata"])

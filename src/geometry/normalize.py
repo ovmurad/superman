@@ -9,12 +9,12 @@ T = TypeVar("T")
 
 
 def normalize(
-    arr: BaseArray[np.float64],
+    arr: BaseArray[T],
     axis: Optional[int] = 1,
     degree_exp: float = 1.0,
     sym_norm: bool = False,
     in_place: bool = False,
-) -> BaseArray[np.float64]:
+) -> BaseArray[T]:
 
     object = False
     if isinstance(arr, ObjectMixin):

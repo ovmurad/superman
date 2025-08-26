@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
+from typing import Any
 
 from src.array import BaseArray, CsrArray, DenseArray
 from src.geometry.matrix.laplacian import LaplacianMatrix, eps_adjustment
@@ -18,7 +19,7 @@ class AffinityMatrixMixin(GeometryMatrixMixin, ABC):
     sparse representations.
     """
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *args: Any, **kwargs: Any):
         """
         Factory constructor for AffinityMatrix subclasses.
 

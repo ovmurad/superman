@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
+from typing import Any
 
 from src.array import BaseArray, CsrArray, DenseArray
 from src.object import GeometryMatrixMixin
@@ -19,7 +20,7 @@ class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
     point without explicitly choosing the dense or sparse representation.
     """
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *args: Any, **kwargs: Any) -> None:
         """
         The constructor returns an instance of either `DenseLaplacianMatrix` or `CsrLaplacianMatrix` depending on if constructed in `DenseArray` format or `CsrArray` format respectively.
 

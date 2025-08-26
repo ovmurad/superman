@@ -1,4 +1,5 @@
 from abc import ABC
+from typing import Any, Type
 
 import numpy as np
 
@@ -16,10 +17,10 @@ class GeometryMatrixMixin(ObjectMixin, ABC):
     """
 
     fixed_ndim = 2
-    fixed_dtype = np.float64
+    fixed_dtype: Type[np.generic] = np.float64
     metadata: Metadata
 
-    def __init__(self, *args, **metadata) -> None:
+    def __init__(self, *args: Any, **metadata: Any) -> None:
         """
         Initialize a GeometryMatrixMixin object, forwarding arguments
         to ObjectMixin.

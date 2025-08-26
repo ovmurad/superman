@@ -1,5 +1,6 @@
 from abc import ABC
 from math import prod
+from typing import Any, Type
 
 import numpy as np
 
@@ -10,12 +11,12 @@ from ..array.dense import DenseArray
 
 
 class FunctionMixin(ObjectMixin, ABC):
-    ndim = 2
-    dtype = np.float64
+    fixed_ndim = 2
+    fixed_dtype: Type[np.generic] = np.float64
 
     metadata: Metadata
 
-    def __init__(self, *args, **metadata) -> None:
+    def __init__(self, *args: Any, **metadata: Any) -> None:
         super().__init__(*args, cls=Metadata, **metadata)
 
     @property
@@ -52,8 +53,7 @@ class KNNDistance(KNNDistanceMixin, DenseArray):
 
 
 class NeighborCountMixin(FunctionMixin, ABC):
-    dtype = np.int64
-
+    fixed_dtype = np.int64
 
 class NeighborCount(NeighborCountMixin, DenseArray):
     pass

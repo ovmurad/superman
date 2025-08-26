@@ -25,12 +25,34 @@ def _convert_to_int(value: int) -> int:
     return int(value)
 
 
-def _convert_to_float(value: float, ndigits=5) -> float:
+def _convert_to_float(value: float, ndigits: int = 5) -> float:
     return round(float(value), ndigits)
 
 
-def _convert_to_tuple_of_floats(value: Tuple[float]):
-    return (val for val in value)
+def _convert_to_tuple_of_floats(value: Tuple[float, ...]) -> Tuple[float, ...]:
+    return tuple(val for val in value)
+
+
+def _convert_to_tuple_of_ints(value: Tuple[int, ...]) -> Tuple[int, ...]:
+    return tuple(val for val in value)
+
+
+def optional_tuple_of_floats(instance: object, attribute: attr.Attribute, value: Optional[Tuple[float, ...]]) -> None:
+    if value is None:
+        return
+    if not isinstance(value, tuple):
+        raise TypeError(f"{attribute.name} must be a tuple or None")
+    if not all(isinstance(v_, float) for v_ in value):
+        raise TypeError(f"All elements of {attribute.name} must be floats")
+
+
+def optional_tuple_of_ints(instance: object, attribute: attr.Attribute, value: Optional[Tuple[int, ...]]) -> None:
+    if value is None:
+        return
+    if not isinstance(value, tuple):
+        raise TypeError(f"{attribute.name} must be a tuple or None")
+    if not all(isinstance(v_, int) for v_ in value):
+        raise TypeError(f"All elements of {attribute.name} must be floats")
 
 
 @attr.s(auto_attribs=True, slots=True)
@@ -73,57 +95,24 @@ class Metadata:
         on_setattr=[convert, validate],
     )
 
-    ks: Optional[Tuple[int]] = attr.ib(
-        default=(),
-        validator=optional_val(instance_of(Tuple[int])),
+    ks: Optional[Tuple[int, ...]] = attr.ib(
+        default=None,
+        validator=optional_tuple_of_ints,
+        converter=optional_conv(_convert_to_tuple_of_ints),
+        on_setattr=[convert, validate],
+    )
+
+    radii: Optional[Tuple[float, ...]] = attr.ib(
+        default=None,
+        validator=optional_tuple_of_floats,
         converter=optional_conv(_convert_to_tuple_of_floats),
         on_setattr=[convert, validate],
     )
 
-    radii: Optional[float] = attr.ib(
+    ds: Optional[Tuple[int, ...]] = attr.ib(
         default=None,
-        validator=optional_val(instance_of(float)),
-        converter=optional_conv(_convert_to_float),
-        on_setattr=[convert, validate],
-    )
-
-    ds: Optional[Tuple[int]] = attr.ib(
-        default=(),
-        validator=optional_val(instance_of(Tuple[int])),
-        converter=optional_conv(_convert_to_tuple_of_floats),
-        on_setattr=[convert, validate],
-    )
-
-    dist_type: Optional[DistanceType] = attr.ib(
-        default=None,
-        validator=optional_val(in_(DISTANCE_TYPES)),
-        on_setattr=[validate],
-    )
-
-    degree_type: Optional[DegreeType] = attr.ib(
-        default=None,
-        validator=optional_val(in_(DEGREE_TYPES)),
-        on_setattr=[validate],
-    )
-
-    ks: Optional[Tuple[int]] = attr.ib(
-        default=(),
-        validator=optional_val(instance_of(Tuple[int])),
-        converter=optional_conv(_convert_to_tuple_of_floats),
-        on_setattr=[convert, validate],
-    )
-
-    radii: Optional[float] = attr.ib(
-        default=None,
-        validator=optional_val(instance_of(float)),
-        converter=optional_conv(_convert_to_float),
-        on_setattr=[convert, validate],
-    )
-
-    ds: Optional[Tuple[int]] = attr.ib(
-        default=(),
-        validator=optional_val(instance_of(Tuple[int])),
-        converter=optional_conv(_convert_to_tuple_of_floats),
+        validator=optional_tuple_of_ints,
+        converter=optional_conv(_convert_to_tuple_of_ints),
         on_setattr=[convert, validate],
     )
 
