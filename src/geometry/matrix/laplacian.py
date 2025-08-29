@@ -4,9 +4,7 @@ from abc import ABC
 from typing import Any, Final, Set
 
 from src.array import BaseArray, CsrArray, DenseArray
-from src.object import GeometryMatrixMixin
-from src.object import LaplacianType
-
+from src.object import GeometryMatrixMixin, LaplacianType
 
 SYM_LAPLACIAN_TYPES: Final[Set[LaplacianType]] = {"symmetric"}
 NON_SYM_LAPLACIAN_TYPES: Final[Set[LaplacianType]] = {"geometric", "random_walk"}

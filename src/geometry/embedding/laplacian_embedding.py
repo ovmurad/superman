@@ -1,35 +1,20 @@
-from typing import Tuple, TypeVar
+from typing import Tuple
+
 import numpy as np
 
 from src.array import DenseArray
 from src.array.linalg import SYM_EIGEN_SOLVERS, EigenSolver, eigen_decomp
-from src.geometry import LaplacianMatrix
-from src.geometry.matrix import SYM_LAPLACIAN_TYPES, NON_SYM_LAPLACIAN_TYPES
-from src.geometry.matrix import AffinityMatrix
 from src.geometry import normalize
+from src.geometry.matrix import (
+    NON_SYM_LAPLACIAN_TYPES,
+    SYM_LAPLACIAN_TYPES,
+    AffinityMatrix,
+)
 from src.geometry.matrix.laplacian import eps_adjustment
 from src.object import LaplacianType
 
 _DIAG_ADD = 2.0
 
-def laplacian_embedding(
-    lap: LaplacianMatrix,
-    ncomp: int,
-    eigen_solver: EigenSolver = "amg",
-    drop_first: bool = True,
-    check_connected: bool = True,
-) -> Tuple[DenseArray, DenseArray]:
-    eigvals, eigvecs = eigen_decomp(
-        arr=lap,
-        ncomp=ncomp + int(drop_first),
-        eigen_solver=eigen_solver,
-        is_symmetric=lap.metadata.lap_type in SYM_LAPLACIAN_TYPES,
-        largest=False,
-    )
-
-    if drop_first:
-        eigvals = eigvals[1:]
-        eigvecs = eigvecs[:, 1:]
 
 def laplacian_embedding(
     aff: AffinityMatrix,
@@ -69,7 +54,11 @@ def laplacian_embedding(
         **kwargs,
     )
 
-    eigvals -= _DIAG_ADD if aff.metadata.eps is None else (_DIAG_ADD * eps_adjustment(aff.metadata.eps))
+    eigvals -= (
+        _DIAG_ADD
+        if aff.metadata.eps is None
+        else (_DIAG_ADD * eps_adjustment(aff.metadata.eps))
+    )
 
     if degrees is not None:
         eigvecs /= np.sqrt(degrees)

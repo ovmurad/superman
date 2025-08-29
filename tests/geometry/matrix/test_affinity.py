@@ -12,6 +12,7 @@ from tests.test_utils import (
 
 pytestmark = pytest.mark.slow
 
+
 @pytest.mark.parametrize("key", threshold_sol_radius.keys())
 def test__affinity__single_points_no_radius_output(key: str):
     if key in affinity_sol.keys():

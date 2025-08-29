@@ -1,5 +1,5 @@
 import warnings
-from typing import Any, Literal, Optional, Tuple, TypeAlias, Final, Set
+from typing import Any, Final, Literal, Optional, Set, Tuple, TypeAlias
 
 import numpy as np
 from numpy.linalg import eig, eigh

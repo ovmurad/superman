@@ -35,7 +35,7 @@ laplacian_embedding_sol: Dict[str, Dict[str, np.ndarray]] = {
 }
 affinity_sol: Dict[str, Dict[str, AffinityMatrix]] = {
     key: {k: AffinityMatrix(d, eps=k) for k, d in dict.item().items()}
-        for key, dict in npy_dict["affinity_sol"].items()
+    for key, dict in npy_dict["affinity_sol"].items()
 }
 adj_test: DistanceMatrix = DistanceMatrix(
     np.array([[0, 0, 3.12], [2.0, 0, 1], [0, 5, 0]]), dist_type="euclidean"

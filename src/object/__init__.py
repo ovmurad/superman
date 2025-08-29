@@ -2,8 +2,8 @@ from .function import FunctionMixin
 from .geometry_matrix_mixin import GeometryMatrixMixin
 from .metadata import (
     AFFINITY_TYPES,
-    DISTANCE_TYPES,
     DEGREE_TYPES,
+    DISTANCE_TYPES,
     LAPLACIAN_TYPES,
     AffinityType,
     DistanceType,
