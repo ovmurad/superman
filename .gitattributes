@@ -6,3 +6,4 @@ threshold_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
 symmetric_lap_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
 geometric_lap_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
 random_walk_lap_sol-10000x10000_float_1.npy filter=lfs diff=lfs merge=lfs -text
+tests/test_data/laplacian_embedding_sol-30x30_float_1.npy filter=lfs diff=lfs merge=lfs -text

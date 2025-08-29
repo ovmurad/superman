@@ -29,8 +29,13 @@ def load_test_npy():
 
 npy_dict: Dict[str, Dict[str, np.ndarray]] = load_test_npy()
 
-affinity_sol: Dict[str, AffinityMatrix] = {
-    key: AffinityMatrix(arr, eps=0.71) for key, arr in npy_dict["affinity_sol"].items()
+laplacian_embedding_sol: Dict[str, Dict[str, np.ndarray]] = {
+    key: {k: d for k, d in dict.item().items()}
+    for key, dict in npy_dict["laplacian_embedding_sol"].items()
+}
+affinity_sol: Dict[str, Dict[str, AffinityMatrix]] = {
+    key: {k: AffinityMatrix(d, eps=k) for k, d in dict.item().items()}
+        for key, dict in npy_dict["affinity_sol"].items()
 }
 adj_test: DistanceMatrix = DistanceMatrix(
     np.array([[0, 0, 3.12], [2.0, 0, 1], [0, 5, 0]]), dist_type="euclidean"
