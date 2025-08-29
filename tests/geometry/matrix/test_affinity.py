@@ -12,8 +12,6 @@ from tests.test_utils import (
 
 pytestmark = pytest.mark.slow
 
-eps = [3.67, 0.71, 0.57, 0.41]
-
 
 @pytest.mark.parametrize("key", threshold_sol_radius.keys())
 def test__affinity__single_points_no_radius_output(key: str):
@@ -22,7 +20,7 @@ def test__affinity__single_points_no_radius_output(key: str):
             aff = threshold_sol_radius[key][radius].affinity(eps=radius / 3)
             assert np.allclose(
                 aff.as_nparray(),
-                affinity_sol[key].as_nparray(),
+                affinity_sol[key][radius / 3].as_nparray(),
                 rtol=test_rtol,
                 atol=test_atol,
             )

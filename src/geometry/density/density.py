@@ -2,9 +2,11 @@ from typing import Iterable, Optional, Union
 
 import numpy as np
 
-from ..array.base import DenseArray
-from ..object.function import Degree, DegreeType
-from ..object.geometry_matrix_mixin import AdjacencyMatrix, AffinityMatrix, DistanceType
+from src.array.base import DenseArray
+from src.geometry.matrix.adjacency import AdjacencyMatrix
+from src.geometry.matrix.affinity import AffinityMatrix
+from src.object.function import Degree
+from src.object.metadata import DegreeType, DistanceType
 
 NeighborMatrix = Union[AffinityMatrix, AdjacencyMatrix]
 
