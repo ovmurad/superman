@@ -56,9 +56,19 @@ threshold_sol_radius: Dict[str, Dict[str, DistanceMatrix]] = {
 threshold_iter_sol: Dict[str, DenseArray[np.float64]] = {
     key: arrs for key, arrs in npy_dict["threshold_iter_sol"].items()
 }
-sym_lap_sol: Dict[str, LaplacianMatrix] = {
-    key: LaplacianMatrix(arr) for key, arr in npy_dict["symmetric_lap_sol"].items()
+geometric_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = {
+    key: {k: LaplacianMatrix(d, eps=k, lap_type="geometric", aff_minus_id=True) for k, d in dict.item().items()}
+    for key, dict in npy_dict["geometric_lap_sol"].items()
 }
+random_walk_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = {
+    key: {k: LaplacianMatrix(d, eps=k, lap_type="random_walk", aff_minus_id=True) for k, d in dict.item().items()}
+    for key, dict in npy_dict["random_walk_lap_sol"].items()
+}
+symmetric_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = {
+    key: {k: LaplacianMatrix(d, eps=k, lap_type="symmetric", aff_minus_id=True) for k, d in dict.item().items()}
+    for key, dict in npy_dict["symmetric_lap_sol"].items()
+}
+lap_sol = {"geometric": geometric_lap_sol, "random_walk": random_walk_lap_sol, "symmetric": symmetric_lap_sol}
 dense_square_float: DenseArray[np.float64] = DenseArray(np.random.rand(30, 30))
 
 

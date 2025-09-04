@@ -10,18 +10,21 @@ from tests.test_utils import (
     npy_dict,
     test_atol,
     test_rtol,
+    geometric_lap_sol,
+    lap_sol
 )
 
 
 @pytest.mark.parametrize("key", affinity_sol.keys())
 @pytest.mark.parametrize("type", get_args(LaplacianType))
 def test__laplacian__output(key: str, type: str):
-    type_dict = npy_dict[f"{type}_lap_sol"]
+    type_dict = lap_sol[type]
     if key in type_dict.keys():
-        lap = affinity_sol[key].laplacian(type)
-        assert np.allclose(
-            type_dict[key], lap.as_nparray(), rtol=test_rtol, atol=test_atol
-        )
+        for eps in affinity_sol[key].keys():
+            lap = affinity_sol[key][eps].laplacian(type)
+            assert np.allclose(
+                type_dict[key][eps].as_nparray(), lap.as_nparray(), rtol=test_rtol, atol=test_atol
+            )
 
 
 @pytest.mark.parametrize("type", get_args(LaplacianType))

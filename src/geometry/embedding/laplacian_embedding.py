@@ -10,19 +10,57 @@ from src.geometry.matrix import (
     SYM_LAPLACIAN_TYPES,
     AffinityMatrix,
 )
-from src.geometry.matrix.laplacian import eps_adjustment
+from src.geometry.matrix.laplacian import LaplacianMatrix, eps_adjustment
 from src.object import LaplacianType
 
 _DIAG_ADD = 2.0
 
 
 def laplacian_embedding(
+    mat: AffinityMatrix | LaplacianMatrix,
+    ncomp: int,
+    lap_type: LaplacianType = "geometric",
+    eigen_solver: EigenSolver = "amg",
+    drop_first: bool = True,
+    in_place: bool = False,
+    **kwargs,
+) -> Tuple[DenseArray, DenseArray]:
+    if isinstance(mat, AffinityMatrix):
+        return _aff_laplacian_embedding(mat, ncomp, lap_type, eigen_solver, drop_first, in_place, **kwargs)
+    elif isinstance(mat, LaplacianMatrix):
+        return _lap_laplacian_embedding(mat, ncomp, eigen_solver, drop_first, **kwargs)
+    raise ValueError(f"Matrix of type {type(mat)} not recognized!")
+
+
+def _lap_laplacian_embedding(
+    lap: LaplacianMatrix,
+    ncomp: int,
+    eigen_solver: EigenSolver = "amg",
+    drop_first: bool = True,
+    **kwargs,
+) -> Tuple[DenseArray, DenseArray]:
+    eigvals, eigvecs = eigen_decomp(
+        arr=lap.as_nparray() * -1.0 if lap.metadata.aff_minus_id else lap.as_nparray(),
+        ncomp=ncomp + int(drop_first),
+        eigen_solver=eigen_solver,
+        is_symmetric=lap.metadata.lap_type in SYM_LAPLACIAN_TYPES,
+        largest=False,
+        **kwargs,
+    )
+
+    if drop_first:
+        eigvals = eigvals[1:]
+        eigvecs = eigvecs[:, 1:]
+
+    return eigvals, eigvecs
+
+
+def _aff_laplacian_embedding(
     aff: AffinityMatrix,
     ncomp: int,
     lap_type: LaplacianType = "geometric",
     eigen_solver: EigenSolver = "amg",
     drop_first: bool = True,
-    check_connected: bool = True,
     in_place: bool = False,
     **kwargs,
 ) -> Tuple[DenseArray, DenseArray]:
