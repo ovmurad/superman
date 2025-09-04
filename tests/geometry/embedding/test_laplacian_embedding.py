@@ -1,16 +1,15 @@
 from typing import get_args
+
 import numpy as np
 import pytest
 from src.geometry.embedding.laplacian_embedding import laplacian_embedding
-from src.geometry.matrix.laplacian import LaplacianMatrix
 from src.object.metadata import LaplacianType
 from tests.test_utils import (
     affinity_sol,
+    lap_sol,
     laplacian_embedding_sol,
     test_atol,
     test_rtol,
-    npy_dict,
-    lap_sol,
 )
 
 pytestmark = pytest.mark.slow

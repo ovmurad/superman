@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Any, Tuple
 
 import numpy as np
 
@@ -23,10 +23,12 @@ def laplacian_embedding(
     eigen_solver: EigenSolver = "amg",
     drop_first: bool = True,
     in_place: bool = False,
-    **kwargs,
+    **kwargs: Any,
 ) -> Tuple[DenseArray, DenseArray]:
     if isinstance(mat, AffinityMatrix):
-        return _aff_laplacian_embedding(mat, ncomp, lap_type, eigen_solver, drop_first, in_place, **kwargs)
+        return _aff_laplacian_embedding(
+            mat, ncomp, lap_type, eigen_solver, drop_first, in_place, **kwargs
+        )
     elif isinstance(mat, LaplacianMatrix):
         return _lap_laplacian_embedding(mat, ncomp, eigen_solver, drop_first, **kwargs)
     raise ValueError(f"Matrix of type {type(mat)} not recognized!")
@@ -37,7 +39,7 @@ def _lap_laplacian_embedding(
     ncomp: int,
     eigen_solver: EigenSolver = "amg",
     drop_first: bool = True,
-    **kwargs,
+    **kwargs: Any,
 ) -> Tuple[DenseArray, DenseArray]:
     eigvals, eigvecs = eigen_decomp(
         arr=lap.as_nparray() * -1.0 if lap.metadata.aff_minus_id else lap.as_nparray(),
@@ -62,7 +64,7 @@ def _aff_laplacian_embedding(
     eigen_solver: EigenSolver = "amg",
     drop_first: bool = True,
     in_place: bool = False,
-    **kwargs,
+    **kwargs: Any,
 ) -> Tuple[DenseArray, DenseArray]:
     degrees = None
 
@@ -74,7 +76,7 @@ def _aff_laplacian_embedding(
 
         degrees = aff.sum(axis=1, keepdims=True)
 
-        lap_type: LaplacianType = "symmetric"
+        lap_type = "symmetric"
 
     lap = aff.laplacian(
         lap_type=lap_type,
@@ -99,7 +101,7 @@ def _aff_laplacian_embedding(
     )
 
     if degrees is not None:
-        eigvecs /= np.sqrt(degrees)
+        eigvecs /= degrees.sqrt()
         eigvecs /= np.linalg.norm(eigvecs, axis=0)
 
     if drop_first:

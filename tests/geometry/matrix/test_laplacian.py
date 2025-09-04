@@ -7,11 +7,9 @@ from src.object import LaplacianType
 from tests.test_utils import (
     affinity_sol,
     dense_square_float,
-    npy_dict,
+    lap_sol,
     test_atol,
     test_rtol,
-    geometric_lap_sol,
-    lap_sol
 )
 
 
@@ -23,7 +21,10 @@ def test__laplacian__output(key: str, type: str):
         for eps in affinity_sol[key].keys():
             lap = affinity_sol[key][eps].laplacian(type)
             assert np.allclose(
-                type_dict[key][eps].as_nparray(), lap.as_nparray(), rtol=test_rtol, atol=test_atol
+                type_dict[key][eps].as_nparray(),
+                lap.as_nparray(),
+                rtol=test_rtol,
+                atol=test_atol,
             )
 
 
