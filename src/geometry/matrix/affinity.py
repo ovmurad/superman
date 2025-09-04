@@ -90,16 +90,19 @@ class AffinityMatrix(AffinityMatrixMixin, ABC):
                 lap: LaplacianMatrix = LaplacianMatrix.create(
                     normalize(aff_arr, sym_norm=False, in_place=True),
                     lap_type="geometric",
+                    aff_minus_id=aff_minus_id,
                 )
             case "random_walk":
                 lap = LaplacianMatrix.create(
                     normalize(aff, sym_norm=False, in_place=in_place),
                     lap_type="random_walk",
+                    aff_minus_id=aff_minus_id,
                 )
             case "symmetric":
                 lap = LaplacianMatrix.create(
                     normalize(aff, sym_norm=True, in_place=in_place, degree_exp=0.5),
                     lap_type="symmetric",
+                    aff_minus_id=aff_minus_id,
                 )
             case _:
                 raise ValueError(f"Unknown laplacian type: {lap_type}!")

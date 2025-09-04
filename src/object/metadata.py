@@ -29,6 +29,10 @@ def _convert_to_float(value: float, ndigits: int = 5) -> float:
     return round(float(value), ndigits)
 
 
+def _convert_to_bool(value: bool) -> bool:
+    return bool(value)
+
+
 def _convert_to_tuple_of_floats(value: Tuple[float, ...]) -> Tuple[float, ...]:
     return tuple(val for val in value)
 
@@ -123,6 +127,13 @@ class Metadata:
     degree_type: Optional[DegreeType] = attr.ib(
         default=None,
         validator=optional_val(in_(DEGREE_TYPES)),
+        on_setattr=[validate],
+    )
+
+    aff_minus_id: Optional[bool] = attr.ib(
+        default=None,
+        validator=optional_val(instance_of(bool)),
+        converter=optional_conv(_convert_to_bool),
         on_setattr=[validate],
     )
 
