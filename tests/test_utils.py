@@ -1,6 +1,6 @@
 import os
 from collections import defaultdict
-from typing import Dict, Tuple
+from typing import Any, Callable, Dict, Optional, Tuple, Type, TypeVar
 
 import numpy as np
 from scipy.sparse import csr_array
@@ -26,57 +26,45 @@ def load_test_npy():
                     data[prefix][file_key] = np.load(full_path, allow_pickle=True)
     return data
 
+def default_process_args(k: Any, d: Any, **kwargs)-> Dict[str, Any]:
+    return kwargs
+
+T = TypeVar("T")
+def load_metadata_dict(name: str, cls: Callable[..., Any], ret: Type[T], process_args: Callable[..., Any] = default_process_args, **kwargs: Any) -> Dict[str, Dict[str, T]]:
+    if cls is None:
+        return {key: {k: d for k, d in dict.item().items()} for key, dict in npy_dict[name].items()}
+    return {key: {k: cls(d, **process_args(k, d, **kwargs)) for k, d in dict.item().items()} for key, dict in npy_dict[name].items()}
+
+def aff_process_args(k: Any, d: Any, **kwargs) -> Dict[str, Any]:
+    kwargs["eps"] = k
+    return kwargs
+
+def lap_process_args(k: Any, d: Any, **kwargs) -> Dict[str, Any]:
+    kwargs["eps"] = k
+    return kwargs
+
+def load_dict(name: str, cls: Callable[..., Any], ret: Type[T]) -> Dict[str, T]:
+    if cls is None:
+        return {key: arr for key, arr in npy_dict[name].items()}
+    return {key: cls(arr) for key, arr in npy_dict[name].items()}
 
 npy_dict: Dict[str, Dict[str, np.ndarray]] = load_test_npy()
 
-laplacian_embedding_sol: Dict[str, Dict[str, np.ndarray]] = {
-    key: {k: d for k, d in dict.item().items()}
-    for key, dict in npy_dict["laplacian_embedding_sol"].items()
-}
-affinity_sol: Dict[str, Dict[str, AffinityMatrix]] = {
-    key: {k: AffinityMatrix(d, eps=k) for k, d in dict.item().items()}
-    for key, dict in npy_dict["affinity_sol"].items()
-}
+laplacian_embedding_sol: Dict[str, Dict[str, np.ndarray]] = load_metadata_dict("laplacian_embedding_sol", None, np.ndarray)
+affinity_sol: Dict[str, Dict[str, AffinityMatrix]] = load_metadata_dict("affinity_sol", AffinityMatrix.create, AffinityMatrix, aff_process_args)
 adj_test: DistanceMatrix = DistanceMatrix(
     np.array([[0, 0, 3.12], [2.0, 0, 1], [0, 5, 0]]), dist_type="euclidean"
 )
 adj_sol: DenseArray[np.float64] = DenseArray(
     [[False, False, True], [True, False, True], [False, True, False]]
 )
-single_dist_sol: Dict[str, DistanceMatrix] = {
-    key: DistanceMatrix(arr) for key, arr in npy_dict["single_dist_sol"].items()
-}
-double_dist_sol: Dict[str, DistanceMatrix] = {
-    key: DistanceMatrix(arr) for key, arr in npy_dict["double_dist_sol"].items()
-}
-threshold_sol_radius: Dict[str, Dict[str, DistanceMatrix]] = {
-    key: {k: DistanceMatrix(d, dist_type="euclidean") for k, d in dict.item().items()}
-    for key, dict in npy_dict["threshold_sol"].items()
-}
-threshold_iter_sol: Dict[str, DenseArray[np.float64]] = {
-    key: arrs for key, arrs in npy_dict["threshold_iter_sol"].items()
-}
-geometric_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = {
-    key: {
-        k: LaplacianMatrix(d, eps=k, lap_type="geometric", aff_minus_id=True)
-        for k, d in dict.item().items()
-    }
-    for key, dict in npy_dict["geometric_lap_sol"].items()
-}
-random_walk_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = {
-    key: {
-        k: LaplacianMatrix(d, eps=k, lap_type="random_walk", aff_minus_id=True)
-        for k, d in dict.item().items()
-    }
-    for key, dict in npy_dict["random_walk_lap_sol"].items()
-}
-symmetric_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = {
-    key: {
-        k: LaplacianMatrix(d, eps=k, lap_type="symmetric", aff_minus_id=True)
-        for k, d in dict.item().items()
-    }
-    for key, dict in npy_dict["symmetric_lap_sol"].items()
-}
+single_dist_sol: Dict[str, DistanceMatrix] = load_dict("single_dist_sol", DistanceMatrix.create, DistanceMatrix)
+double_dist_sol: Dict[str, DistanceMatrix] = load_dict("double_dist_sol", DistanceMatrix.create, DistanceMatrix)
+threshold_sol_radius: Dict[str, Dict[str, DistanceMatrix]] = load_metadata_dict("threshold_sol", DistanceMatrix.create, DistanceMatrix, dist_type="euclidean")
+threshold_iter_sol: Dict[str, DenseArray[np.float64]] = load_dict("threshold_iter_sol", None, np.ndarray)
+geometric_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = load_metadata_dict("geometric_lap_sol", LaplacianMatrix.create, LaplacianMatrix, lap_process_args, lap_type="geometric", aff_minus_id=True)
+random_walk_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = load_metadata_dict("random_walk_lap_sol", LaplacianMatrix.create, LaplacianMatrix, lap_process_args, lap_type="random_walk", aff_minus_id=True)
+symmetric_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = load_metadata_dict("symmetric_lap_sol", LaplacianMatrix.create, LaplacianMatrix, lap_process_args, lap_type="symmetric", aff_minus_id=True)
 lap_sol = {
     "geometric": geometric_lap_sol,
     "random_walk": random_walk_lap_sol,

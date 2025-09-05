@@ -23,6 +23,8 @@ class LaplacianMatrixMixin(GeometryMatrixMixin, ABC):
     point without explicitly choosing the dense or sparse representation.
     """
 
+    md_fields = ()
+
     def __new__(cls, *args: Any, **kwargs: Any) -> LaplacianMatrix:
         """
         The constructor returns an instance of either `DenseLaplacianMatrix` or `CsrLaplacianMatrix` depending on if constructed in `DenseArray` format or `CsrArray` format respectively.

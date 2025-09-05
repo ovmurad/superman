@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any, Type
+from typing import Any, Tuple, Type
 
 import attr
 import numpy as np
@@ -17,6 +17,7 @@ class ObjectMixin(BaseArray, ABC):
     """
 
     metadata: Metadata
+    md_fields: Tuple[Any, ...]
 
     fixed_ndim: int
     fixed_dtype: Type[np.generic]
