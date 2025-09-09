@@ -20,11 +20,27 @@ def laplacian_embedding(
     mat: AffinityMatrix | LaplacianMatrix,
     ncomp: int,
     lap_type: LaplacianType = "geometric",
-    eigen_solver: EigenSolver = "amg",
+    eigen_solver: EigenSolver = "dense",
     drop_first: bool = True,
     in_place: bool = False,
     **kwargs: Any,
 ) -> Tuple[DenseArray, DenseArray]:
+    """
+    Compute a Laplacian embedding of a graph using either an affinity matrix
+    or a Laplacian matrix.
+
+    :param mat: The input matrix, either an AffinityMatrix or a LaplacianMatrix.
+    :param ncomp: Number of components (eigenvectors) to compute.
+    :param lap_type: Type of Laplacian to construct if `mat` is an AffinityMatrix. (default: "geometric").
+    :param eigen_solver: Eigenvalue solver to use. (default: "dense").
+    :param drop_first: Whether to drop the first eigenvector (typically trivial). (default: True)
+    :param in_place: Whether to modify the input matrix in place. (default: False)
+    :param kwargs: Additional keyword arguments passed to the eigen decomposition function.
+
+    :return: A tuple of eigenvalues and eigenvectors.
+    :raises ValueError: If the input matrix type is not recognized.
+    """
+
     if isinstance(mat, AffinityMatrix):
         return _aff_laplacian_embedding(
             mat, ncomp, lap_type, eigen_solver, drop_first, in_place, **kwargs
@@ -37,10 +53,22 @@ def laplacian_embedding(
 def _lap_laplacian_embedding(
     lap: LaplacianMatrix,
     ncomp: int,
-    eigen_solver: EigenSolver = "amg",
+    eigen_solver: EigenSolver = "dense",
     drop_first: bool = True,
     **kwargs: Any,
 ) -> Tuple[DenseArray, DenseArray]:
+    """
+    Compute the Laplacian embedding given a precomputed Laplacian matrix.
+
+    :param lap: A LaplacianMatrix object.
+    :param ncomp: Number of components (eigenvectors) to compute.
+    :param eigen_solver: Eigenvalue solver to use. (default: "dense").
+    :param drop_first: Whether to drop the first eigenvector (typically trivial). (default: True).
+    :param kwargs: Additional keyword arguments passed to the eigen decomposition function.
+
+    :return: A tuple of eigenvalues and eigenvectors.
+    """
+
     eigvals, eigvecs = eigen_decomp(
         arr=lap.as_nparray() * -1.0 if lap.metadata.aff_minus_id else lap.as_nparray(),
         ncomp=ncomp + int(drop_first),
@@ -66,6 +94,19 @@ def _aff_laplacian_embedding(
     in_place: bool = False,
     **kwargs: Any,
 ) -> Tuple[DenseArray, DenseArray]:
+    """
+    Compute the Laplacian embedding from an affinity matrix.
+
+    :param aff: AffinityMatrix representing pairwise similarities.
+    :param ncomp: Number of components (eigenvectors) to compute.
+    :param lap_type: Type of Laplacian to construct. (default: "geometric").
+    :param eigen_solver: Eigenvalue solver to use. (default: "dense").
+    :param drop_first: Whether to drop the first eigenvector (typically trivial). (default: True).
+    :param in_place: Whether to modify the affinity matrix in place. (default: False).
+    :param kwargs: Additional keyword arguments passed to the eigen decomposition function.
+    :return: A tuple of eigenvalues and eigenvectors.
+    """
+
     degrees = None
 
     if eigen_solver in SYM_EIGEN_SOLVERS and lap_type in NON_SYM_LAPLACIAN_TYPES:

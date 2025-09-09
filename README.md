@@ -1,5 +1,13 @@
 # superman
 
+## Installation
+
+1. Install poetry. Instructions [here](https://python-poetry.org/docs/#installation).
+2. Clone this repo with your preferred method.
+3. Using the command line, navigate to the repo and run `poetry install`
+
+Note: docs are located at https://ovmurad.github.io/superman/
+
 ## Overall
 
 ## Project Management

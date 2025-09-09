@@ -194,10 +194,10 @@ class DistanceMatrix(DistanceMatrixMixin, ABC):
         Compute an affinity matrix from the distance matrix.
 
         The operation can be computed either in place or out of place depending on
-        the 'in_place' flag. The distance matrix is assumed to contain squared distances
-        if the DistanceMatrix's `dist_type` metadata is 'sqeuclidean'.
+        the `in_place` flag. The distance matrix is assumed to contain squared distances
+        if the DistanceMatrix`s `dist_type` metadata is `sqeuclidean`.
 
-        :param aff_type: The type of affinity to compute (e.g., 'gaussian').
+        :param aff_type: The type of affinity to compute (e.g., `gaussian`).
         :type aff_type: AffinityType
         :param eps: Optional scaling parameter for the affinity function. If None,
                     a default is used. (default: None)
