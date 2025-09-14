@@ -7,6 +7,7 @@ Laplacian Embedding Example
 ---------------------------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: Contents:
 
    scripts/laplacian_embedding

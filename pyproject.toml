@@ -27,7 +27,9 @@ ruff = "^0.12.3"
 pre-commit = "^4.2.0"
 pytest = "^8.4.1"
 sphinx = "^8.2.3"
+nbsphinx = "^0.9"
 pytest-cov = "^6.2.1"
+pypandoc = "^1.8.8"
 
 [build-system]
 requires = ["poetry-core"]
@@ -50,6 +52,3 @@ disallow_untyped_defs = true
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
-
-[tool.poetry.extras]
-docs = ["sphinx"]

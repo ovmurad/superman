@@ -1,12 +1,13 @@
-from .matrix import AdjacencyMatrix, AffinityMatrix, DistanceMatrix, LaplacianMatrix
+from . import matrix
+from . import embedding
+from . import density
 from .normalize import normalize
 from .points import Coordinates, Data, Embedding, Points
 
 __all__ = [
-    "AdjacencyMatrix",
-    "AffinityMatrix",
-    "DistanceMatrix",
-    "LaplacianMatrix",
+    "matrix",
+    "embedding",
+    "density",
     "Points",
     "Embedding",
     "Data",

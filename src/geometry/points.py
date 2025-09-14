@@ -6,7 +6,7 @@ from typing import Any, Optional
 import numpy as np
 
 from src.array import DenseArray
-from src.geometry import DistanceMatrix
+from src.geometry.matrix import DistanceMatrix
 from src.object import DistanceType, Metadata, ObjectMixin
 
 
