@@ -33,93 +33,218 @@
             
   <section id="src-data-package">
 <h1>src.data package<a class="headerlink" href="#src-data-package" title="Link to this heading">¶</a></h1>
-<section id="module-src.data">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.data" title="Link to this heading">¶</a></h2>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-src.data.load_data">
+<span id="src-data-load-data-module"></span><h2>src.data.load_data module<a class="headerlink" href="#module-src.data.load_data" title="Link to this heading">¶</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="src.data.download_gdrive_folder">
-<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">download_gdrive_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'1NGfGcVpBarNtFMmdvQhq28hWBlVuxdQz'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'data/'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.data.download_gdrive_folder" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="src.data.load_data.download_gdrive_folder">
+<span class="sig-prename descclassname"><span class="pre">src.data.load_data.</span></span><span class="sig-name descname"><span class="pre">download_gdrive_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1NGfGcVpBarNtFMmdvQhq28hWBlVuxdQz'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_data.download_gdrive_folder" title="Link to this definition">¶</a></dt>
 <dd><p>Download all files from a Google Drive folder by ID and store them in a local directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fid</strong> – Google Drive folder ID. Defaults to <cite>DEFAULT_GDRIVE_FOLDER</cite>.</p></li>
-<li><p><strong>data_dir</strong> – Target directory where files will be stored. (default: “data/”).</p></li>
+<li><p><strong>fid</strong> (<em>str</em>) – Google Drive folder ID. Defaults to <cite>DEFAULT_GDRIVE_FOLDER</cite>.</p></li>
+<li><p><strong>data_dir</strong> (<em>str</em>) – Target directory where files will be stored. (default: “data/”).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.data.load_data.load_file">
+<span class="sig-prename descclassname"><span class="pre">src.data.load_data.</span></span><span class="sig-name descname"><span class="pre">load_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_data.load_file" title="Link to this definition">¶</a></dt>
+<dd><p>Load a numpy file into a Points object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the .npy file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Points object containing the loaded data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.data.load_data.load_gdrive_file">
+<span class="sig-prename descclassname"><span class="pre">src.data.load_data.</span></span><span class="sig-name descname"><span class="pre">load_gdrive_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_data.load_gdrive_file" title="Link to this definition">¶</a></dt>
+<dd><p>Download a file from Google Drive using its file ID, move it into a data directory,
+and optionally load it into a class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fid</strong> (<em>str</em>) – Google Drive file ID.</p></li>
+<li><p><strong>cls</strong> (<em>Type</em><em>[</em><em>T</em><em>] </em><em>| </em><em>None</em>) – Class to wrap the loaded numpy array in. If None, no class is returned.</p></li>
+<li><p><strong>data_dir</strong> (<em>str</em>) – Target directory where the file will be stored. (default: “data/”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of <cite>cls</cite> containing the loaded data, or None if <cite>cls</cite> is None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>T</em> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.data.load_data.load_s_curve">
+<span class="sig-prename descclassname"><span class="pre">src.data.load_data.</span></span><span class="sig-name descname"><span class="pre">load_s_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_data.load_s_curve" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a synthetic S-curve dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate. (default: 100).</p></li>
+<li><p><strong>noise</strong> (<em>float</em>) – Standard deviation of Gaussian noise added to the data. (default: 0.0).</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> | </em><em>None</em>) – Seed for reproducibility. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple (Points, Coordinates) where Points are the 3D data
+and Coordinates are the unrolled 1D parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>, <a class="reference internal" href="src.geometry.html#src.geometry.points.Coordinates" title="src.geometry.points.Coordinates"><em>Coordinates</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.data.load_data.load_swiss_roll">
+<span class="sig-prename descclassname"><span class="pre">src.data.load_data.</span></span><span class="sig-name descname"><span class="pre">load_swiss_roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hole</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_data.load_swiss_roll" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a synthetic Swiss roll dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate. (default: 100).</p></li>
+<li><p><strong>noise</strong> (<em>float</em>) – Standard deviation of Gaussian noise added to the data. (default: 0.0).</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> | </em><em>None</em>) – Seed for reproducibility. (default: None).</p></li>
+<li><p><strong>hole</strong> (<em>bool</em><em> | </em><em>None</em>) – Whether to generate the Swiss roll with a hole. (default: False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple (Points, Coordinates) where Points are the 3D data
+and Coordinates are the unrolled 1D parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>, <a class="reference internal" href="src.geometry.html#src.geometry.points.Coordinates" title="src.geometry.points.Coordinates"><em>Coordinates</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.data" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.data.download_gdrive_folder">
+<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">download_gdrive_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1NGfGcVpBarNtFMmdvQhq28hWBlVuxdQz'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.download_gdrive_folder" title="Link to this definition">¶</a></dt>
+<dd><p>Download all files from a Google Drive folder by ID and store them in a local directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fid</strong> (<em>str</em>) – Google Drive folder ID. Defaults to <cite>DEFAULT_GDRIVE_FOLDER</cite>.</p></li>
+<li><p><strong>data_dir</strong> (<em>str</em>) – Target directory where files will be stored. (default: “data/”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.data.load_file">
-<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">load_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.geometry.html#src.geometry.Points" title="src.geometry.points.Points"><span class="pre">Points</span></a></span></span><a class="headerlink" href="#src.data.load_file" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">load_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_file" title="Link to this definition">¶</a></dt>
 <dd><p>Load a numpy file into a Points object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> – Path to the .npy file.</p>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to the .npy file.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A Points object containing the loaded data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.data.load_gdrive_file">
-<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">load_gdrive_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'data/'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#src.data.load_gdrive_file" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">load_gdrive_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_gdrive_file" title="Link to this definition">¶</a></dt>
 <dd><p>Download a file from Google Drive using its file ID, move it into a data directory,
 and optionally load it into a class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fid</strong> – Google Drive file ID.</p></li>
-<li><p><strong>cls</strong> – Class to wrap the loaded numpy array in. If None, no class is returned.</p></li>
-<li><p><strong>data_dir</strong> – Target directory where the file will be stored. (default: “data/”).</p></li>
+<li><p><strong>fid</strong> (<em>str</em>) – Google Drive file ID.</p></li>
+<li><p><strong>cls</strong> (<em>Type</em><em>[</em><em>T</em><em>] </em><em>| </em><em>None</em>) – Class to wrap the loaded numpy array in. If None, no class is returned.</p></li>
+<li><p><strong>data_dir</strong> (<em>str</em>) – Target directory where the file will be stored. (default: “data/”).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An instance of <cite>cls</cite> containing the loaded data, or None if <cite>cls</cite> is None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>T</em> | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.data.load_s_curve">
-<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">load_s_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.geometry.html#src.geometry.Points" title="src.geometry.points.Points"><span class="pre">Points</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="src.geometry.html#src.geometry.Coordinates" title="src.geometry.points.Coordinates"><span class="pre">Coordinates</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.data.load_s_curve" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">load_s_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_s_curve" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a synthetic S-curve dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_samples</strong> – Number of samples to generate. (default: 100).</p></li>
-<li><p><strong>noise</strong> – Standard deviation of Gaussian noise added to the data. (default: 0.0).</p></li>
-<li><p><strong>random_state</strong> – Seed for reproducibility. (default: None).</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate. (default: 100).</p></li>
+<li><p><strong>noise</strong> (<em>float</em>) – Standard deviation of Gaussian noise added to the data. (default: 0.0).</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> | </em><em>None</em>) – Seed for reproducibility. (default: None).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A tuple (Points, Coordinates) where Points are the 3D data
 and Coordinates are the unrolled 1D parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>, <a class="reference internal" href="src.geometry.html#src.geometry.points.Coordinates" title="src.geometry.points.Coordinates"><em>Coordinates</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.data.load_swiss_roll">
-<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">load_swiss_roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hole</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.geometry.html#src.geometry.Points" title="src.geometry.points.Points"><span class="pre">Points</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="src.geometry.html#src.geometry.Coordinates" title="src.geometry.points.Coordinates"><span class="pre">Coordinates</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.data.load_swiss_roll" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">src.data.</span></span><span class="sig-name descname"><span class="pre">load_swiss_roll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hole</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.data.load_swiss_roll" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a synthetic Swiss roll dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_samples</strong> – Number of samples to generate. (default: 100).</p></li>
-<li><p><strong>noise</strong> – Standard deviation of Gaussian noise added to the data. (default: 0.0).</p></li>
-<li><p><strong>random_state</strong> – Seed for reproducibility. (default: None).</p></li>
-<li><p><strong>hole</strong> – Whether to generate the Swiss roll with a hole. (default: False).</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em>) – Number of samples to generate. (default: 100).</p></li>
+<li><p><strong>noise</strong> (<em>float</em>) – Standard deviation of Gaussian noise added to the data. (default: 0.0).</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> | </em><em>None</em>) – Seed for reproducibility. (default: None).</p></li>
+<li><p><strong>hole</strong> (<em>bool</em><em> | </em><em>None</em>) – Whether to generate the Swiss roll with a hole. (default: False).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A tuple (Points, Coordinates) where Points are the 3D data
 and Coordinates are the unrolled 1D parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>, <a class="reference internal" href="src.geometry.html#src.geometry.points.Coordinates" title="src.geometry.points.Coordinates"><em>Coordinates</em></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -153,12 +278,6 @@ and Coordinates are the unrolled 1D parameters.</p>
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
-</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>

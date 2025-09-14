@@ -8,19 +8,17 @@ Subpackages
    :maxdepth: 4
 
    src.array
+   src.backend
    src.data
    src.geometry
-   src.io
-   src.linalg
+   src.model
    src.object
-   src.sampling
-   src.utils
-   src.visualization
+   src.storage
 
 Module contents
 ---------------
 
 .. automodule:: src
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

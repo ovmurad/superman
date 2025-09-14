@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>src.geometry.matrix package &#8212; superman 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="src-geometry-matrix-package">
+<h1>src.geometry.matrix package<a class="headerlink" href="#src-geometry-matrix-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-src.geometry.matrix.adjacency">
+<span id="src-geometry-matrix-adjacency-module"></span><h2>src.geometry.matrix.adjacency module<a class="headerlink" href="#module-src.geometry.matrix.adjacency" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.adjacency.AdjacencyMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.adjacency.</span></span><span class="sig-name descname"><span class="pre">AdjacencyMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrixMixin" title="src.geometry.matrix.adjacency.AdjacencyMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdjacencyMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix">AdjacencyMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.adjacency.AdjacencyMatrixMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.adjacency.</span></span><span class="sig-name descname"><span class="pre">AdjacencyMatrixMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.adjacency.AdjacencyMatrixMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin" title="src.object.geometry_matrix_mixin.GeometryMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometryMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix">AdjacencyMatrix</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.adjacency.AdjacencyMatrixMixin.create">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.adjacency.AdjacencyMatrixMixin.create" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix"><em>AdjacencyMatrix</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.geometry.matrix.adjacency.AdjacencyMatrixMixin.fixed_dtype">
+<span class="sig-name descname"><span class="pre">fixed_dtype</span></span><a class="headerlink" href="#src.geometry.matrix.adjacency.AdjacencyMatrixMixin.fixed_dtype" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.adjacency.CsrAdjacencyMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.adjacency.</span></span><span class="sig-name descname"><span class="pre">CsrAdjacencyMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.adjacency.CsrAdjacencyMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdjacencyMatrix</span></code></a>, <a class="reference internal" href="src.array.sparse.html#src.array.sparse.csr.CsrArray" title="src.array.sparse.csr.CsrArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsrArray</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix">AdjacencyMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.adjacency.DenseAdjacencyMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.adjacency.</span></span><span class="sig-name descname"><span class="pre">DenseAdjacencyMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.adjacency.DenseAdjacencyMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdjacencyMatrix</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix">AdjacencyMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.geometry.matrix.affinity">
+<span id="src-geometry-matrix-affinity-module"></span><h2>src.geometry.matrix.affinity module<a class="headerlink" href="#module-src.geometry.matrix.affinity" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.affinity.AffinityMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.affinity.</span></span><span class="sig-name descname"><span class="pre">AffinityMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.affinity.AffinityMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrixMixin" title="src.geometry.matrix.affinity.AffinityMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AffinityMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix">AffinityMatrix</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.affinity.AffinityMatrix.laplacian">
+<span class="sig-name descname"><span class="pre">laplacian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lap_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'geometric'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aff_minus_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.affinity.AffinityMatrix.laplacian" title="Link to this definition">¶</a></dt>
+<dd><p>Construct a graph Laplacian from an affinity matrix using the specified type. Uses aff’s eps metadata for scaling.
+Papers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>geometric and symmetric: <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1063520306000546">https://www.sciencedirect.com/science/article/pii/S1063520306000546</a></p></li>
+<li><p>random walk: <a class="reference external" href="https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf">https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf</a></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>affs</strong> – Affinity matrix.</p></li>
+<li><p><strong>eps</strong> – Optional scaling parameter. If provided, the resulting Laplacian is multiplied by 4 / eps^2. (default: None).</p></li>
+<li><p><strong>lap_type</strong> (<em>Literal</em><em>[</em><em>'geometric'</em><em>, </em><em>'random_walk'</em><em>, </em><em>'symmetric'</em><em>]</em>) – Type of Laplacian to compute. (default: “geometric”).
+- “geometric”: normalized symmetric followed by random-walk-like normalization.
+- “random_walk”: standard random walk Laplacian.
+- “symmetric”: symmetric normalized Laplacian.</p></li>
+<li><p><strong>diag_add</strong> (<em>float</em>) – Value to add to the diagonal after constructing the Laplacian.
+If <cite>aff_minus_id</cite> is True, this value is negated before being added.</p></li>
+<li><p><strong>aff_minus_id</strong> (<em>bool</em>) – Whether to subtract the identity matrix from the affinity matrix. (default: True)
+If True, computes <cite>I - normalized_affs</cite>. If False, negates the Laplacian directly.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – Whether to modify the input affinity matrix in place during normalization. (default: False).</p></li>
+<li><p><strong>aff</strong> (<a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix"><em>AffinityMatrix</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed Laplacian matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.affinity.AffinityMatrixMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.affinity.</span></span><span class="sig-name descname"><span class="pre">AffinityMatrixMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.affinity.AffinityMatrixMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin" title="src.object.geometry_matrix_mixin.GeometryMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometryMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Mixin class that adds factory functionality to the AffinityMatrix
+hierarchy.</p>
+<p>This allows users to work with <cite>AffinityMatrix</cite> as an abstract
+entry point without needing to explicitly choose between dense or
+sparse representations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix">AffinityMatrix</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.affinity.AffinityMatrixMixin.create">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.affinity.AffinityMatrixMixin.create" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix"><em>AffinityMatrix</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.affinity.CsrAffinityMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.affinity.</span></span><span class="sig-name descname"><span class="pre">CsrAffinityMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.affinity.CsrAffinityMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">AffinityMatrix</span></code></a>, <a class="reference internal" href="src.array.sparse.html#src.array.sparse.csr.CsrArray" title="src.array.sparse.csr.CsrArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsrArray</span></code></a></p>
+<p>Implementation of a sparse (Csr-backed) affinity matrix.</p>
+<p>This class represents an affinity matrix stored in sparse format,
+providing fast element-wise operations at the cost of memory usage.</p>
+<p>Typically not instantiated directly: instead, construct an
+<cite>AffinityMatrix</cite> in <cite>CsrArray</cite> format which will return an instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix">AffinityMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.affinity.DenseAffinityMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.affinity.</span></span><span class="sig-name descname"><span class="pre">DenseAffinityMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.affinity.DenseAffinityMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">AffinityMatrix</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<p>Implementation of a dense (NumPy-backed) affinity matrix.</p>
+<p>This class represents an affinity matrix stored in dense format,
+providing fast element-wise operations at the cost of memory usage.</p>
+<p>Typically not instantiated directly: instead, construct an
+<cite>AffinityMatrix</cite> in <cite>DenseArray</cite> format which will return an instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix">AffinityMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.geometry.matrix.distance">
+<span id="src-geometry-matrix-distance-module"></span><h2>src.geometry.matrix.distance module<a class="headerlink" href="#module-src.geometry.matrix.distance" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.CsrDistanceMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.distance.</span></span><span class="sig-name descname"><span class="pre">CsrDistanceMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.CsrDistanceMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrix</span></code></a>, <a class="reference internal" href="src.array.sparse.html#src.array.sparse.csr.CsrArray" title="src.array.sparse.csr.CsrArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsrArray</span></code></a></p>
+<p>Implementation of a sparse (CSR-backed) distance matrix.
+Provides thresholding and adjacency operations for sparse arrays.</p>
+<p>Typically not instantiated directly: instead, construct an
+<cite>DistanceMatrix</cite> in <cite>CsrArray</cite> format which will return an instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix">DistanceMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.DenseDistanceMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.distance.</span></span><span class="sig-name descname"><span class="pre">DenseDistanceMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.DenseDistanceMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrix</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<p>Implementation of a dense (NumPy-backed) distance matrix.
+Provides thresholding and adjacency operations for dense arrays.</p>
+<p>Typically not instantiated directly: instead, construct an
+<cite>DistanceMatrix</cite> in <cite>DenseArray</cite> format which will return an instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix">DistanceMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.DistanceMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.distance.</span></span><span class="sig-name descname"><span class="pre">DistanceMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.DistanceMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrixMixin" title="src.geometry.matrix.distance.DistanceMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class representing a distance matrix, with functionality to
+derive adjacency and affinity matrices, and to threshold distances.</p>
+<p>This class serves as a template for distance matrix operations and enforces
+the implementation of adjacency and threshold execution methods in subclasses.
+It also provides registration and dispatching mechanisms for affinity functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix">DistanceMatrix</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.DistanceMatrix.adjacency">
+<span class="sig-name descname"><span class="pre">adjacency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.DistanceMatrix.adjacency" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the distance matrix into an adjacency matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>copy</strong> (<em>bool</em>) – Whether to return a copy of the adjacency matrix or reuse existing data. (default: False</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The adjacency matrix corresponding to this distance matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix">AdjacencyMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.DistanceMatrix.affinity">
+<span class="sig-name descname"><span class="pre">affinity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aff_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gaussian'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.DistanceMatrix.affinity" title="Link to this definition">¶</a></dt>
+<dd><p>Compute an affinity matrix from the distance matrix.</p>
+<p>The operation can be computed either in place or out of place depending on
+the <cite>in_place</cite> flag. The distance matrix is assumed to contain squared distances
+if the DistanceMatrix`s <cite>dist_type</cite> metadata is <cite>sqeuclidean</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aff_type</strong> (<em>AffinityType</em>) – The type of affinity to compute (e.g., <cite>gaussian</cite>).</p></li>
+<li><p><strong>eps</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Optional scaling parameter for the affinity function. If None,
+a default is used. (default: None)</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing matrix; otherwise, return a new one. (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The computed affinity matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix">AffinityMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.DistanceMatrix.threshold">
+<span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.DistanceMatrix.threshold" title="Link to this definition">¶</a></dt>
+<dd><p>Threshold the distance matrix by eliminating entries above a given radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>float</em>) – The maximum radius to retain distances. When dense, entries larger than
+this will be set to np.inf.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing distance matrix; otherwise,
+return a new one. (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the given radius is greater than the maximum radius
+defined in the matrix metadata.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The thresholded distance matrix.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix">DistanceMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.DistanceMatrix.threshold_distance_iter">
+<span class="sig-name descname"><span class="pre">threshold_distance_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.DistanceMatrix.threshold_distance_iter" title="Link to this definition">¶</a></dt>
+<dd><p>Generate an iterator over thresholded distance matrices with a single radius or sequence of radii.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radii</strong> (<em>float</em><em> or </em><em>Iterable</em><em>[</em><em>float</em><em>]</em>) – A single radius or an iterable of radii with which to threshold
+the distance matrix.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing distance matrix with each radius (This will ultimately threshold with the largest radius);
+otherwise, return new matrices. (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An iterator over thresholded distance matrices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Iterator[<a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix">DistanceMatrix</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.DistanceMatrixMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.distance.</span></span><span class="sig-name descname"><span class="pre">DistanceMatrixMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.DistanceMatrixMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin" title="src.object.geometry_matrix_mixin.GeometryMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometryMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Mixin class that adds factory functionality to the DistanceMatrix
+hierarchy.</p>
+<p>This allows users to work with <cite>DistanceMatrix</cite> as an abstract
+entry point without worrying about the underlying dense/sparse
+representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix">DistanceMatrix</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.DistanceMatrixMixin.create">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.DistanceMatrixMixin.create" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><em>DistanceMatrix</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geometry.matrix.distance.gaussian">
+<span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.distance.</span></span><span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dists</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_is_sq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.distance.gaussian" title="Link to this definition">¶</a></dt>
+<dd><p>Compute a Gaussian affinity matrix from a distance matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dists</strong> (<a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><em>DistanceMatrix</em></a>) – The distance matrix to convert into an affinity matrix.</p></li>
+<li><p><strong>eps</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Scaling parameter for the Gaussian kernel. If None, chosen to be 1. (default: None)</p></li>
+<li><p><strong>dist_is_sq</strong> (<em>bool</em>) – Whether the distance matrix already contains squared
+distances. (default: False)</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – If True, compute the affinity in place by modifying the
+given distance matrix; otherwise, compute out of place. (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Gaussian affinity matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix">AffinityMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.geometry.matrix.laplacian">
+<span id="src-geometry-matrix-laplacian-module"></span><h2>src.geometry.matrix.laplacian module<a class="headerlink" href="#module-src.geometry.matrix.laplacian" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.laplacian.CsrLaplacianMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.laplacian.</span></span><span class="sig-name descname"><span class="pre">CsrLaplacianMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.laplacian.CsrLaplacianMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplacianMatrix</span></code></a>, <a class="reference internal" href="src.array.sparse.html#src.array.sparse.csr.CsrArray" title="src.array.sparse.csr.CsrArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsrArray</span></code></a></p>
+<p>Concrete implementation of a sparse (CSR-backed) Laplacian matrix.</p>
+<p>This class provides a memory-efficient sparse representation,
+especially useful for large, sparse graphs.</p>
+<p>Typically not instantiated directly; instead, construct a
+<cite>LaplacianMatrix</cite> and let the <cite>LaplacianMatrixMixin</cite> factory
+return a <cite>CsrLaplacianMatrix</cite> if constructed in a <cite>CsrArray</cite> format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix">LaplacianMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.laplacian.DenseLaplacianMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.laplacian.</span></span><span class="sig-name descname"><span class="pre">DenseLaplacianMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.laplacian.DenseLaplacianMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplacianMatrix</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<p>Implementation of a dense (NumPy-backed) Laplacian matrix.</p>
+<p>This class provides a dense representation, offering fast
+element-wise operations at the cost of memory usage.</p>
+<p>Typically not instantiated directly; instead, construct a
+<cite>LaplacianMatrix</cite> and let the <cite>LaplacianMatrixMixin</cite> factory
+return a <cite>DenseLaplacianMatrix</cite> if constructed in a <cite>DenseArray</cite> format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix">LaplacianMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.laplacian.LaplacianMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.laplacian.</span></span><span class="sig-name descname"><span class="pre">LaplacianMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrixMixin" title="src.geometry.matrix.laplacian.LaplacianMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplacianMatrixMixin</span></code></a>, <a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseArray</span></code></a></p>
+<p>Abstract base class representing a Laplacian matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix">LaplacianMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.laplacian.LaplacianMatrixMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.laplacian.</span></span><span class="sig-name descname"><span class="pre">LaplacianMatrixMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.laplacian.LaplacianMatrixMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin" title="src.object.geometry_matrix_mixin.GeometryMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometryMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Mixin class that adds factory functionality to the LaplacianMatrix
+hierarchy.</p>
+<p>When instantiating <cite>LaplacianMatrix</cite> directly, this mixin intercepts
+construction and returns either a <cite>DenseLaplacianMatrix</cite> or a
+<cite>CsrLaplacianMatrix</cite> depending on the provided arguments.</p>
+<p>This allows users to work with <cite>LaplacianMatrix</cite> as an abstract entry
+point without explicitly choosing the dense or sparse representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix">LaplacianMatrix</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.laplacian.LaplacianMatrixMixin.create">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.laplacian.LaplacianMatrixMixin.create" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geometry.matrix.laplacian.eps_adjustment">
+<span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.laplacian.</span></span><span class="sig-name descname"><span class="pre">eps_adjustment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.laplacian.eps_adjustment" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>eps</strong> (<em>float</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.geometry.matrix">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.geometry.matrix" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.AdjacencyMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.</span></span><span class="sig-name descname"><span class="pre">AdjacencyMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.AdjacencyMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.adjacency.AdjacencyMatrixMixin" title="src.geometry.matrix.adjacency.AdjacencyMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdjacencyMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.AdjacencyMatrix" title="src.geometry.matrix.AdjacencyMatrix">AdjacencyMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.AffinityMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.</span></span><span class="sig-name descname"><span class="pre">AffinityMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.AffinityMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrixMixin" title="src.geometry.matrix.affinity.AffinityMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AffinityMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.AffinityMatrix" title="src.geometry.matrix.AffinityMatrix">AffinityMatrix</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.AffinityMatrix.laplacian">
+<span class="sig-name descname"><span class="pre">laplacian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lap_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'geometric'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aff_minus_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.AffinityMatrix.laplacian" title="Link to this definition">¶</a></dt>
+<dd><p>Construct a graph Laplacian from an affinity matrix using the specified type. Uses aff’s eps metadata for scaling.
+Papers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>geometric and symmetric: <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1063520306000546">https://www.sciencedirect.com/science/article/pii/S1063520306000546</a></p></li>
+<li><p>random walk: <a class="reference external" href="https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf">https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf</a></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>affs</strong> – Affinity matrix.</p></li>
+<li><p><strong>eps</strong> – Optional scaling parameter. If provided, the resulting Laplacian is multiplied by 4 / eps^2. (default: None).</p></li>
+<li><p><strong>lap_type</strong> (<em>Literal</em><em>[</em><em>'geometric'</em><em>, </em><em>'random_walk'</em><em>, </em><em>'symmetric'</em><em>]</em>) – Type of Laplacian to compute. (default: “geometric”).
+- “geometric”: normalized symmetric followed by random-walk-like normalization.
+- “random_walk”: standard random walk Laplacian.
+- “symmetric”: symmetric normalized Laplacian.</p></li>
+<li><p><strong>diag_add</strong> (<em>float</em>) – Value to add to the diagonal after constructing the Laplacian.
+If <cite>aff_minus_id</cite> is True, this value is negated before being added.</p></li>
+<li><p><strong>aff_minus_id</strong> (<em>bool</em>) – Whether to subtract the identity matrix from the affinity matrix. (default: True)
+If True, computes <cite>I - normalized_affs</cite>. If False, negates the Laplacian directly.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – Whether to modify the input affinity matrix in place during normalization. (default: False).</p></li>
+<li><p><strong>aff</strong> (<a class="reference internal" href="#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix"><em>AffinityMatrix</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed Laplacian matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.DistanceMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.</span></span><span class="sig-name descname"><span class="pre">DistanceMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.DistanceMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.distance.DistanceMatrixMixin" title="src.geometry.matrix.distance.DistanceMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class representing a distance matrix, with functionality to
+derive adjacency and affinity matrices, and to threshold distances.</p>
+<p>This class serves as a template for distance matrix operations and enforces
+the implementation of adjacency and threshold execution methods in subclasses.
+It also provides registration and dispatching mechanisms for affinity functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.DistanceMatrix" title="src.geometry.matrix.DistanceMatrix">DistanceMatrix</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.DistanceMatrix.adjacency">
+<span class="sig-name descname"><span class="pre">adjacency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.DistanceMatrix.adjacency" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the distance matrix into an adjacency matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>copy</strong> (<em>bool</em>) – Whether to return a copy of the adjacency matrix or reuse existing data. (default: False</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The adjacency matrix corresponding to this distance matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.matrix.AdjacencyMatrix" title="src.geometry.matrix.AdjacencyMatrix">AdjacencyMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.DistanceMatrix.affinity">
+<span class="sig-name descname"><span class="pre">affinity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aff_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gaussian'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.DistanceMatrix.affinity" title="Link to this definition">¶</a></dt>
+<dd><p>Compute an affinity matrix from the distance matrix.</p>
+<p>The operation can be computed either in place or out of place depending on
+the <cite>in_place</cite> flag. The distance matrix is assumed to contain squared distances
+if the DistanceMatrix`s <cite>dist_type</cite> metadata is <cite>sqeuclidean</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aff_type</strong> (<em>AffinityType</em>) – The type of affinity to compute (e.g., <cite>gaussian</cite>).</p></li>
+<li><p><strong>eps</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Optional scaling parameter for the affinity function. If None,
+a default is used. (default: None)</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing matrix; otherwise, return a new one. (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The computed affinity matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.matrix.AffinityMatrix" title="src.geometry.matrix.AffinityMatrix">AffinityMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.DistanceMatrix.threshold">
+<span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.DistanceMatrix.threshold" title="Link to this definition">¶</a></dt>
+<dd><p>Threshold the distance matrix by eliminating entries above a given radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>float</em>) – The maximum radius to retain distances. When dense, entries larger than
+this will be set to np.inf.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing distance matrix; otherwise,
+return a new one. (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the given radius is greater than the maximum radius
+defined in the matrix metadata.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The thresholded distance matrix.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.DistanceMatrix" title="src.geometry.matrix.DistanceMatrix">DistanceMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.matrix.DistanceMatrix.threshold_distance_iter">
+<span class="sig-name descname"><span class="pre">threshold_distance_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.DistanceMatrix.threshold_distance_iter" title="Link to this definition">¶</a></dt>
+<dd><p>Generate an iterator over thresholded distance matrices with a single radius or sequence of radii.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radii</strong> (<em>float</em><em> or </em><em>Iterable</em><em>[</em><em>float</em><em>]</em>) – A single radius or an iterable of radii with which to threshold
+the distance matrix.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing distance matrix with each radius (This will ultimately threshold with the largest radius);
+otherwise, return new matrices. (default: False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An iterator over thresholded distance matrices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Iterator[<a class="reference internal" href="#src.geometry.matrix.DistanceMatrix" title="src.geometry.matrix.DistanceMatrix">DistanceMatrix</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.matrix.LaplacianMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.matrix.</span></span><span class="sig-name descname"><span class="pre">LaplacianMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.matrix.LaplacianMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.matrix.laplacian.LaplacianMatrixMixin" title="src.geometry.matrix.laplacian.LaplacianMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplacianMatrixMixin</span></code></a>, <a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseArray</span></code></a></p>
+<p>Abstract base class representing a Laplacian matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.matrix.LaplacianMatrix" title="src.geometry.matrix.LaplacianMatrix">LaplacianMatrix</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">superman</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Octavian-Vlad Murad, Marcus Yim.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/src.geometry.matrix.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

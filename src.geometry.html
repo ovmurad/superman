@@ -33,47 +33,220 @@
             
   <section id="src-geometry-package">
 <h1>src.geometry package<a class="headerlink" href="#src-geometry-package" title="Link to this heading">¶</a></h1>
-<section id="module-src.geometry">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.geometry" title="Link to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="src.geometry.AdjacencyMatrix">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">AdjacencyMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.AdjacencyMatrix" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AdjacencyMatrixMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.geometry.density.html">src.geometry.density package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.density.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.density.html#src-geometry-density-density-module">src.geometry.density.density module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.density.html#module-src.geometry.density">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.geometry.embedding.html">src.geometry.embedding package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.embedding.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.embedding.html#module-src.geometry.embedding.laplacian_embedding">src.geometry.embedding.laplacian_embedding module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.embedding.html#src.geometry.embedding.laplacian_embedding.laplacian_embedding"><code class="docutils literal notranslate"><span class="pre">laplacian_embedding()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.embedding.html#module-src.geometry.embedding.ltsa">src.geometry.embedding.ltsa module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.embedding.html#module-src.geometry.embedding">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.embedding.html#src.geometry.embedding.laplacian_embedding"><code class="docutils literal notranslate"><span class="pre">laplacian_embedding()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.geometry.matrix.html">src.geometry.matrix package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.matrix.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.matrix.html#module-src.geometry.matrix.adjacency">src.geometry.matrix.adjacency module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.adjacency.AdjacencyMatrix"><code class="docutils literal notranslate"><span class="pre">AdjacencyMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.adjacency.AdjacencyMatrixMixin"><code class="docutils literal notranslate"><span class="pre">AdjacencyMatrixMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.adjacency.AdjacencyMatrixMixin.create"><code class="docutils literal notranslate"><span class="pre">AdjacencyMatrixMixin.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.adjacency.AdjacencyMatrixMixin.fixed_dtype"><code class="docutils literal notranslate"><span class="pre">AdjacencyMatrixMixin.fixed_dtype</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.adjacency.CsrAdjacencyMatrix"><code class="docutils literal notranslate"><span class="pre">CsrAdjacencyMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.adjacency.DenseAdjacencyMatrix"><code class="docutils literal notranslate"><span class="pre">DenseAdjacencyMatrix</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.matrix.html#module-src.geometry.matrix.affinity">src.geometry.matrix.affinity module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.affinity.AffinityMatrix"><code class="docutils literal notranslate"><span class="pre">AffinityMatrix</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.affinity.AffinityMatrix.laplacian"><code class="docutils literal notranslate"><span class="pre">AffinityMatrix.laplacian()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.affinity.AffinityMatrixMixin"><code class="docutils literal notranslate"><span class="pre">AffinityMatrixMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.affinity.AffinityMatrixMixin.create"><code class="docutils literal notranslate"><span class="pre">AffinityMatrixMixin.create()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.affinity.CsrAffinityMatrix"><code class="docutils literal notranslate"><span class="pre">CsrAffinityMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.affinity.DenseAffinityMatrix"><code class="docutils literal notranslate"><span class="pre">DenseAffinityMatrix</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.matrix.html#module-src.geometry.matrix.distance">src.geometry.matrix.distance module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.CsrDistanceMatrix"><code class="docutils literal notranslate"><span class="pre">CsrDistanceMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DenseDistanceMatrix"><code class="docutils literal notranslate"><span class="pre">DenseDistanceMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix.adjacency"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.adjacency()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix.affinity"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.affinity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix.threshold"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.threshold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix.threshold_distance_iter"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.threshold_distance_iter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrixMixin"><code class="docutils literal notranslate"><span class="pre">DistanceMatrixMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrixMixin.create"><code class="docutils literal notranslate"><span class="pre">DistanceMatrixMixin.create()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.gaussian"><code class="docutils literal notranslate"><span class="pre">gaussian()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.matrix.html#module-src.geometry.matrix.laplacian">src.geometry.matrix.laplacian module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.CsrLaplacianMatrix"><code class="docutils literal notranslate"><span class="pre">CsrLaplacianMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.DenseLaplacianMatrix"><code class="docutils literal notranslate"><span class="pre">DenseLaplacianMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix"><code class="docutils literal notranslate"><span class="pre">LaplacianMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrixMixin"><code class="docutils literal notranslate"><span class="pre">LaplacianMatrixMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrixMixin.create"><code class="docutils literal notranslate"><span class="pre">LaplacianMatrixMixin.create()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.eps_adjustment"><code class="docutils literal notranslate"><span class="pre">eps_adjustment()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.geometry.matrix.html#module-src.geometry.matrix">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.AdjacencyMatrix"><code class="docutils literal notranslate"><span class="pre">AdjacencyMatrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.AffinityMatrix"><code class="docutils literal notranslate"><span class="pre">AffinityMatrix</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.AffinityMatrix.laplacian"><code class="docutils literal notranslate"><span class="pre">AffinityMatrix.laplacian()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.DistanceMatrix"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.DistanceMatrix.adjacency"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.adjacency()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.DistanceMatrix.affinity"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.affinity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.DistanceMatrix.threshold"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.threshold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.DistanceMatrix.threshold_distance_iter"><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.threshold_distance_iter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.LaplacianMatrix"><code class="docutils literal notranslate"><span class="pre">LaplacianMatrix</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-src.geometry.normalize">
+<span id="src-geometry-normalize-module"></span><h2>src.geometry.normalize module<a class="headerlink" href="#module-src.geometry.normalize" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geometry.normalize.normalize">
+<span class="sig-prename descclassname"><span class="pre">src.geometry.normalize.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree_exp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.normalize.normalize" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em>[</em><em>T</em><em>]</em>)</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>degree_exp</strong> (<em>float</em>)</p></li>
+<li><p><strong>sym_norm</strong> (<em>bool</em>)</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a>[<em>T</em>]</p>
+</dd>
+</dl>
 </dd></dl>
 
+</section>
+<section id="module-src.geometry.points">
+<span id="src-geometry-points-module"></span><h2>src.geometry.points module<a class="headerlink" href="#module-src.geometry.points" title="Link to this heading">¶</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="src.geometry.AffinityMatrix">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">AffinityMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.AffinityMatrix" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AffinityMatrixMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="src.geometry.AffinityMatrix.laplacian">
-<span class="sig-name descname"><span class="pre">laplacian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lap_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'geometric'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'random_walk'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'symmetric'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'geometric'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_add</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aff_minus_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.geometry.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><span class="pre">LaplacianMatrix</span></a></span></span><a class="headerlink" href="#src.geometry.AffinityMatrix.laplacian" title="Link to this definition">¶</a></dt>
-<dd><p>Construct a graph Laplacian from an affinity matrix using the specified type. Uses aff’s eps metadata for scaling.
-Papers:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>geometric and symmetric: <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S1063520306000546">https://www.sciencedirect.com/science/article/pii/S1063520306000546</a></p></li>
-<li><p>random walk: <a class="reference external" href="https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf">https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf</a></p></li>
-</ul>
-</div></blockquote>
+<dt class="sig sig-object py" id="src.geometry.points.Coordinates">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Coordinates" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.points.PointsMixin" title="src.geometry.points.PointsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>affs</strong> – Affinity matrix.</p></li>
-<li><p><strong>eps</strong> – Optional scaling parameter. If provided, the resulting Laplacian is multiplied by 4 / eps^2. (default: None).</p></li>
-<li><p><strong>lap_type</strong> – Type of Laplacian to compute. (default: “geometric”).
-- “geometric”: normalized symmetric followed by random-walk-like normalization.
-- “random_walk”: standard random walk Laplacian.
-- “symmetric”: symmetric normalized Laplacian.</p></li>
-<li><p><strong>diag_add</strong> – Value to add to the diagonal after constructing the Laplacian.
-If <cite>aff_minus_id</cite> is True, this value is negated before being added.</p></li>
-<li><p><strong>aff_minus_id</strong> – Whether to subtract the identity matrix from the affinity matrix. (default: True)
-If True, computes <cite>I - normalized_affs</cite>. If False, negates the Laplacian directly.</p></li>
-<li><p><strong>in_place</strong> – Whether to modify the input affinity matrix in place during normalization. (default: False).</p></li>
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geometry.points.Coordinates.d">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">d</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.points.Coordinates.d" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.points.Data">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Data" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geometry.points.Data.D">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">D</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.points.Data.D" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.points.Embedding">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Embedding" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geometry.points.Embedding.p">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">p</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.points.Embedding.p" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.points.Points">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Points" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.points.PointsMixin" title="src.geometry.points.PointsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.points.Points.pairwise_distance">
+<span class="sig-name descname"><span class="pre">pairwise_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Points.pairwise_distance" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the pairwise distance matrix between points.</p>
+<p>If <cite>y_pts</cite> is provided, computes distances between <cite>self</cite> and <cite>y_pts</cite>.
+Otherwise, computes distances among points in <cite>self</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_pts</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a><em>]</em>) – Another <cite>Points</cite> object to compute distances to. If None,
+distances are computed within <cite>self</cite>.</p></li>
+<li><p><strong>dist_type</strong> (<em>DistanceType</em>) – The type of distance metric to use (“euclidean”, “cityblock”, “sqeuclidian”). Name of metric is stored in metadata. (default: “euclidian”)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The constructed Laplacian matrix.</p>
+<dd class="field-even"><p>A <cite>DistanceMatrix</cite> containing pairwise distances. The matrix name
+is constructed from the metadata of the points involved.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix">DistanceMatrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -81,9 +254,81 @@ If True, computes <cite>I - normalized_affs</cite>. If False, negates the Laplac
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.points.PointsMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">PointsMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.PointsMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.object_mixin.ObjectMixin" title="src.object.object_mixin.ObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Mixin class for point cloud objects.</p>
+<p>Adds fixed dimensionality and dtype constraints, metadata handling,
+and distance computation functionality to point cloud classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.geometry.points.PointsMixin.fixed_dtype">
+<span class="sig-name descname"><span class="pre">fixed_dtype</span></span><a class="headerlink" href="#src.geometry.points.PointsMixin.fixed_dtype" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.geometry.points.PointsMixin.fixed_ndim">
+<span class="sig-name descname"><span class="pre">fixed_ndim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.geometry.points.PointsMixin.fixed_ndim" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.geometry.points.PointsMixin.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><span class="pre">Metadata</span></a></em><a class="headerlink" href="#src.geometry.points.PointsMixin.metadata" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geometry.points.PointsMixin.nfeats">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nfeats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.points.PointsMixin.nfeats" title="Link to this definition">¶</a></dt>
+<dd><p>Number of features (dimensions) per point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of features per point.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geometry.points.PointsMixin.npts">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">npts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.points.PointsMixin.npts" title="Link to this definition">¶</a></dt>
+<dd><p>Number of points in the point set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Number of points.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.geometry">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.geometry" title="Link to this heading">¶</a></h2>
+<dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.Coordinates">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Coordinates" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code>, <a class="reference internal" href="src.array.html#src.array.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Coordinates" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.points.PointsMixin" title="src.geometry.points.PointsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="src.geometry.Coordinates.d">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">d</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.Coordinates.d" title="Link to this definition">¶</a></dt>
@@ -93,8 +338,16 @@ If True, computes <cite>I - normalized_affs</cite>. If False, negates the Laplac
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.Data">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Data" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#src.geometry.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Data" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="src.geometry.Data.D">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">D</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.Data.D" title="Link to this definition">¶</a></dt>
@@ -103,110 +356,17 @@ If True, computes <cite>I - normalized_affs</cite>. If False, negates the Laplac
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="src.geometry.DistanceMatrix">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">DistanceMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.DistanceMatrix" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrixMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
-<p>Abstract base class representing a distance matrix, with functionality to
-derive adjacency and affinity matrices, and to threshold distances.</p>
-<p>This class serves as a template for distance matrix operations and enforces
-the implementation of adjacency and threshold execution methods in subclasses.
-It also provides registration and dispatching mechanisms for affinity functions.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="src.geometry.DistanceMatrix.adjacency">
-<span class="sig-name descname"><span class="pre">adjacency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.geometry.AdjacencyMatrix" title="src.geometry.matrix.adjacency.AdjacencyMatrix"><span class="pre">AdjacencyMatrix</span></a></span></span><a class="headerlink" href="#src.geometry.DistanceMatrix.adjacency" title="Link to this definition">¶</a></dt>
-<dd><p>Convert the distance matrix into an adjacency matrix.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>copy</strong> (<em>bool</em>) – Whether to return a copy of the adjacency matrix or reuse existing data. (default: False</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The adjacency matrix corresponding to this distance matrix.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.AdjacencyMatrix" title="src.geometry.AdjacencyMatrix">AdjacencyMatrix</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.geometry.DistanceMatrix.affinity">
-<span class="sig-name descname"><span class="pre">affinity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aff_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'gaussian'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gaussian'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.geometry.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix"><span class="pre">AffinityMatrix</span></a></span></span><a class="headerlink" href="#src.geometry.DistanceMatrix.affinity" title="Link to this definition">¶</a></dt>
-<dd><p>Compute an affinity matrix from the distance matrix.</p>
-<p>The operation can be computed either in place or out of place depending on
-the <cite>in_place</cite> flag. The distance matrix is assumed to contain squared distances
-if the DistanceMatrix`s <cite>dist_type</cite> metadata is <cite>sqeuclidean</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>aff_type</strong> (<em>AffinityType</em>) – The type of affinity to compute (e.g., <cite>gaussian</cite>).</p></li>
-<li><p><strong>eps</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – Optional scaling parameter for the affinity function. If None,
-a default is used. (default: None)</p></li>
-<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing matrix; otherwise, return a new one. (default: False)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The computed affinity matrix.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.AffinityMatrix" title="src.geometry.AffinityMatrix">AffinityMatrix</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.geometry.DistanceMatrix.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.geometry.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><span class="pre">DistanceMatrix</span></a></span></span><a class="headerlink" href="#src.geometry.DistanceMatrix.threshold" title="Link to this definition">¶</a></dt>
-<dd><p>Threshold the distance matrix by eliminating entries above a given radius.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>radius</strong> (<em>float</em>) – The maximum radius to retain distances. When dense, entries larger than
-this will be set to np.inf.</p></li>
-<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing distance matrix; otherwise,
-return a new one. (default: False)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If the given radius is greater than the maximum radius
-defined in the matrix metadata.</p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The thresholded distance matrix.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#src.geometry.DistanceMatrix" title="src.geometry.DistanceMatrix">DistanceMatrix</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.geometry.DistanceMatrix.threshold_distance_iter">
-<span class="sig-name descname"><span class="pre">threshold_distance_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radii</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.geometry.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><span class="pre">DistanceMatrix</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.geometry.DistanceMatrix.threshold_distance_iter" title="Link to this definition">¶</a></dt>
-<dd><p>Generate an iterator over thresholded distance matrices with a single radius or sequence of radii.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>radii</strong> (<em>float</em><em> or </em><em>Iterable</em><em>[</em><em>float</em><em>]</em>) – A single radius or an iterable of radii with which to threshold
-the distance matrix.</p></li>
-<li><p><strong>in_place</strong> (<em>bool</em>) – If True, modify the existing distance matrix with each radius (This will ultimately threshold with the largest radius);
-otherwise, return new matrices. (default: False)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An iterator over thresholded distance matrices.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Iterator[<a class="reference internal" href="#src.geometry.DistanceMatrix" title="src.geometry.DistanceMatrix">DistanceMatrix</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.Embedding">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Embedding" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#src.geometry.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Embedding" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="src.geometry.Embedding.p">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">p</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.Embedding.p" title="Link to this definition">¶</a></dt>
@@ -215,19 +375,20 @@ otherwise, return new matrices. (default: False)</p></li>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="src.geometry.LaplacianMatrix">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">LaplacianMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.LaplacianMatrix" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LaplacianMatrixMixin</span></code>, <a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseArray</span></code></a></p>
-<p>Abstract base class representing a Laplacian matrix.</p>
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.Points">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Points" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code>, <a class="reference internal" href="src.array.html#src.array.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Points" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geometry.points.PointsMixin" title="src.geometry.points.PointsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.geometry.Points.pairwise_distance">
-<span class="sig-name descname"><span class="pre">pairwise_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.geometry.Points" title="src.geometry.points.Points"><span class="pre">Points</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'euclidean'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'cityblock'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'sqeuclidean'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.geometry.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><span class="pre">DistanceMatrix</span></a></span></span><a class="headerlink" href="#src.geometry.Points.pairwise_distance" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">pairwise_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Points.pairwise_distance" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the pairwise distance matrix between points.</p>
 <p>If <cite>y_pts</cite> is provided, computes distances between <cite>self</cite> and <cite>y_pts</cite>.
 Otherwise, computes distances among points in <cite>self</cite>.</p>
@@ -244,7 +405,7 @@ distances are computed within <cite>self</cite>.</p></li>
 is constructed from the metadata of the points involved.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.DistanceMatrix" title="src.geometry.DistanceMatrix">DistanceMatrix</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix">DistanceMatrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -253,8 +414,22 @@ is constructed from the metadata of the points involved.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.geometry.normalize">
-<span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><span class="pre">BaseArray</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree_exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym_norm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><span class="pre">BaseArray</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.geometry.normalize" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree_exp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.normalize" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em>[</em><em>T</em><em>]</em>)</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>degree_exp</strong> (<em>float</em>)</p></li>
+<li><p><strong>sym_norm</strong> (<em>bool</em>)</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a>[<em>T</em>]</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 </section>
@@ -285,12 +460,6 @@ is constructed from the metadata of the points involved.</p>
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
-</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>

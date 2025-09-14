@@ -1,10 +1,10 @@
-src.utils package
+src.model package
 =================
 
 Module contents
 ---------------
 
-.. automodule:: src.utils
+.. automodule:: src.model
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

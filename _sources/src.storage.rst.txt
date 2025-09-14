@@ -1,13 +1,13 @@
-src.data package
-================
+src.storage package
+===================
 
 Submodules
 ----------
 
-src.data.load\_data module
+src.storage.storage module
 --------------------------
 
-.. automodule:: src.data.load_data
+.. automodule:: src.storage.storage
    :members:
    :show-inheritance:
    :undoc-members:
@@ -15,7 +15,7 @@ src.data.load\_data module
 Module contents
 ---------------
 
-.. automodule:: src.data
+.. automodule:: src.storage
    :members:
    :show-inheritance:
    :undoc-members:
