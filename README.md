@@ -4,9 +4,11 @@
 
 1. Install poetry. Instructions [here](https://python-poetry.org/docs/#installation).
 2. Clone this repo with your preferred method.
-3. Using the command line, navigate to the repo and run `poetry install`
+3. Using the command line, navigate to the repo and run `poetry install`.
 
-Note: docs are located at https://ovmurad.github.io/superman/
+## Docs
+
+Docs are located at https://ovmurad.github.io/superman/.
 
 ## Overall
 
@@ -32,52 +34,49 @@ sparse arrays.
 The common interface will be implemented in the Array Class, while the dense and sparse implementations will be
 implemented by the DenseArray and SparseArray classes respecively.
 
-#### Array
+#### BaseArray
 
-##### Common Interface
-
-- Common Array properties: shape, num, nnz, etc.
+Abstract class that contains functionality that all children must implement. Things like `__add__` and `__iadd__` are defined
 
 #### DenseArray
 
-##### Common Interface Specifics
+Class that performs operations on a `Storage` field. Copies the storage if operation is out-of-place, 
+otherwise modifies the storage directly. Currently uses numpy operations.
 
-##### Specific Interface
+#### Storage
+
+Class that uses some `BACKEND` to execute Dense operations.
+
+#### Backend
+
+Implements the Dense operations. Currently uses numpy operations.
 
 #### SparseArray
 
-##### Interface Specifics
-
-##### Specific Interface
+Class that uses scipy's `coo_array` to exectue Sparse operations.
 
 ### object
 
-This submodule will implement the interface with the Array Class depending on the type of 'geometric' object wrapping
-the array.
-Abstractly, each Object subclass will implement the 'semantic meaning' of the array it manipulates.
-Some examples include: **Points**(these will be points in either the ambient or embedding space, always Dense with size
-npts x nfeats), **Laplacian**(handles laplacian matrices, can be either Dense or Sparse of size npts x npts), and many
-others.
-Some of these objects will support only DenseArrays or SparseArrays, but some will support both, making the common
-interface in Array necessary.
-The Object class should implement some common functions to all subclasses. Wrappers for the underlying Array object and
-a `visualize` function would be a good place to start, but others might be useful.
+This submodule contains mixin classes for the generic `Object` and all non-implementation mixin classes.
+Mixins are all abstract and are only used as mixins.
 
 #### Object
+
+This submodule contains mixin classes for the generic `Object` and all non-implementation mixin classes.
+`Objects` inherit a metadata field and some `fixed_ndim` and `fixed_dtype` that will be checked against 
+when an instance of that `Object` is created. If the constructor receives array-like data that has ndim 
+not equal to `fixed_ndim` or dtype not equal to `fixed_dtype`, it will error.
+
+Generally, all child `Object` implementations will inherit both a mixin class and an Array class.
+Thus, all implementations are the same abstract mixin class and have functionality from the Array class.
+You can expect the functionality defined in the mixin class without worrying about the specific implementation.
+
+All child Objects must inherit from the mixin FIRST and then its array. This is very important because 
+the flow of constructor data follows the MRO and the data must terminate in the BaseArray class.
 
 ##### Common interface
 
 A very rough list of Objects with their dimensions, type of Array Object supported, and description.
-
-#### Points/Embedded Points/Point Coordinates
-
-- **Variable Name**: for points in ambient space - `xamb`, `yamb`, `amb`; for embedded points - `xemb`, `yemb`, `emb`;
-  for point coordinates - `xcoord`, `ycoord`, `coord`;
-- **Array Type**: Dense.
-- **Dimensions**: (`npts`, `D`) for points in ambient space; (`npts`, `p`) for embedded points; (`npts`, `d`) for point
-  coordinates.
-- **Description**: Array containing a set of points sampled from a manifold, subsequently embedded by some embedding
-  algorithm or function, or the coordinates of the points in some chart.
 
 #### Function
 
@@ -90,25 +89,41 @@ A very rough list of Objects with their dimensions, type of Array Object support
   This class is going to be essential for visualization and will generally represent the colors by which we color the
   points.
 
+### geometry
+
+This submodule contains all geometry-related objects. Matrix objects and `Points` are included.
+
+#### Points/Embedded Points/Point Coordinates
+
+- **Variable Name**: for points in ambient space - `xamb`, `yamb`, `amb`; for embedded points - `xemb`, `yemb`, `emb`;
+  for point coordinates - `xcoord`, `ycoord`, `coord`;
+- **Array Type**: Dense.
+- **Dimensions**: (`npts`, `D`) for points in ambient space; (`npts`, `p`) for embedded points; (`npts`, `d`) for point
+  coordinates.
+- **Description**: Array containing a set of points sampled from a manifold, subsequently embedded by some embedding
+  algorithm or function, or the coordinates of the points in some chart.
+
 #### Distance Matrix
 
-- **Variable Name**: `dist_mat`.
+- **Variable Name**: `dist`.
 - **Array Type**: Dense or Sparse.
 - **Dimensions**: (`npts`, `npts`).
+- **Description**: Matrix object that represents pairwise distances. All pairwise distances are calculated, resulting in a fully dense matrix.
+  Thresholding is highly recommended.
 
 #### Affinity Matrix
 
-- **Variable Name**: `aff_mat`.
+- **Variable Name**: `aff`.
 - **Array Type**: Dense or Sparse.
 - **Dimensions**: (`npts`, `npts`).
-- **Description**: TODO.
+- **Description**: Matrix object that represents similarities. Reweights a distance matrix's edges with some function like a gaussian.
 
 #### Laplacian Matrix
 
-- **Variable Name**: `lap_mat`.
+- **Variable Name**: `lap`.
 - **Array Type**: Dense or Sparse.
 - **Dimensions**: (`npts`, `npts`).
-- **Description**: TODO.
+- **Description**: Matrix object that represents a graph laplacian. Computes graph laplacian variations on an affinity matrix.
 
 #### Laplacian Spectrum
 
@@ -156,8 +171,6 @@ A very rough list of Objects with their dimensions, type of Array Object support
 
 ### linalg
 
-### geometry
-
 ## Secondary Package Components
 
 ### utils
@@ -165,6 +178,8 @@ A very rough list of Objects with their dimensions, type of Array Object support
 ### io
 
 ### data
+
+This submodule contains utilities for generating and loading datasets into Superman objects.
 
 ### sampling
 
