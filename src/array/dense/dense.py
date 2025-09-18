@@ -14,7 +14,7 @@ from typing import (
 
 import numpy as np
 
-from ...storage import Data, Storage
+from src.storage import Data, Storage
 from ..base import BaseArray, unwrap, unwrap_args, unwrap_kwargs
 
 _OpArgs = ParamSpec("_OpArgs")
@@ -207,7 +207,7 @@ class DenseArray(Generic[Data], BaseArray[Data]):
         )
 
     def as_nparray(self) -> np.ndarray:
-        return np.array(self.values.data)
+        return self.values.data
 
     # ======================================================================
     # Elementwise math functions (ufuncs)

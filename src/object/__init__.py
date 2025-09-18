@@ -10,7 +10,7 @@ from .metadata import (
     LaplacianType,
     Metadata,
 )
-from .object_mixin import ObjectMixin
+from .object_mixin import ObjectMixin, chunk
 
 __all__ = [
     "GeometryMatrixMixin",
@@ -24,4 +24,5 @@ __all__ = [
     "AFFINITY_TYPES",
     "LAPLACIAN_TYPES",
     "FunctionMixin",
+    "chunk",
 ]

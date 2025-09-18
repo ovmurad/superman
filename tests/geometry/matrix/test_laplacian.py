@@ -2,7 +2,7 @@ from typing import get_args
 
 import numpy as np
 import pytest
-from src.geometry import AffinityMatrix
+from src.geometry.matrix import AffinityMatrix
 from src.object import LaplacianType
 from tests.test_utils import (
     affinity_sol,

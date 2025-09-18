@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any, Type
+from typing import Any, Iterator, Optional, Tuple, Type, Union
 
 import attr
 import numpy as np
@@ -59,3 +59,32 @@ class ObjectMixin(BaseArray, ABC):
 
         if isinstance(args[0], ObjectMixin):
             self.metadata = self.metadata.update_with(args[0].metadata)
+
+BaseArrayLike = Union[BaseArray, Tuple[Union[BaseArray, None], ...]]
+
+def _nbatches(arr_len: int, batch_size: int) -> int:
+    return int(np.ceil(arr_len / batch_size))
+
+def chunk(arr: BaseArrayLike, bsize: Optional[int] = None) -> Iterator[BaseArrayLike]:
+    if isinstance(arr, tuple):
+        # Find the first non-None array to get the dimension
+        non_none_arrays = [a for a in arr if a is not None]
+        if not non_none_arrays:
+            yield arr  # All None tuple
+            return
+
+        n = non_none_arrays[0].shape[0]
+        if not all(a.shape[0] == n for a in non_none_arrays):
+            raise ValueError("All non-None arrays in the tuple must have the same first dimension")
+    else:
+        n = arr.shape[0]
+    
+    if bsize is None or n <= bsize:
+        yield arr
+    else:
+        for b in range(_nbatches(n, bsize)):
+            sl = slice(b * bsize, (b + 1) * bsize)
+            if isinstance(arr, tuple):
+                yield tuple(a[sl] if a is not None else None for a in arr)
+            else:
+                yield arr[sl]
