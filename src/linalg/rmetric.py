@@ -12,7 +12,7 @@ from src.geometry import Embedding
 from src.geometry import normalize
 from src.linalg.func import func
 from src.linalg.covariance import Covariance
-from src.linalg.eigen_system import EigenSystem
+from src.geometry.eigen_system import EigenSystem
 from src.object import ObjectMixin
 from src.object import chunk
 from src.object.geometry_matrix_mixin import GeometryMatrixMixin
@@ -75,7 +75,6 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
 
         #hacky
         dual_metric = Covariance.local_func(x_pts, mean_pts, lap, needs_means=False, md=md)
-        print(cls._decompose_dual_metric(dual_metric, ncomp, dual))
         return RMetricSystems(cls._decompose_dual_metric(dual_metric, ncomp, dual), metadata=md)
 
     @classmethod

@@ -4,14 +4,16 @@ import numpy as np
 
 from src.array import DenseArray
 from src.array.linalg import SYM_EIGEN_SOLVERS, EigenSolver, eigen_decomp
-from src.geometry import normalize
+from src.geometry.normalize import normalize
 from src.geometry.matrix import (
     NON_SYM_LAPLACIAN_TYPES,
     SYM_LAPLACIAN_TYPES,
     AffinityMatrix,
 )
 from src.geometry.matrix.laplacian import LaplacianMatrix, eps_adjustment
+from src.geometry.eigen_system import EigenSystem
 from src.object import LaplacianType
+from src.object.metadata import Metadata
 
 _DIAG_ADD = 2.0
 
@@ -24,7 +26,7 @@ def laplacian_embedding(
     drop_first: bool = True,
     in_place: bool = False,
     **kwargs: Any,
-) -> Tuple[DenseArray, DenseArray]:
+) -> EigenSystem:
     """
     Compute a Laplacian embedding of a graph using either an affinity matrix
     or a Laplacian matrix.
@@ -56,7 +58,7 @@ def _lap_laplacian_embedding(
     eigen_solver: EigenSolver = "dense",
     drop_first: bool = True,
     **kwargs: Any,
-) -> Tuple[DenseArray, DenseArray]:
+) -> EigenSystem:
     """
     Compute the Laplacian embedding given a precomputed Laplacian matrix.
 
@@ -68,6 +70,8 @@ def _lap_laplacian_embedding(
 
     :return: A tuple of eigenvalues and eigenvectors.
     """
+
+    md: Metadata = lap.metadata
 
     eigvals, eigvecs = eigen_decomp(
         arr=lap.as_nparray() * -1.0 if lap.metadata.aff_minus_id else lap.as_nparray(),
@@ -82,7 +86,7 @@ def _lap_laplacian_embedding(
         eigvals = eigvals[1:]
         eigvecs = eigvecs[:, 1:]
 
-    return eigvals, eigvecs
+    return EigenSystem((eigvals, eigvecs), metadata=md)
 
 
 def _aff_laplacian_embedding(
@@ -93,7 +97,7 @@ def _aff_laplacian_embedding(
     drop_first: bool = True,
     in_place: bool = False,
     **kwargs: Any,
-) -> Tuple[DenseArray, DenseArray]:
+) -> EigenSystem:
     """
     Compute the Laplacian embedding from an affinity matrix.
 
@@ -106,6 +110,8 @@ def _aff_laplacian_embedding(
     :param kwargs: Additional keyword arguments passed to the eigen decomposition function.
     :return: A tuple of eigenvalues and eigenvectors.
     """
+
+    md: Metadata = aff.metadata
 
     degrees = None
 
@@ -149,4 +155,4 @@ def _aff_laplacian_embedding(
         eigvals = eigvals[1:]
         eigvecs = eigvecs[:, 1:]
 
-    return eigvals, eigvecs
+    return EigenSystem((DenseArray(eigvals), DenseArray(eigvecs)), metadata=md)

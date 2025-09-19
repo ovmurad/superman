@@ -6,7 +6,7 @@ import numpy as np
 from src.array.base import BaseArray
 from src.array.dense.dense import DenseArray
 from src.array.sparse.csr import CsrArray
-from src.linalg.eigen_system import EigenSystem
+from src.geometry.eigen_system import EigenSystem
 from src.object import ObjectMixin
 from src.object.geometry_matrix_mixin import GeometryMatrixMixin
 

@@ -25,8 +25,6 @@ class EigenMixin(ObjectMixin, tuple[DenseArray]):
             raise ValueError(f"{obj.__class__.__name__} object has `value_ndim`={obj[0].ndim}, but expected {obj.fixed_value_ndim}!")
         if obj[1].ndim != obj.fixed_vector_ndim:
             raise ValueError(f"{obj.__class__.__name__} object has `vector_ndim`={obj[1].ndim}, but expected {obj.fixed_vector_ndim}!")
-        if obj[0].shape[0] != obj[1].shape[0]:
-            raise ValueError(f"`value` has number of rows={obj[0].shape[0]}, but expected `vector` number of rows={obj[1].shape[0]}!")
 
         return obj
 

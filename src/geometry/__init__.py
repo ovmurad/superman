@@ -3,6 +3,7 @@ from . import embedding
 from . import density
 from .normalize import normalize
 from .points import Coordinates, Data, Embedding, Points
+from .eigen_system import EigenSystem
 
 __all__ = [
     "matrix",
@@ -13,4 +14,5 @@ __all__ = [
     "Data",
     "Coordinates",
     "normalize",
+    "EigenSystem",
 ]

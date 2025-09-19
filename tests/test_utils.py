@@ -24,7 +24,6 @@ def load_test_npy():
                     file_key = f[f.find("-") + 1 : f.find(".npy")]
                     full_path = os.path.join(root, f)
                     data[prefix][file_key] = np.load(full_path, allow_pickle=True)
-                    print("a")
     return data
 
 

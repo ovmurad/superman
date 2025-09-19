@@ -62,8 +62,6 @@ class DistanceMatrix(DistanceMatrixMixin, ABC):
     It also provides registration and dispatching mechanisms for affinity functions.
     """
 
-    _dispatch_affinity: ClassVar[dict[AffinityType, Callable]] = {}
-
     def adjacency(
         self,
         copy: bool = False,
@@ -93,25 +91,6 @@ class DistanceMatrix(DistanceMatrixMixin, ABC):
         :rtype: AdjacencyMatrix
         """
         pass
-
-    @classmethod
-    def _register(
-        cls, name: AffinityType
-    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        """
-        Decorator to register a class method in the affinity dispatch table.
-
-        :param name: The name of the affinity type to register.
-        :type name: AffinityType
-        :return: The decorator that registers the function.
-        :rtype: Callable
-        """
-
-        def decorator(func: Callable) -> Callable[..., Any]:
-            cls._dispatch_affinity[name] = classmethod(func).__get__(None, cls)
-            return func
-
-        return decorator
 
     def threshold(
         self,
@@ -209,13 +188,10 @@ class DistanceMatrix(DistanceMatrixMixin, ABC):
         """
 
         dist_is_sq = self.metadata.dist_type == "sqeuclidean"
+        
+        if aff_type == "gaussian":
+            return gaussian(self, eps, dist_is_sq, in_place)
 
-        return self._dispatch_affinity[aff_type].__get__(self)(
-            eps, dist_is_sq, in_place
-        )
-
-
-@DistanceMatrix._register("gaussian")
 def gaussian(
     dists: DistanceMatrix,
     eps: Optional[float] = None,
