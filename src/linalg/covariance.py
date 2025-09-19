@@ -8,7 +8,7 @@ import numpy as np
 from src.array import BaseArray, CsrArray, DenseArray
 from src.geometry import normalize
 from src.geometry import Points
-from src.linalg import func
+from src.linalg.func import func
 from src.object import ObjectMixin
 from src.object import chunk
 from src.object import GeometryMatrixMixin
@@ -18,23 +18,29 @@ from src.object.metadata import Metadata
 class CovarianceMatrixMixin(GeometryMatrixMixin, ABC):
     pass
 
-class Covariance(func, ABC):
-    nouts = 1
+class CovarianceMatrix(CovarianceMatrixMixin, DenseArray):
+    pass
 
+class CovarianceMatrices(CovarianceMatrixMixin, DenseArray):
+    fixed_ndim = 3
+
+class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
+    @classmethod
+    def global_func(*args: Any, **kwargs: Any) -> CovarianceMatrix:
+        raise NotImplementedError()
+
+    @classmethod
     def local_func(
-        self,
-        x_pts: Points,
+        cls,
+        x_pts: DenseArray,
         mean_pts: DenseArray,
         weights: Optional[BaseArray],
-        needs_means: bool, 
+        needs_means: bool,
+        md: Metadata,
     ) -> CovarianceMatrices:
         #hack for now
-        pts_md: Metadata = x_pts.metadata
         x_pts: np.ndarray = x_pts.as_nparray()
         mean_pts: np.ndarray = mean_pts.as_nparray()
-        wt_md: Metadata = None
-        if isinstance(weights, ObjectMixin):
-            wt_md = weights.metadata
         weights: Optional[np.ndarray] = None if weights is None else weights.as_nparray()
 
         nmeans: int = mean_pts.shape[0] if weights is None else weights.shape[0]
@@ -63,10 +69,11 @@ class Covariance(func, ABC):
 
             cov += outer_means
 
-        return CovarianceMatrices(cov, metadata=pts_md if wt_md is None else pts_md.update_with(wt_md))
+        return CovarianceMatrices(cov, metadata=md)
 
+    @classmethod
     def local_iter(
-        self,
+        cls,
         x_pts: Points,
         mean_pts: Optional[DenseArray] = None,
         weights: Optional[BaseArray] = None,
@@ -79,12 +86,14 @@ class Covariance(func, ABC):
             mean_pts = x_pts[np.arange(x_pts.shape[0])]
         elif mean_pts is None:
             mean_pts = x_pts if weights is None else weights * x_pts
-        if needs_norm:
+        if weights is not None and needs_norm:
             weights = normalize(weights, axis=None, in_place=in_place_norm)
-        return (self.local_func(x_pts, mean_chunk, weight_chunk, needs_means) for mean_chunk, weight_chunk in chunk((mean_pts, weights), bsize=bsize))
+        md: Metadata = x_pts.metadata.update_with(weights.metadata) if isinstance(weights, ObjectMixin) else x_pts.metadata
+        return (cls.local_func(x_pts, mean_chunk, weight_chunk, needs_means, md) for mean_chunk, weight_chunk in chunk((mean_pts, weights), bsize=bsize))
 
-    def local_covariance(
-        self,
+    @classmethod
+    def local(
+        cls,
         x_pts: Points,
         mean_pts: Optional[DenseArray] = None,
         weights: Optional[BaseArray] = None,
@@ -93,11 +102,4 @@ class Covariance(func, ABC):
         in_place_norm: bool = False,
         bsize: Optional[int] = None,
     ) -> CovarianceMatrices:
-        func.local()
-
-class CovarianceMatrix(CovarianceMatrixMixin, DenseArray):
-    pass
-
-
-class CovarianceMatrices(CovarianceMatrixMixin, DenseArray):
-    fixed_ndim = 3
+        return super().package(x_pts, mean_pts, weights, needs_means, needs_norm, in_place_norm, output_cls=CovarianceMatrices, bsize=bsize)

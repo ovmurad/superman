@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from abc import ABC
-from typing import Any, Iterator, Optional, Tuple, Type, Union
+from abc import ABC, abstractmethod
+from typing import Any, Iterator, Optional, Self, Sequence, Tuple, Type, Union
 
 import attr
 import numpy as np
@@ -10,7 +10,7 @@ from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
 
-class ObjectMixin(BaseArray, ABC):
+class ObjectMixin(ABC):
     """
     Abstract base class providing metadata handling and type/dimension
     validation.
@@ -37,28 +37,33 @@ class ObjectMixin(BaseArray, ABC):
         :raises ValueError: If the object's ndim or dtype does not match
                             the fixed expected values.
         """
-        super().__init__(*args, **kwargs)  # type: ignore
-
-        if self.ndim != self.fixed_ndim:
-            raise ValueError(
-                f"{self.__class__.__name__} object has `ndim`={self.ndim}, but expected {self.fixed_ndim}!"
-            )
-        if self.dtype != self.fixed_dtype:
-            raise ValueError(
-                f"{self.__class__.__name__} object has `dtype`={self.dtype}, but expected {self.fixed_dtype}!"
-            )
 
         metadata_args = tuple(
-            kwargs[f.name] if f.name in kwargs else None for f in attr.fields(Metadata)
+            self._give_arg_and_consume(f.name, kwargs) if f.name in kwargs else None for f in attr.fields(Metadata)
         )
 
         self.metadata = Metadata(*metadata_args)
 
         if "metadata" in kwargs:
             self.metadata = self.metadata.update_with(kwargs["metadata"])
+            del kwargs["metadata"]
 
-        if isinstance(args[0], ObjectMixin):
+        if len(args) > 0 and isinstance(args[0], ObjectMixin):
             self.metadata = self.metadata.update_with(args[0].metadata)
+
+        super().__init__(*args, **kwargs)  # type: ignore
+
+    @staticmethod
+    def _give_arg_and_consume(name: str, kwargs: Any) -> Any:
+        temp: Any = kwargs[name]
+        del kwargs[name]
+        return temp
+
+    @classmethod
+    @abstractmethod
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        ...
+
 
 BaseArrayLike = Union[BaseArray, Tuple[Union[BaseArray, None], ...]]
 

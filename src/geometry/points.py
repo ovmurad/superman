@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any, Iterator, Optional, Tuple
+from typing import Any, Iterator, Optional, Self, Sequence, Tuple
 
 import numpy as np
 
@@ -127,6 +127,10 @@ class Points(PointsMixin, DenseArray):
 
         return pts, mean_pt, weights
 
+
+    @classmethod
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        return cls(super().concat(arrs, axis=axis), metadata=arrs[0].metadata)
 
 class Data(Points):
 

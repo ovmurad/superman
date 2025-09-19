@@ -1,13 +1,15 @@
 from abc import ABC
-from typing import Any, Type
+from typing import Any, Self, Sequence, Type
 
+import attr
 import numpy as np
 
+from src.array.base import BaseArray
 from src.object.metadata import Metadata
 from src.object.object_mixin import ObjectMixin
 
 
-class GeometryMatrixMixin(ObjectMixin, ABC):
+class GeometryMatrixMixin(ObjectMixin, BaseArray, ABC):
     """
     Mixin class providing common functionality for geometry-related matrices.
 
@@ -18,7 +20,6 @@ class GeometryMatrixMixin(ObjectMixin, ABC):
 
     fixed_ndim = 2
     fixed_dtype: Type[np.generic] = np.float64
-    metadata: Metadata
 
     def __init__(self, *args: Any, **metadata: Any) -> None:
         """
@@ -29,6 +30,15 @@ class GeometryMatrixMixin(ObjectMixin, ABC):
         :param metadata: Keyword arguments representing metadata fields.
         """
         super().__init__(*args, **metadata)
+
+        if self.ndim != self.fixed_ndim:
+            raise ValueError(
+                f"{self.__class__.__name__} object has `ndim`={self.ndim}, but expected {self.fixed_ndim}!"
+            )
+        if self.dtype != self.fixed_dtype:
+            raise ValueError(
+                f"{self.__class__.__name__} object has `dtype`={self.dtype}, but expected {self.fixed_dtype}!"
+            )
 
     @property
     def is_square(self) -> bool:
@@ -72,3 +82,7 @@ class GeometryMatrixMixin(ObjectMixin, ABC):
         if self.is_square:
             return self.from_npts
         raise ValueError("Matrix is not square, so `npts` is not well defined!")
+
+    @classmethod
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        return cls(super().concat(arrs, axis=axis), metadata=arrs[0].metadata)

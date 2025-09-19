@@ -1,36 +1,37 @@
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any, Generic, Iterable, Optional, Tuple, Type, TypeVar
 
 import numpy as np
 
+from src.array.base import BaseArray
+from src.array.dense.dense import DenseArray
+from src.array.sparse.csr import CsrArray
+from src.linalg.eigen_system import EigenSystem
+from src.object import ObjectMixin
+from src.object.geometry_matrix_mixin import GeometryMatrixMixin
 
-class func(ABC):
-    nouts: int
+GlobalType = TypeVar("GlobalType", bound=ObjectMixin)
+LocalType = TypeVar("LocalType", bound=ObjectMixin)
 
+class func(ABC, Generic[GlobalType, LocalType]):
+    local_type: Type
+    global_type : Type
+
+    @classmethod
     @abstractmethod
-    def global_func(self, *args: Any, **kwargs: Any) -> Any:
+    def global_func(cls, *args: Any, **kwargs: Any) -> GlobalType:
         ...
 
+    @classmethod
     @abstractmethod
-    def local_func(self, *args: Any, **kwargs: Any) -> Any:
+    def local_func(cls, *args: Any, **kwargs: Any) -> LocalType:
         ...
     
+    @classmethod
     @abstractmethod
-    def local_iter(self, *args: Any, **kwargs: Any) -> Any:
+    def local_iter(cls, *args: Any, **kwargs: Any) -> Iterable[LocalType]:
         ...
 
-    def local(self, *args: Any, bsize: Optional[int] = None, **kwargs: Any):
-        if bsize is None:
-            return self.local_func(
-                *args, bsize, **kwargs
-            )
-
-        local_data_iter = self.local_iter(
-            *args, bsize, **kwargs
-        )
-
-        local_data_batches = [[] for _ in range(self.nouts)]
-        for ld in local_data_iter:
-            for out_ld_b, out in zip(local_data_batches, ld):
-                out_ld_b.append(out)
-        return tuple(np.concatenate(ld_batches) for ld_batches in local_data_batches)
+    @classmethod
+    def package(cls, *args: Any, output_cls: Type[LocalType], bsize: Optional[int] = None, **kwargs: Any) -> LocalType:
+        return output_cls.concat_with_metadata(list(cls.local_iter(*args, bsize, **kwargs)))
