@@ -5,6 +5,7 @@ from typing import Any, Generic, NoReturn, Optional, Sequence
 import numpy as np
 
 from src.storage import BACKEND, Data, Storage
+
 from ..base import BaseArray, unwrap
 from ..dense import DenseArray
 from .sparse import SparseArray

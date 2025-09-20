@@ -1,18 +1,17 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any, Iterator, Optional, Self, Sequence, Tuple
+from typing import Optional, Self, Sequence, Tuple
 
 import numpy as np
 
 from src.array import BaseArray, DenseArray
-from src.geometry.matrix import DistanceMatrix, LaplacianMatrix
+from src.geometry.matrix import DistanceMatrix
 from src.geometry.normalize import normalize
 from src.object import DistanceType, Metadata, ObjectMixin
-from src.object.object_mixin import chunk
 
 
-class PointsMixin(ObjectMixin, ABC):
+class PointsMixin(ObjectMixin, BaseArray, ABC):
     """
     Mixin class for point cloud objects.
 
@@ -44,6 +43,7 @@ class PointsMixin(ObjectMixin, ABC):
         :rtype: int
         """
         return self.shape[1]
+
 
 class Points(PointsMixin, DenseArray):
     def pairwise_distance(
@@ -85,31 +85,14 @@ class Points(PointsMixin, DenseArray):
 
     def demean(
         self,
-        mean_pt: Optional[DenseArray| int | bool] = None,
+        mean_pt: Optional[DenseArray | int | bool] = None,
         weights: Optional[BaseArray] = None,
         needs_norm: bool = True,
         in_place_demean: bool = False,
         in_place_norm: bool = False,
-    ) -> Tuple[Points, DenseArray, BaseArray | None]:
-        """
-        Prepare inputs for single function computation: normalizes weights, computes mean if needed,
-        and demeans 'x_pts'. Optionally performs demeans in-place on 'x_pts' and normalizes in-place on 'weights'.
+    ) -> Tuple[Points, DenseArray | None, BaseArray | None]:
 
-        :param x_pts: Array of input points.
-        :param mean_pt: Optional mean point. (default: None)
-            - If True, compute the mean (weighted or unweighted) of 'x_pts'.
-            - If an integer, use 'x_pts[mean_pt]' as the mean.
-            - If an array, use as mean directly.
-            - If None, do not demean.
-        :param weights: Optional weights for each point. (default: None)
-        :param needs_norm: Whether to normalize weights. (default: True)
-        :param in_place_demean: Whether to demean in-place on 'x_pts'. (default: False)
-        :param in_place_norm: Whether to normalize weights in-place on 'weights'. (default: False)
-
-        :return: self if 'in_place_demean' otherwise a copy.
-        """
-
-        pts: Points = self if in_place_demean else self.copy()
+        pts: DenseArray = self if in_place_demean else self.copy()
 
         if needs_norm and weights is not None:
             weights = normalize(weights, axis=None, in_place=in_place_norm)
@@ -125,12 +108,12 @@ class Points(PointsMixin, DenseArray):
         if mean_pt is not None:
             pts -= mean_pt
 
-        return pts, mean_pt, weights
-
+        return Points(pts, metadata=self.metadata), mean_pt, weights
 
     @classmethod
     def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
         return cls(super().concat(arrs, axis=axis), metadata=arrs[0].metadata)
+
 
 class Data(Points):
 
@@ -151,3 +134,7 @@ class Coordinates(PointsMixin, DenseArray):
     @property
     def d(self) -> int:
         return self.nfeats
+
+    @classmethod
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        return cls(super().concat(arrs, axis=axis), metadata=arrs[0].metadata)

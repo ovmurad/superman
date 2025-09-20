@@ -4,6 +4,7 @@ from abc import abstractmethod
 from typing import Any, Callable, Generic, Optional, ParamSpec, Self, Sequence
 
 from src.storage import Data, Storage
+
 from ..base import BaseArray, unwrap
 from ..dense import DenseArray
 

@@ -5,24 +5,25 @@ from itertools import cycle
 from typing import Any, Iterator, Optional
 
 import numpy as np
-from src.array import BaseArray, CsrArray, DenseArray
-from src.geometry import normalize
-from src.geometry import Points
+
+from src.array import BaseArray, DenseArray
+from src.geometry import Points, normalize
 from src.linalg.func import func
-from src.object import ObjectMixin
-from src.object import chunk
-from src.object import GeometryMatrixMixin
+from src.object import GeometryMatrixMixin, ObjectMixin, chunk
 from src.object.metadata import Metadata
 
 
 class CovarianceMatrixMixin(GeometryMatrixMixin, ABC):
     pass
 
+
 class CovarianceMatrix(CovarianceMatrixMixin, DenseArray):
     pass
 
+
 class CovarianceMatrices(CovarianceMatrixMixin, DenseArray):
     fixed_ndim = 3
+
 
 class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
     @classmethod
@@ -38,23 +39,26 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
         needs_means: bool,
         md: Metadata,
     ) -> CovarianceMatrices:
-        #hack for now
-        x_pts: np.ndarray = x_pts.as_nparray()
-        mean_pts: np.ndarray = mean_pts.as_nparray()
-        weights: Optional[np.ndarray] = None if weights is None else weights.as_nparray()
+        # hack for now
+        x_pts_arr: np.ndarray = x_pts.as_nparray()
+        mean_pts_arr: np.ndarray = mean_pts.as_nparray()
 
-        nmeans: int = mean_pts.shape[0] if weights is None else weights.shape[0]
+        nmeans: int = mean_pts_arr.shape[0] if weights is None else weights.shape[0]
 
         if weights is None:
-            cov: np.ndarray = (1.0 / x_pts.shape[0]) * (x_pts.T @ x_pts)
+            cov: np.ndarray = (1.0 / x_pts_arr.shape[0]) * (x_pts_arr.T @ x_pts_arr)
             cov = np.repeat(np.expand_dims(cov, axis=0), repeats=nmeans, axis=0)
-        elif isinstance(weights, np.ndarray):
-            cov = np.einsum("mn,np,nq->mpq", weights, x_pts, x_pts)
+        elif isinstance(weights, DenseArray):
+            cov = np.einsum("mn,np,nq->mpq", weights.as_nparray(), x_pts_arr, x_pts_arr)
 
         if weights is None:
-            means_outer_x_pts = np.einsum("mp,q->mpq", mean_pts, np.mean(x_pts, axis=0))
+            means_outer_x_pts = np.einsum(
+                "mp,q->mpq", mean_pts_arr, np.mean(x_pts_arr, axis=0)
+            )
         else:
-            means_outer_x_pts = np.einsum("mp,mq->mpq", mean_pts, weights @ x_pts)
+            means_outer_x_pts = np.einsum(
+                "mp,mq->mpq", mean_pts_arr, DenseArray(weights * x_pts_arr).as_nparray()
+            )
 
         cov -= means_outer_x_pts
         cov -= np.transpose(means_outer_x_pts, axes=(0, 2, 1))
@@ -62,10 +66,15 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
         if needs_means:
 
             if weights is None:
-                outer_means = np.einsum("mp,mq->mpq", mean_pts, mean_pts)
+                outer_means = np.einsum("mp,mq->mpq", mean_pts_arr, mean_pts_arr)
             else:
                 weights = weights.sum(axis=1, keepdims=True)
-                outer_means = np.einsum("mp,m,mq->mpq", mean_pts, weights, mean_pts)
+                outer_means = np.einsum(
+                    "mp,m,mq->mpq",
+                    mean_pts_arr,
+                    DenseArray(weights).as_nparray(),
+                    mean_pts_arr,
+                )
 
             cov += outer_means
 
@@ -83,13 +92,27 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
         bsize: Optional[int] = None,
     ) -> Iterator[CovarianceMatrices]:
         if weights is None and mean_pts is None:
-            mean_pts = x_pts[np.arange(x_pts.shape[0])]
+            processed_mean_pts: DenseArray = x_pts[np.arange(x_pts.shape[0])]
         elif mean_pts is None:
-            mean_pts = x_pts if weights is None else weights * x_pts
+            processed_mean_pts = (
+                x_pts if weights is None else DenseArray(weights * x_pts)
+            )
+        else:
+            processed_mean_pts = mean_pts
         if weights is not None and needs_norm:
             weights = normalize(weights, axis=None, in_place=in_place_norm)
-        md: Metadata = x_pts.metadata.update_with(weights.metadata) if isinstance(weights, ObjectMixin) else x_pts.metadata
-        return (cls.local_func(x_pts, mean_chunk, weight_chunk, needs_means, md) for mean_chunk, weight_chunk in chunk((mean_pts, weights), bsize=bsize))
+        md: Metadata = (
+            x_pts.metadata.update_with(weights.metadata)
+            if isinstance(weights, ObjectMixin)
+            else x_pts.metadata
+        )
+        return (
+            cls.local_func(x_pts, mean_chunk, weight_chunk, needs_means, md)
+            for mean_chunk, weight_chunk in zip(
+                chunk(processed_mean_pts, bsize=bsize),
+                cycle((None,)) if weights is None else chunk(weights, bsize=bsize),
+            )
+        )
 
     @classmethod
     def local(
@@ -102,4 +125,13 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
         in_place_norm: bool = False,
         bsize: Optional[int] = None,
     ) -> CovarianceMatrices:
-        return super().package(x_pts, mean_pts, weights, needs_means, needs_norm, in_place_norm, output_cls=CovarianceMatrices, bsize=bsize)
+        return super().package(
+            x_pts,
+            mean_pts,
+            weights,
+            needs_means,
+            needs_norm,
+            in_place_norm,
+            output_cls=CovarianceMatrices,
+            bsize=bsize,
+        )

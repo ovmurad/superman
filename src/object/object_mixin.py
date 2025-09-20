@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Iterator, Optional, Self, Sequence, Tuple, Type, Union
+from typing import Any, Iterator, Optional, Self, Sequence, Type, TypeVar
 
 import attr
 import numpy as np
@@ -39,7 +39,8 @@ class ObjectMixin(ABC):
         """
 
         metadata_args = tuple(
-            self._give_arg_and_consume(f.name, kwargs) if f.name in kwargs else None for f in attr.fields(Metadata)
+            self._give_arg_and_consume(f.name, kwargs) if f.name in kwargs else None
+            for f in attr.fields(Metadata)
         )
 
         self.metadata = Metadata(*metadata_args)
@@ -61,35 +62,21 @@ class ObjectMixin(ABC):
 
     @classmethod
     @abstractmethod
-    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
-        ...
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self: ...
 
-
-BaseArrayLike = Union[BaseArray, Tuple[Union[BaseArray, None], ...]]
 
 def _nbatches(arr_len: int, batch_size: int) -> int:
     return int(np.ceil(arr_len / batch_size))
 
-def chunk(arr: BaseArrayLike, bsize: Optional[int] = None) -> Iterator[BaseArrayLike]:
-    if isinstance(arr, tuple):
-        # Find the first non-None array to get the dimension
-        non_none_arrays = [a for a in arr if a is not None]
-        if not non_none_arrays:
-            yield arr  # All None tuple
-            return
 
-        n = non_none_arrays[0].shape[0]
-        if not all(a.shape[0] == n for a in non_none_arrays):
-            raise ValueError("All non-None arrays in the tuple must have the same first dimension")
-    else:
-        n = arr.shape[0]
-    
-    if bsize is None or n <= bsize:
+T = TypeVar("T", bound=BaseArray)
+
+
+def chunk(arr: T, bsize: Optional[int] = None) -> Iterator[T]:
+    if bsize is None or arr.shape[0] <= bsize:
         yield arr
     else:
-        for b in range(_nbatches(n, bsize)):
-            sl = slice(b * bsize, (b + 1) * bsize)
-            if isinstance(arr, tuple):
-                yield tuple(a[sl] if a is not None else None for a in arr)
-            else:
-                yield arr[sl]
+        for b in range(_nbatches(arr.shape[0], bsize)):
+            # Yield a slice from data array from the b x batch_size to the start index
+            # of the next batch
+            yield arr.__class__(arr[b * bsize : (b + 1) * bsize])

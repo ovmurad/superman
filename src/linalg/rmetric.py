@@ -4,30 +4,28 @@ from abc import ABC
 from typing import Iterator, Optional, Tuple, Type
 
 import numpy as np
-from src.array import DenseArray
-from src.array import BaseArray
-from src.array.linalg import eigen_decomp
-from src.geometry.matrix import LaplacianMatrix
-from src.geometry import Embedding
-from src.geometry import normalize
-from src.linalg.func import func
-from src.linalg.covariance import Covariance
-from src.geometry.eigen_system import EigenSystem
-from src.object import ObjectMixin
-from src.object import chunk
-from src.object.geometry_matrix_mixin import GeometryMatrixMixin
-from src.object.metadata import Metadata
 
+from src.array import DenseArray
+from src.array.linalg import eigen_decomp
+from src.geometry import Embedding
+from src.geometry.eigen_system import EigenSystem
+from src.geometry.matrix import LaplacianMatrix
+from src.linalg.covariance import Covariance
+from src.linalg.func import func
+from src.object import chunk
+from src.object.metadata import Metadata
 
 
 class RMetricSystem(EigenSystem):
     pass
+
 
 class RMetricSystems(EigenSystem):
     fixed_value_ndim: int = 2
     fixed_vector_ndim: int = 3
     fixed_value_type: Type = DenseArray
     fixed_vector_type: Type = DenseArray
+
 
 class RMetric(func[RMetricSystem, RMetricSystems], ABC):
     @staticmethod
@@ -42,7 +40,9 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         :param dual: If True, return the dual metric. If False, return the inverse. (default: True).
         :return: Tuple of (eigenvalues, eigenvectors).
         """
-        eigvals, eigvecs = eigen_decomp(dual_metric.as_nparray(), ncomp, is_symmetric=True)
+        eigvals, eigvecs = eigen_decomp(
+            dual_metric.as_nparray(), ncomp, is_symmetric=True
+        )
         eigvals *= 0.5
 
         if not dual:
@@ -73,9 +73,13 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         :return: Tuple of (eigenvalues, eigenvectors).
         """
 
-        #hacky
-        dual_metric = Covariance.local_func(x_pts, mean_pts, lap, needs_means=False, md=md)
-        return RMetricSystems(cls._decompose_dual_metric(dual_metric, ncomp, dual), metadata=md)
+        # hacky
+        dual_metric = Covariance.local_func(
+            x_pts, mean_pts, lap, needs_means=False, md=md
+        )
+        return RMetricSystems(
+            cls._decompose_dual_metric(dual_metric, ncomp, dual), metadata=md
+        )
 
     @classmethod
     def local_iter(
@@ -90,7 +94,12 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         if mean_pts is None:
             mean_pts = x_pts[np.arange(x_pts.shape[0])]
         md: Metadata = x_pts.metadata.update_with(lap.metadata)
-        return (cls.local_func(x_pts, mean_chunk, weight_chunk, ncomp, dual, md) for mean_chunk, weight_chunk in chunk((mean_pts, lap), bsize=bsize))
+        return (
+            cls.local_func(x_pts, mean_chunk, weight_chunk, ncomp, dual, md)
+            for mean_chunk, weight_chunk in zip(
+                chunk(mean_pts, bsize=bsize), chunk(lap, bsize=bsize)
+            )
+        )
 
     @classmethod
     def local(
@@ -102,4 +111,6 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         dual: bool = True,
         bsize: Optional[int] = None,
     ) -> RMetricSystems:
-        return super().package(x_pts, lap, ncomp, mean_pts, dual, output_cls=RMetricSystems, bsize=bsize)
+        return super().package(
+            x_pts, lap, ncomp, mean_pts, dual, output_cls=RMetricSystems, bsize=bsize
+        )

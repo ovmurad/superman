@@ -1,17 +1,14 @@
-from typing import Any, Tuple
+from typing import Any
 
-import numpy as np
-
-from src.array import DenseArray
 from src.array.linalg import SYM_EIGEN_SOLVERS, EigenSolver, eigen_decomp
-from src.geometry.normalize import normalize
+from src.geometry.eigen_system import EigenSystem
 from src.geometry.matrix import (
     NON_SYM_LAPLACIAN_TYPES,
     SYM_LAPLACIAN_TYPES,
     AffinityMatrix,
 )
 from src.geometry.matrix.laplacian import LaplacianMatrix, eps_adjustment
-from src.geometry.eigen_system import EigenSystem
+from src.geometry.normalize import normalize
 from src.object import LaplacianType
 from src.object.metadata import Metadata
 
@@ -25,6 +22,7 @@ def laplacian_embedding(
     eigen_solver: EigenSolver = "dense",
     drop_first: bool = True,
     in_place: bool = False,
+    largest: bool = False,
     **kwargs: Any,
 ) -> EigenSystem:
     """
@@ -45,10 +43,12 @@ def laplacian_embedding(
 
     if isinstance(mat, AffinityMatrix):
         return _aff_laplacian_embedding(
-            mat, ncomp, lap_type, eigen_solver, drop_first, in_place, **kwargs
+            mat, ncomp, lap_type, eigen_solver, drop_first, in_place, largest, **kwargs
         )
     elif isinstance(mat, LaplacianMatrix):
-        return _lap_laplacian_embedding(mat, ncomp, eigen_solver, drop_first, **kwargs)
+        return _lap_laplacian_embedding(
+            mat, ncomp, eigen_solver, drop_first, largest, **kwargs
+        )
     raise ValueError(f"Matrix of type {type(mat)} not recognized!")
 
 
@@ -57,6 +57,7 @@ def _lap_laplacian_embedding(
     ncomp: int,
     eigen_solver: EigenSolver = "dense",
     drop_first: bool = True,
+    largest: bool = False,
     **kwargs: Any,
 ) -> EigenSystem:
     """
@@ -78,7 +79,7 @@ def _lap_laplacian_embedding(
         ncomp=ncomp + int(drop_first),
         eigen_solver=eigen_solver,
         is_symmetric=lap.metadata.lap_type in SYM_LAPLACIAN_TYPES,
-        largest=False,
+        largest=largest,
         **kwargs,
     )
 
@@ -96,6 +97,7 @@ def _aff_laplacian_embedding(
     eigen_solver: EigenSolver = "amg",
     drop_first: bool = True,
     in_place: bool = False,
+    largest: bool = False,
     **kwargs: Any,
 ) -> EigenSystem:
     """
@@ -110,7 +112,6 @@ def _aff_laplacian_embedding(
     :param kwargs: Additional keyword arguments passed to the eigen decomposition function.
     :return: A tuple of eigenvalues and eigenvectors.
     """
-
     md: Metadata = aff.metadata
 
     degrees = None
@@ -137,7 +138,7 @@ def _aff_laplacian_embedding(
         ncomp=ncomp + int(drop_first),
         eigen_solver=eigen_solver,
         is_symmetric=lap_type in SYM_LAPLACIAN_TYPES,
-        largest=False,
+        largest=largest,
         **kwargs,
     )
 
@@ -149,10 +150,10 @@ def _aff_laplacian_embedding(
 
     if degrees is not None:
         eigvecs /= degrees.sqrt()
-        eigvecs /= np.linalg.norm(eigvecs, axis=0)
+        eigvecs /= (eigvecs**2).sum(axis=0).sqrt()
 
     if drop_first:
         eigvals = eigvals[1:]
         eigvecs = eigvecs[:, 1:]
 
-    return EigenSystem((DenseArray(eigvals), DenseArray(eigvecs)), metadata=md)
+    return EigenSystem((eigvals, eigvecs), metadata=md)

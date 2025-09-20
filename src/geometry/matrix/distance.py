@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable, ClassVar, Iterable, Iterator, Optional, Union
+from typing import Any, Iterable, Iterator, Optional, Union
 
 import numpy as np
 
@@ -188,9 +188,10 @@ class DistanceMatrix(DistanceMatrixMixin, ABC):
         """
 
         dist_is_sq = self.metadata.dist_type == "sqeuclidean"
-        
+
         if aff_type == "gaussian":
             return gaussian(self, eps, dist_is_sq, in_place)
+
 
 def gaussian(
     dists: DistanceMatrix,
@@ -266,7 +267,7 @@ class DenseDistanceMatrix(DistanceMatrix, DenseArray):
     ) -> DistanceMatrix:
         """
         Threshold a dense distance matrix by eliminating entries larger
-        than a given radius.
+        than a given radius, setting them to +inf.
 
         :param radius: The maximum radius to retain distances. Entries
                        greater than this are set to infinity.

@@ -6,8 +6,6 @@ from numpy.linalg import eig, eigh
 from pyamg import smoothed_aggregation_solver
 from scipy.sparse.linalg import eigs, eigsh, lobpcg
 
-from src.array import DenseArray
-
 EigenSolver: TypeAlias = Literal["dense", "arpack", "lobpcg", "amg"]
 SYM_EIGEN_SOLVERS: Final[Set[EigenSolver]] = {"amg", "lobpcg"}
 NON_SYM_EIGEN_SOLVERS: Final[Set[EigenSolver]] = {"dense", "arpack"}
@@ -17,13 +15,13 @@ _ZERO_EIGVAL_TOL = 1e-9
 
 
 def eigen_decomp(
-    arr: DenseArray,
+    arr: np.ndarray,
     ncomp: Optional[int] = None,
     eigen_solver: EigenSolver = "dense",
     is_symmetric: bool = False,
     largest: bool = True,
     **kwargs: Any,
-) -> Tuple[DenseArray, DenseArray]:
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     Compute the eigenvalue decomposition of a matrix using various solvers.
 

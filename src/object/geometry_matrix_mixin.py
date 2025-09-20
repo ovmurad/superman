@@ -1,11 +1,9 @@
 from abc import ABC
 from typing import Any, Self, Sequence, Type
 
-import attr
 import numpy as np
 
 from src.array.base import BaseArray
-from src.object.metadata import Metadata
 from src.object.object_mixin import ObjectMixin
 
 
