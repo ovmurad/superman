@@ -37,8 +37,19 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
         mean_pts: DenseArray,
         weights: Optional[BaseArray],
         needs_means: bool,
-        md: Metadata,
+        md: Optional[Metadata] = None,
     ) -> CovarianceMatrices:
+        """
+        Computes the local covariance on all `x_pts` centered on `mean_pts`. If there are multiple mean points, computes covariance for each.
+
+        :param x_pts: The neighborhood to calculate covariance with.
+        :param mean_pts: The center for the covariance calculation. If there are multiple mean points, computes covariance for each.
+        :param weights: Optional weight matrix to calculate weighted covariance with.
+        :param needs_means: Whether `x_pts` is centered.
+        :param md: Optional metadata to include in return `CovarianceMatrices`. (default: None).
+
+        :return: Matrix where covariance matrices are joined along axis 0.
+        """
         # hack for now
         x_pts_arr: np.ndarray = x_pts.as_nparray()
         mean_pts_arr: np.ndarray = mean_pts.as_nparray()
@@ -78,7 +89,7 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
 
             cov += outer_means
 
-        return CovarianceMatrices(cov, metadata=md)
+        return CovarianceMatrices(cov) if md is None else CovarianceMatrices(cov, metadata=md)
 
     @classmethod
     def local_iter(
@@ -91,6 +102,19 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
         in_place_norm: bool = False,
         bsize: Optional[int] = None,
     ) -> Iterator[CovarianceMatrices]:
+        """
+        Computes the local covariance in a batched manner on all `x_pts` centered on `mean_pts`. If there are multiple mean points, computes covariance for each.
+
+        :param x_pts: The neighborhood to calculate covariance with.
+        :param mean_pts: Optional center for the covariance calculation. If there are multiple mean points, computes covariance for each. If None, each point is treated as its own center. (default: None)
+        :param weights: Optional weight matrix to calculate weighted covariance with. (default: None).
+        :param needs_means: Whether `x_pts` is centered. (default: True)
+        :param needs_norm: Whether the weights need to be normalized. (default: True)
+        :param in_place_norm: If `needs_norm`, whether to do the weight normalization in-place. (default: False)
+        :param bsize: Optional batch size to divide the covariance calculation. (default: None).
+
+        :return: Iterator that gives the desired covariance matrices.
+        """
         if weights is None and mean_pts is None:
             processed_mean_pts: DenseArray = x_pts[np.arange(x_pts.shape[0])]
         elif mean_pts is None:
@@ -125,6 +149,19 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
         in_place_norm: bool = False,
         bsize: Optional[int] = None,
     ) -> CovarianceMatrices:
+        """
+        Lazily computes the local covariance on all `x_pts` centered on `mean_pts`. If there are multiple mean points, computes covariance for each.
+
+        :param x_pts: The neighborhood to calculate covariance with.
+        :param mean_pts: Optional center for the covariance calculation. If there are multiple mean points, computes covariance for each. If None, each point is treated as its own center. (default: None)
+        :param weights: Optional weight matrix to calculate weighted covariance with. (default: None).
+        :param needs_means: Whether `x_pts` is centered. (default: True)
+        :param needs_norm: Whether the weights need to be normalized. (default: True)
+        :param in_place_norm: If `needs_norm`, whether to do the weight normalization in-place. (default: False)
+        :param bsize: Optional batch size to divide the covariance calculation. (default: None).
+
+        :return: The desired covariance matrices in a `CovarianceMatrices` object.
+        """
         return super().package(
             x_pts,
             mean_pts,

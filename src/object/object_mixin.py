@@ -62,7 +62,17 @@ class ObjectMixin(ABC):
 
     @classmethod
     @abstractmethod
-    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self: ...
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        """
+        Concatenates a `Sequence` of this class, retaining the metadata of the first in the sequence.
+        Returns an instance of this class with data concatentated.
+
+        :param arrs: `Sequence` of instances to concatenate.
+        :param axis: Axis to concatentate on. Axis must exist for each instance in `arrs`.
+
+        :return: An instance of this class with data concatentated.
+        """
+        ...
 
 
 def _nbatches(arr_len: int, batch_size: int) -> int:

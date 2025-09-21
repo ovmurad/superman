@@ -2,11 +2,18 @@ from __future__ import annotations
 
 from typing import Any, Iterable, Self, Sequence, Tuple, Type
 
+import numpy as np
+
 from src.array.dense.dense import DenseArray
 from src.object.object_mixin import ObjectMixin
 
 
 class Eigen(ObjectMixin, Tuple[DenseArray, DenseArray]):
+    """
+    This class represents a pair of eigenvalues and eigenvectors.
+    It is a Tuple of two `DenseArray` with additional checks and methods.
+    Ensures correct eigenvalue and eigenvector lengths and dimensions.
+    """
     fixed_value_ndim: int = 1
     fixed_vector_ndim: int = 2
     fixed_tuple_length: int = 2
@@ -49,6 +56,17 @@ class Eigen(ObjectMixin, Tuple[DenseArray, DenseArray]):
     @property
     def eigenvectors(self) -> DenseArray:
         return self[1]
+
+    def sort_by_eigval(self, largest: bool = False) -> Self:
+        """
+        Sorts the eigenvalues and eigenvectors by eigenvalue.
+
+        :param largest: If True, sorts with largest first. If False, sorts with smallest first.
+
+        :return: A sorted instance of this class.
+        """
+        idx = np.argsort(self[0])[::-1] if largest else np.argsort(self[0])
+        return self.__class__(self[0][idx], self[1][:, idx])
 
     @classmethod
     def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
