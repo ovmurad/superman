@@ -1,5 +1,5 @@
 import warnings
-from typing import Any, Final, Literal, Optional, Set
+from typing import Any, Final, Optional, Set
 
 import numpy as np
 
@@ -13,7 +13,8 @@ from src.object import LaplacianType
 from src.object.metadata import Metadata
 
 DIFFUSION_TYPES: Final[Set[LaplacianType]] = {"geometric"}
-EPS_RADIUS_RATIO: Final[int] = 1/3
+EPS_RADIUS_RATIO: Final[int] = 1 / 3
+
 
 def compute_diffusion_maps(eig: EigenSystem, diffusion_time: float) -> EigenSystem:
     """Credit to Satrajit Ghosh (http://satra.cogitatum.org/) for final steps"""
@@ -48,6 +49,46 @@ class SpectralEmbedding(Embedding):
         diffusion_maps: bool = False,
         **solver_kwds: Any,
     ) -> None:
+        """
+        Spectral embedding for non-linear dimensionality reduction.
+
+        Forms an affinity matrix given by the specified function and
+        applies spectral decomposition to the corresponding graph Laplacian.
+        The resulting transformation is given by the eigenvectors for each data point.
+
+        :param radius: Radius for adjacency and affinity calculations.
+        :param n_components: Number of coordinates for the manifold.
+        :param eps: Optional epsilon to use for adjacency and affinity calculations. If None, uses `EPS_RADIUS_RATIO` to calculate it from the radius.
+        :param eigen_solver: Eigenvalue decomposition method.
+            - ``'auto'``: algorithm will attempt to choose the best method for input data
+            - ``'dense'``: use standard dense matrix operations (avoid for large problems)
+            - ``'arpack'``: use Arnoldi iteration in shift-invert mode (can be unstable)
+            - ``'lobpcg'``: Locally Optimal Block Preconditioned Conjugate Gradient Method
+            - ``'amg'``: Algebraic Multigrid (requires pyamg; may be faster but less stable)
+        :param drop_first: Whether to drop the first eigenvector.
+            For spectral embedding, this should be ``True`` (the first eigenvector is a constant vector
+            for a connected graph). For spectral clustering, this should be ``False``.
+        :param lap_type: The type of graph laplacian to use.
+        :param diffusion_time: The diffusion time used if `diffusion_maps` is True.
+        :param diffusion_maps: Whether to return the diffusion maps version by
+            re-scaling the embedding by the eigenvalues.
+        :param solver_kwds: Additional keyword arguments to pass to the selected eigen_solver.
+
+        :returns: A configured `SpectralEmbedding` object.
+
+        :references:
+            - Ulrike von Luxburg. *A Tutorial on Spectral Clustering*, 2007
+            http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.9323
+
+            - Andrew Y. Ng, Michael I. Jordan, Yair Weiss.
+            *On Spectral Clustering: Analysis and an Algorithm*, 2011
+            http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.19.8100
+
+            - Jianbo Shi, Jitendra Malik.
+            *Normalized Cuts and Image Segmentation*, 2000
+            http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324
+        """
+
         self.n_components = n_components
         self.radius = radius
         self.eps = radius * EPS_RADIUS_RATIO if eps is None else eps
@@ -59,6 +100,13 @@ class SpectralEmbedding(Embedding):
         self.diffusion_maps = diffusion_maps
 
     def fit(self, data: GeometryType) -> EigenSystem:
+        """
+        Fit the model from geometry matrix data.
+
+        :param data: Any GeometryType geometry matrix. If a `LaplacianMatrix`, overrides the `lap_type` specified in the constructor.
+
+        :returns: The `EigenSystem` corresponding to the spectral embedding.
+        """
         if isinstance(data, Points):
             data = data.pairwise_distance()
         if isinstance(data, DistanceMatrix):

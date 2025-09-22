@@ -8,6 +8,7 @@ class EigenSystem(Eigen):
     This class represents a pair of eigenvalues and eigenvectors aka an eigensystem.
     EigenSystem behaves as a Tuple with extra methods. An eigenvalue's corresponding eigenvector is stored at the same index.
     """
+
     def get_comp(self, ncomp: int) -> EigenSystem:
         """
         Gets the first `ncomp` number of eigenvalues and eigenvectors.

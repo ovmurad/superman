@@ -14,6 +14,7 @@ class Eigen(ObjectMixin, Tuple[DenseArray, DenseArray]):
     It is a Tuple of two `DenseArray` with additional checks and methods.
     Ensures correct eigenvalue and eigenvector lengths and dimensions.
     """
+
     fixed_value_ndim: int = 1
     fixed_vector_ndim: int = 2
     fixed_tuple_length: int = 2
@@ -70,6 +71,15 @@ class Eigen(ObjectMixin, Tuple[DenseArray, DenseArray]):
 
     @classmethod
     def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        """
+        Concatenates eigenvalues and eigenvectors along an axis and returns an instance of this class with metadata of the first object in `arrs`.
+
+        :param arrs: Sequence of objects of this class to concatenate.
+        :param axis: Axis along which to concatenate arrays. (default: 0).
+
+        :return: A new instance of this class with concatenated data and
+             metadata taken from the first element in `arrs`.
+        """
         return arrs[0].__class__(
             (DenseArray.concat(arrs, axis=axis) for arrs in zip(*arrs)),
             metadata=arrs[0].metadata,

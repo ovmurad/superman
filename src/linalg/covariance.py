@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC
 from itertools import cycle
-from typing import Any, Iterator, Optional
+from typing import Iterator, Optional
 
 import numpy as np
 
@@ -14,21 +14,88 @@ from src.object.metadata import Metadata
 
 
 class CovarianceMatrixMixin(GeometryMatrixMixin, ABC):
+    """
+    Abstract mixin class for covariance matrices.
+
+    Provides a common interface for covariance-related matrix objects.
+    """
+
     pass
 
 
 class CovarianceMatrix(CovarianceMatrixMixin, DenseArray):
+    """
+    Container class for a single Dense covariance matrix.
+    """
+
     pass
 
 
 class CovarianceMatrices(CovarianceMatrixMixin, DenseArray):
+    """
+    Container class for multiple covariance matrices.
+
+    Extends :class:`DenseArray` with a fixed third dimension for stacking
+    covariance matrices along axis 0.
+    """
+
     fixed_ndim = 3
 
 
 class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
     @classmethod
-    def global_func(*args: Any, **kwargs: Any) -> CovarianceMatrix:
-        raise NotImplementedError()
+    def global_func(
+        cls,
+        centered_x_pts: DenseArray,
+        weights: Optional[BaseArray] = None,
+        md: Optional[Metadata] = None,
+    ) -> CovarianceMatrix:
+        """
+        Computes the global covariance matrix from centered data points.
+
+        :param centered_x_pts: Centered data points with shape ``(m, p)``,
+            where ``m`` is the number of samples and ``p`` is the feature dimension.
+        :param weights: Optional weight array of shape ``(m,)`` to compute a
+            weighted covariance. If None, computes the unweighted covariance. (default: None).
+        :param md: Metadata to attach to the returned `CovarianceMatrix`.
+
+        :return: A `CovarianceMatrix` representing the global covariance structure.
+        """
+        centered_x_pts_arr = centered_x_pts.as_nparray()
+
+        if weights is None:
+            return (
+                CovarianceMatrix(
+                    (1.0 / centered_x_pts_arr.shape[0])
+                    * (centered_x_pts_arr.T @ centered_x_pts_arr)
+                )
+                if md is None
+                else CovarianceMatrix(
+                    (1.0 / centered_x_pts_arr.shape[0])
+                    * (centered_x_pts_arr.T @ centered_x_pts_arr),
+                    metadata=md,
+                )
+            )
+        return (
+            CovarianceMatrix(
+                np.einsum(
+                    "mp,m,mq->pq",
+                    centered_x_pts_arr,
+                    weights.as_nparray(),
+                    centered_x_pts_arr,
+                )
+            )
+            if md is None
+            else CovarianceMatrix(
+                np.einsum(
+                    "mp,m,mq->pq",
+                    centered_x_pts_arr,
+                    weights.as_nparray(),
+                    centered_x_pts_arr,
+                ),
+                metadata=md,
+            )
+        )
 
     @classmethod
     def local_func(
@@ -89,7 +156,11 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
 
             cov += outer_means
 
-        return CovarianceMatrices(cov) if md is None else CovarianceMatrices(cov, metadata=md)
+        return (
+            CovarianceMatrices(cov)
+            if md is None
+            else CovarianceMatrices(cov, metadata=md)
+        )
 
     @classmethod
     def local_iter(

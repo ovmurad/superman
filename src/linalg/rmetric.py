@@ -17,10 +17,18 @@ from src.object.metadata import Metadata
 
 
 class RMetricSystem(EigenSystem):
+    """
+    Container class for a single Riemannian metric eigensystem.
+    """
+
     pass
 
 
 class RMetricSystems(EigenSystem):
+    """
+    Container class for multiple Riemannian metric eigensystems. Index 0 is an array of eigenvalue arrays. Index 1 is an array of eigenvector matrices.
+    """
+
     fixed_value_ndim: int = 2
     fixed_vector_ndim: int = 3
     fixed_value_type: Type = DenseArray
@@ -28,6 +36,31 @@ class RMetricSystems(EigenSystem):
 
 
 class RMetric(func[RMetricSystem, RMetricSystems], ABC):
+    @classmethod
+    def global_func(
+        cls,
+        x_pts: Embedding,
+        lap: DenseArray,
+        ncomp: Optional[int] = None,
+        dual: bool = True,
+        md: Optional[Metadata] = None,
+    ) -> RMetricSystems:
+        """
+        Compute the global Riemannian metric from data embeddings and a Laplacian vector.
+
+        :param x_pts: Input data embedding.
+        :param lap: Laplacian vector or equivalent weight vector.
+        :param ncomp: Number of eigencomponents to retain. If None, keep all. (default: None).
+        :param dual: If True, return the dual metric. If False, return the inverse. (default: True).
+        :param md: Optional metadata to merge with x_pts metadata. If None, inherits from x_pts. (default: None)
+        :return: An `RMetricSystems` object containing eigenvalues and eigenvectors.
+        """
+        md: Metadata = x_pts.metadata if md is None else x_pts.metadata.update_with(md)
+        dual_metric = Covariance.global_func(x_pts, lap, md)
+        return RMetricSystems(
+            cls._decompose_dual_metric(dual_metric, ncomp, dual), metadata=md
+        )
+
     @staticmethod
     def _decompose_dual_metric(
         dual_metric: DenseArray, ncomp: int | None, dual: bool
@@ -65,12 +98,14 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         """
         Computes the local Riemannian metric using uncentered data and affinity weights.
 
-        :param x_pts: Input data points.
-        :param mean_pts: Local means for each point.
-        :param lap: Laplacian weights.
-        :param ncomp: Number of eigencomponents to retain.
+        :param x_pts: Input data embedding.
+        :param mean_pts: Local mean points for each neighborhood.
+        :param lap: Laplacian weights for local neighborhoods.
+        :param ncomp: Number of eigencomponents to retain. If None, keep all. (default: None).
         :param dual: If True, return the dual metric. If False, return the inverse. (default: True).
-        :return: Tuple of (eigenvalues, eigenvectors).
+        :param md: Metadata to include in the return `RMetricSystems`.
+
+        :return: The desired local Riemannian metric in an `RMetricSystems` object.
         """
 
         # hacky
@@ -91,6 +126,20 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         dual: bool = True,
         bsize: Optional[int] = None,
     ) -> Iterator[RMetricSystems]:
+        """
+        Computes the local Riemannian metric in a batched manner on all `x_pts` centered on `mean_pts`.
+        If there are multiple mean points, computes metrics for each.
+
+        :param x_pts: Input data embedding.
+        :param lap: Laplacian weights for local neighborhoods.
+        :param ncomp: Number of eigencomponents to retain. If None, keep all. (default: None).
+        :param mean_pts: Optional local mean points. If None, defaults to each data point. (default: None).
+        :param dual: If True, return the dual metric. If False, return the inverse. (default: True).
+        :param bsize: Optional batch size for dividing the computation. (default: None).
+
+        :return: Iterator that yields `RMetricSystems` objects per batch.
+        """
+
         if mean_pts is None:
             mean_pts = x_pts[np.arange(x_pts.shape[0])]
         md: Metadata = x_pts.metadata.update_with(lap.metadata)
@@ -111,6 +160,20 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         dual: bool = True,
         bsize: Optional[int] = None,
     ) -> RMetricSystems:
+        """
+        Lazily computes the local Riemannian metric on all `x_pts` centered on `mean_pts`.
+        If there are multiple mean points, computes metrics for each.
+
+        :param x_pts: Input data embedding.
+        :param lap: Laplacian weights for local neighborhoods.
+        :param ncomp: Number of eigencomponents to retain. If None, keep all. (default: None).
+        :param mean_pts: Optional local mean points. If None, defaults to each data point. (default: None).
+        :param dual: If True, return the dual metric. If False, return the inverse. (default: True).
+        :param bsize: Optional batch size for dividing the computation. (default: None).
+
+        :return: The desired local Riemannian metric in an `RMetricSystems` object.
+        """
+
         return super().package(
             x_pts, lap, ncomp, mean_pts, dual, output_cls=RMetricSystems, bsize=bsize
         )
