@@ -1,3 +1,4 @@
+from .eigen import Eigen
 from .function import FunctionMixin
 from .geometry_matrix_mixin import GeometryMatrixMixin
 from .metadata import (
@@ -25,4 +26,5 @@ __all__ = [
     "LAPLACIAN_TYPES",
     "FunctionMixin",
     "chunk",
+    "Eigen",
 ]

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from src.object.eigen import Eigen
+from src.object import Eigen
 
 
 class EigenSystem(Eigen):
