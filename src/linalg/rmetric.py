@@ -44,9 +44,9 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         ncomp: Optional[int] = None,
         dual: bool = True,
         md: Optional[Metadata] = None,
-    ) -> RMetricSystems:
+    ) -> RMetricSystem:
         """
-        Compute the global Riemannian metric from data embeddings and a Laplacian vector.
+        Compute the global Riemannian metric decomposition from data embeddings and a Laplacian vector.
 
         :param x_pts: Input data embedding.
         :param lap: Laplacian vector or equivalent weight vector.
@@ -55,9 +55,9 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         :param md: Optional metadata to merge with x_pts metadata. If None, inherits from x_pts. (default: None)
         :return: An `RMetricSystems` object containing eigenvalues and eigenvectors.
         """
-        md: Metadata = x_pts.metadata if md is None else x_pts.metadata.update_with(md)
+        md = x_pts.metadata if md is None else x_pts.metadata.update_with(md)
         dual_metric = Covariance.global_func(x_pts, lap, md)
-        return RMetricSystems(
+        return RMetricSystem(
             cls._decompose_dual_metric(dual_metric, ncomp, dual), metadata=md
         )
 
@@ -93,10 +93,10 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         lap: LaplacianMatrix,
         ncomp: Optional[int],
         dual: bool,
-        md: Metadata,
+        md: Optional[Metadata] = None,
     ) -> RMetricSystems:
         """
-        Computes the local Riemannian metric using uncentered data and affinity weights.
+        Computes the local Riemannian metric decomposition using uncentered data and affinity weights.
 
         :param x_pts: Input data embedding.
         :param mean_pts: Local mean points for each neighborhood.
@@ -111,6 +111,10 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         # hacky
         dual_metric = Covariance.local_func(
             x_pts, mean_pts, lap, needs_means=False, md=md
+        )
+        if md is None:
+            return RMetricSystems(
+            cls._decompose_dual_metric(dual_metric, ncomp, dual)
         )
         return RMetricSystems(
             cls._decompose_dual_metric(dual_metric, ncomp, dual), metadata=md
@@ -127,7 +131,7 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         bsize: Optional[int] = None,
     ) -> Iterator[RMetricSystems]:
         """
-        Computes the local Riemannian metric in a batched manner on all `x_pts` centered on `mean_pts`.
+        Computes the local Riemannian metric decomposition in a batched manner on all `x_pts` centered on `mean_pts`.
         If there are multiple mean points, computes metrics for each.
 
         :param x_pts: Input data embedding.
@@ -161,7 +165,7 @@ class RMetric(func[RMetricSystem, RMetricSystems], ABC):
         bsize: Optional[int] = None,
     ) -> RMetricSystems:
         """
-        Lazily computes the local Riemannian metric on all `x_pts` centered on `mean_pts`.
+        Lazily computes the local Riemannian metric decomposition on all `x_pts` centered on `mean_pts`.
         If there are multiple mean points, computes metrics for each.
 
         :param x_pts: Input data embedding.

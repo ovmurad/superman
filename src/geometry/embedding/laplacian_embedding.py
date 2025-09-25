@@ -2,6 +2,7 @@ from typing import Any
 
 from src.array.linalg import SYM_EIGEN_SOLVERS, EigenSolver, eigen_decomp
 from src.geometry.eigen_system import EigenSystem
+from src.geometry.embedding_system import EmbeddingSystem
 from src.geometry.matrix import (
     NON_SYM_LAPLACIAN_TYPES,
     SYM_LAPLACIAN_TYPES,
@@ -24,7 +25,7 @@ def laplacian_embedding(
     in_place: bool = False,
     largest: bool = False,
     **kwargs: Any,
-) -> EigenSystem:
+) -> EmbeddingSystem:
     """
     Compute a Laplacian embedding of a graph using either an affinity matrix
     or a Laplacian matrix.
@@ -59,7 +60,7 @@ def _lap_laplacian_embedding(
     drop_first: bool = True,
     largest: bool = False,
     **kwargs: Any,
-) -> EigenSystem:
+) -> EmbeddingSystem:
     """
     Compute the Laplacian embedding given a precomputed Laplacian matrix.
 
@@ -87,7 +88,7 @@ def _lap_laplacian_embedding(
         eigvals = eigvals[1:]
         eigvecs = eigvecs[:, 1:]
 
-    return EigenSystem((eigvals, eigvecs), metadata=md)
+    return EmbeddingSystem((eigvals, eigvecs), metadata=md)
 
 
 def _aff_laplacian_embedding(
@@ -99,7 +100,7 @@ def _aff_laplacian_embedding(
     in_place: bool = False,
     largest: bool = False,
     **kwargs: Any,
-) -> EigenSystem:
+) -> EmbeddingSystem:
     """
     Compute the Laplacian embedding from an affinity matrix.
 
@@ -156,4 +157,4 @@ def _aff_laplacian_embedding(
         eigvals = eigvals[1:]
         eigvecs = eigvecs[:, 1:]
 
-    return EigenSystem((eigvals, eigvecs), metadata=md)
+    return EmbeddingSystem((eigvals, eigvecs), metadata=md)

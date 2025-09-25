@@ -3,7 +3,7 @@ from typing import Sequence
 import numpy as np
 import pytest
 from src.array import DenseArray
-from src.geometry import DistanceMatrix
+from src.geometry.matrix import DistanceMatrix
 from tests.test_utils import (
     dist_points,
     double_dist_sol,

@@ -1,11 +1,12 @@
 import warnings
-from typing import Any, Final, Optional, Set
+from typing import Any, Final, Optional, Set, Tuple
 
 import numpy as np
 
 from src.array.linalg import EigenSolver
 from src.geometry import EigenSystem, Embedding
 from src.geometry.embedding import laplacian_embedding
+from src.geometry.embedding_system import EmbeddingSystem
 from src.geometry.matrix import AffinityMatrix, DistanceMatrix, LaplacianMatrix
 from src.geometry.points import Points
 from src.model.embedding import GeometryType
@@ -13,10 +14,10 @@ from src.object import LaplacianType
 from src.object.metadata import Metadata
 
 DIFFUSION_TYPES: Final[Set[LaplacianType]] = {"geometric"}
-EPS_RADIUS_RATIO: Final[int] = 1 / 3
+EPS_RADIUS_RATIO: Final[float] = 1 / 3
 
 
-def compute_diffusion_maps(eig: EigenSystem, diffusion_time: float) -> EigenSystem:
+def compute_diffusion_maps(eig: EmbeddingSystem, diffusion_time: float) -> EmbeddingSystem:
     """Credit to Satrajit Ghosh (http://satra.cogitatum.org/) for final steps"""
     md: Metadata = eig.metadata
     # Check that diffusion maps is using the correct laplacian, warn otherwise
@@ -33,10 +34,14 @@ def compute_diffusion_maps(eig: EigenSystem, diffusion_time: float) -> EigenSyst
     else:
         lambdas = np.abs(lambdas)
         lambdas = lambdas ** float(diffusion_time)
-    return EigenSystem((lambdas, vectors), metadata=md)
+    return EmbeddingSystem((lambdas, vectors), metadata=md)
 
 
 class SpectralEmbedding(Embedding):
+    dist_mat: Optional[DistanceMatrix] = None
+    aff_mat: Optional[AffinityMatrix] = None
+    lap_mat: Optional[LaplacianMatrix] = None
+    
     def __init__(
         self,
         radius: float,
@@ -99,25 +104,33 @@ class SpectralEmbedding(Embedding):
         self.diffusion_time = diffusion_time
         self.diffusion_maps = diffusion_maps
 
-    def fit(self, data: GeometryType) -> EigenSystem:
+    def fit(self, data: GeometryType, save: bool = False) -> EmbeddingSystem:
         """
         Fit the model from geometry matrix data.
 
         :param data: Any GeometryType geometry matrix. If a `LaplacianMatrix`, overrides the `lap_type` specified in the constructor.
+        :param save: Whether to save the `DistanceMatrix`, `AffinityMatrix` and `LaplacianMatrix`. IMPORTANT: If True, will take a significant additional memory. If your dataset is a significant portion of your available memory, it is reccomended to keep `save` False.
 
         :returns: The `EigenSystem` corresponding to the spectral embedding.
         """
         if isinstance(data, Points):
             data = data.pairwise_distance()
+            if save: self.dist_mat = data
         if isinstance(data, DistanceMatrix):
-            data = data.affinity(eps=self.eps, in_place=True)
-        if isinstance(data, AffinityMatrix) or isinstance(data, LaplacianMatrix):
+            data = data.affinity(eps=self.eps, in_place=not save)
+
+            if save: self.aff_mat = data
+        if isinstance(data, AffinityMatrix):
+            data = data.laplacian(self.lap_type, in_place=not save)
+            
+            if save: self.lap_mat = data
+        if isinstance(data, LaplacianMatrix):
             lap_emb = laplacian_embedding(
                 data,
                 self.n_components + int(self.drop_first),
                 self.lap_type,
                 drop_first=False,
-                in_place=True,
+                in_place=not save,
                 **self.solver_kwds,
             )
 

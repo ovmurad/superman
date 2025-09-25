@@ -75,22 +75,23 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
                     * (centered_x_pts_arr.T @ centered_x_pts_arr),
                     metadata=md,
                 )
-            )
+            ) 
+
         return (
             CovarianceMatrix(
                 np.einsum(
-                    "mp,m,mq->pq",
-                    centered_x_pts_arr,
+                    "mp,mq,pd->qd",
                     weights.as_nparray(),
+                    centered_x_pts_arr,
                     centered_x_pts_arr,
                 )
             )
             if md is None
             else CovarianceMatrix(
                 np.einsum(
-                    "mp,m,mq->pq",
-                    centered_x_pts_arr,
+                    "mp,mq,pd->qd",
                     weights.as_nparray(),
+                    centered_x_pts_arr,
                     centered_x_pts_arr,
                 ),
                 metadata=md,
@@ -135,7 +136,7 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
             )
         else:
             means_outer_x_pts = np.einsum(
-                "mp,mq->mpq", mean_pts_arr, DenseArray(weights * x_pts_arr).as_nparray()
+                "mp,mq->mpq", mean_pts_arr, DenseArray(weights.as_nparray() @ x_pts_arr).as_nparray()
             )
 
         cov -= means_outer_x_pts
@@ -150,7 +151,7 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
                 outer_means = np.einsum(
                     "mp,m,mq->mpq",
                     mean_pts_arr,
-                    DenseArray(weights).as_nparray(),
+                    DenseArray(weights).as_nparray().squeeze(),
                     mean_pts_arr,
                 )
 
@@ -190,7 +191,7 @@ class Covariance(func[CovarianceMatrix, CovarianceMatrices], ABC):
             processed_mean_pts: DenseArray = x_pts[np.arange(x_pts.shape[0])]
         elif mean_pts is None:
             processed_mean_pts = (
-                x_pts if weights is None else DenseArray(weights * x_pts)
+                x_pts if weights is None else DenseArray(weights.as_nparray() @ x_pts.as_nparray())
             )
         else:
             processed_mean_pts = mean_pts

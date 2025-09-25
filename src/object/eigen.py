@@ -18,23 +18,22 @@ class Eigen(ObjectMixin, Tuple[DenseArray, DenseArray]):
     fixed_value_ndim: int = 1
     fixed_vector_ndim: int = 2
     fixed_tuple_length: int = 2
-    fixed_value_type: Type = DenseArray
-    fixed_vector_type: Type = DenseArray
+    fixed_type: Tuple[Type, Type] = (DenseArray, DenseArray)
 
     def __new__(cls, iterable: Iterable[Any], **kwargs: Any) -> Eigen:
-        obj: Eigen = super().__new__(cls, (DenseArray(item) for item in iterable))
+        obj: Eigen = super().__new__(cls, (type(item) for type, item in zip(iter(cls.fixed_type), iterable)))
 
         if len(obj) != cls.fixed_tuple_length:
             raise ValueError(
                 f"{obj.__class__.__name__} object has `length`={len(obj)}, but expected {obj.fixed_tuple_length}!"
             )
-        if not isinstance(obj[0], cls.fixed_value_type):  # type: ignore
+        if not isinstance(obj[0], cls.fixed_type[0]):  # type: ignore
             raise ValueError(
-                f"{obj.__class__.__name__} object has `value_type`={obj[0].__class__.__name__}, but expected {obj.fixed_value_type}!"
+                f"{obj.__class__.__name__} object has `value_type`={obj[0].__class__.__name__}, but expected {obj.fixed_type[0]}!"
             )
-        if not isinstance(obj[1], cls.fixed_value_type):  # type: ignore
+        if not isinstance(obj[1], cls.fixed_type[1]):  # type: ignore
             raise ValueError(
-                f"{obj.__class__.__name__} object has `value_type`={obj[1].__class__.__name__}, but expected {obj.fixed_vector_type}!"
+                f"{obj.__class__.__name__} object has `value_type`={obj[1].__class__.__name__}, but expected {obj.fixed_type[1]}!" # type: ignore
             )
         if obj[0].ndim != cls.fixed_value_ndim:  # type: ignore
             raise ValueError(
@@ -66,8 +65,8 @@ class Eigen(ObjectMixin, Tuple[DenseArray, DenseArray]):
 
         :return: A sorted instance of this class.
         """
-        idx = np.argsort(self[0])[::-1] if largest else np.argsort(self[0])
-        return self.__class__(self[0][idx], self[1][:, idx])
+        idx = np.argsort(self[0].as_nparray())[::-1] if largest else np.argsort(self[0].as_nparray())
+        return self.__class__((self[0][idx], self[1][:, idx]))
 
     @classmethod
     def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
