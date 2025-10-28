@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from abc import ABC
-from typing import Any, Type
+from abc import ABC, abstractmethod
+from typing import Any, Iterator, Optional, Self, Sequence, Type, TypeVar
 
 import attr
 import numpy as np
@@ -10,7 +10,7 @@ from src.array.base import BaseArray
 from src.object.metadata import Metadata
 
 
-class ObjectMixin(BaseArray, ABC):
+class ObjectMixin(ABC):
     """
     Abstract base class providing metadata handling and type/dimension
     validation.
@@ -37,25 +37,56 @@ class ObjectMixin(BaseArray, ABC):
         :raises ValueError: If the object's ndim or dtype does not match
                             the fixed expected values.
         """
-        super().__init__(*args, **kwargs)  # type: ignore
-
-        if self.ndim != self.fixed_ndim:
-            raise ValueError(
-                f"{self.__class__.__name__} object has `ndim`={self.ndim}, but expected {self.fixed_ndim}!"
-            )
-        if self.dtype != self.fixed_dtype:
-            raise ValueError(
-                f"{self.__class__.__name__} object has `dtype`={self.dtype}, but expected {self.fixed_dtype}!"
-            )
 
         metadata_args = tuple(
-            kwargs[f.name] if f.name in kwargs else None for f in attr.fields(Metadata)
+            self._give_arg_and_consume(f.name, kwargs) if f.name in kwargs else None
+            for f in attr.fields(Metadata)
         )
 
         self.metadata = Metadata(*metadata_args)
 
         if "metadata" in kwargs:
             self.metadata = self.metadata.update_with(kwargs["metadata"])
+            del kwargs["metadata"]
 
-        if isinstance(args[0], ObjectMixin):
+        if len(args) > 0 and isinstance(args[0], ObjectMixin):
             self.metadata = self.metadata.update_with(args[0].metadata)
+
+        super().__init__(*args, **kwargs)  # type: ignore
+
+    @staticmethod
+    def _give_arg_and_consume(name: str, kwargs: Any) -> Any:
+        temp: Any = kwargs[name]
+        del kwargs[name]
+        return temp
+
+    @classmethod
+    @abstractmethod
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        """
+        Concatenates a `Sequence` of this class, retaining the metadata of the first in the sequence.
+        Returns an instance of this class with data concatentated.
+
+        :param arrs: `Sequence` of instances to concatenate.
+        :param axis: Axis to concatentate on. Axis must exist for each instance in `arrs`.
+
+        :return: An instance of this class with data concatentated.
+        """
+        ...
+
+
+def _nbatches(arr_len: int, batch_size: int) -> int:
+    return int(np.ceil(arr_len / batch_size))
+
+
+T = TypeVar("T", bound=BaseArray)
+
+
+def chunk(arr: T, bsize: Optional[int] = None) -> Iterator[T]:
+    if bsize is None or arr.shape[0] <= bsize:
+        yield arr
+    else:
+        for b in range(_nbatches(arr.shape[0], bsize)):
+            # Yield a slice from data array from the b x batch_size to the start index
+            # of the next batch
+            yield arr.__class__(arr[b * bsize : (b + 1) * bsize])

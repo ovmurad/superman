@@ -15,7 +15,7 @@ from typing import (
 
 import numpy as np
 
-from ..storage import Data, Storage
+from src.storage import Data, Storage
 
 if TYPE_CHECKING:
     from .dense import DenseArray

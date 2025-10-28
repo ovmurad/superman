@@ -1,16 +1,17 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any, Optional
+from typing import Optional, Self, Sequence, Tuple
 
 import numpy as np
 
-from src.array import DenseArray
+from src.array import BaseArray, DenseArray
 from src.geometry.matrix import DistanceMatrix
+from src.geometry.normalize import normalize
 from src.object import DistanceType, Metadata, ObjectMixin
 
 
-class PointsMixin(ObjectMixin, ABC):
+class PointsMixin(ObjectMixin, BaseArray, ABC):
     """
     Mixin class for point cloud objects.
 
@@ -22,15 +23,6 @@ class PointsMixin(ObjectMixin, ABC):
 
     fixed_ndim = 2
     fixed_dtype = np.float64
-
-    def __init__(self, *args: Any, **metadata: Any) -> None:
-        """
-        Initialize a Points object with optional metadata.
-
-        :param args: Positional arguments forwarded to the base class.
-        :param metadata: Keyword arguments representing metadata fields.
-        """
-        super().__init__(*args, cls=Metadata, **metadata)
 
     @property
     def npts(self) -> int:
@@ -91,6 +83,37 @@ class Points(PointsMixin, DenseArray):
 
         return DistanceMatrix.create(dist_mat, dist_type=dist_type, name=dist_name)
 
+    def demean(
+        self,
+        mean_pt: Optional[DenseArray | int | bool] = None,
+        weights: Optional[BaseArray] = None,
+        needs_norm: bool = True,
+        in_place_demean: bool = False,
+        in_place_norm: bool = False,
+    ) -> Tuple[Points, DenseArray | None, BaseArray | None]:
+
+        pts: DenseArray = self if in_place_demean else self.copy()
+
+        if needs_norm and weights is not None:
+            weights = normalize(weights, axis=None, in_place=in_place_norm)
+
+        if mean_pt is True:
+            if weights is None:
+                mean_pt = pts.mean(axis=0)
+            else:
+                mean_pt = (pts * weights.expand_dims(axis=1)).sum(axis=0)
+        elif isinstance(mean_pt, int):
+            mean_pt = pts[mean_pt]
+
+        if mean_pt is not None:
+            pts -= mean_pt
+
+        return Points(pts, metadata=self.metadata), mean_pt, weights
+
+    @classmethod
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        return cls(super().concat(arrs, axis=axis), metadata=arrs[0].metadata)
+
 
 class Data(Points):
 
@@ -111,3 +134,7 @@ class Coordinates(PointsMixin, DenseArray):
     @property
     def d(self) -> int:
         return self.nfeats
+
+    @classmethod
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        return cls(super().concat(arrs, axis=axis), metadata=arrs[0].metadata)

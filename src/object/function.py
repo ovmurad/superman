@@ -1,16 +1,17 @@
 from abc import ABC
 from math import prod
-from typing import Any, Type
+from typing import Any, Self, Sequence, Type
 
 import numpy as np
 
+from src.array import BaseArray
 from src.object.metadata import Metadata
 from src.object.object_mixin import ObjectMixin
 
-from ..array.dense import DenseArray
+from ..array import DenseArray
 
 
-class FunctionMixin(ObjectMixin, ABC):
+class FunctionMixin(ObjectMixin, BaseArray, ABC):
     fixed_ndim = 2
     fixed_dtype: Type[np.generic] = np.float64
 
@@ -26,6 +27,10 @@ class FunctionMixin(ObjectMixin, ABC):
     @property
     def nfuncs(self) -> int:
         return prod(self.shape[1:])
+
+    @classmethod
+    def concat_with_metadata(cls, arrs: Sequence[Self], axis: int = 0) -> Self:
+        return cls(super().concat(arrs, axis=axis), metadata=arrs[0].metadata)
 
 
 class CoordinateMixin(FunctionMixin, ABC):

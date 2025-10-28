@@ -1,6 +1,5 @@
-from . import matrix
-from . import embedding
-from . import density
+from . import density, embedding, matrix
+from .eigen_system import EigenSystem
 from .normalize import normalize
 from .points import Coordinates, Data, Embedding, Points
 
@@ -13,4 +12,5 @@ __all__ = [
     "Data",
     "Coordinates",
     "normalize",
+    "EigenSystem",
 ]

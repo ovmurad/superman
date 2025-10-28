@@ -2,32 +2,30 @@ from typing import Optional, TypeVar
 
 from src.array.base import BaseArray
 from src.object import ObjectMixin
+from src.object.metadata import Metadata
 
-T = TypeVar("T")
+T = TypeVar("T", bound=BaseArray)
 
 
 def normalize(
-    arr: BaseArray[T],
+    arr: T,
     axis: Optional[int] = 1,
     degree_exp: float = 1.0,
     sym_norm: bool = False,
     in_place: bool = False,
-) -> BaseArray[T]:
-
-    object = False
+) -> T:
+    md: Optional[Metadata] = None
     if isinstance(arr, ObjectMixin):
-        object = True
-        cls = arr.__class__
-        metadata = arr.metadata
+        md = arr.metadata
 
     degrees = arr.sum(axis=axis, keepdims=True) ** degree_exp
 
     if in_place:
-        arr /= degrees
+        arr /= degrees  # type: ignore
     else:
-        arr = arr / degrees
+        arr = arr / degrees  # type: ignore
 
     if sym_norm and axis is not None:
-        arr /= degrees.reshape(shape=degrees.shape[::-1])
+        arr /= degrees.reshape(shape=degrees.shape[::-1])  # type: ignore
 
-    return cls(arr, metadata=metadata) if object and not in_place else arr
+    return arr.__class__(arr) if md is None else arr.__class__(arr, metadata=md)

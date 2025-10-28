@@ -77,6 +77,11 @@ symmetric_lap_sol: Dict[str, Dict[str, LaplacianMatrix]] = {
     }
     for key, dict in npy_dict["symmetric_lap_sol"].items()
 }
+rmetric_sol: Dict[str, Dict[str, np.ndarray]] = {
+    key: {k: d for k, d in dict.item().items()}
+    for key, dict in npy_dict["rmetric_sol"].items()
+}
+
 lap_sol = {
     "geometric": geometric_lap_sol,
     "random_walk": random_walk_lap_sol,
