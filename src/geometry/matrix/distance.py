@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable, ClassVar, Iterable, Iterator, Optional, Union
+from typing import Any, Iterable, Iterator, Optional, Union
 
 import numpy as np
 
@@ -62,8 +62,6 @@ class DistanceMatrix(DistanceMatrixMixin, ABC):
     It also provides registration and dispatching mechanisms for affinity functions.
     """
 
-    _dispatch_affinity: ClassVar[dict[AffinityType, Callable]] = {}
-
     def adjacency(
         self,
         copy: bool = False,
@@ -93,25 +91,6 @@ class DistanceMatrix(DistanceMatrixMixin, ABC):
         :rtype: AdjacencyMatrix
         """
         pass
-
-    @classmethod
-    def _register(
-        cls, name: AffinityType
-    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        """
-        Decorator to register a class method in the affinity dispatch table.
-
-        :param name: The name of the affinity type to register.
-        :type name: AffinityType
-        :return: The decorator that registers the function.
-        :rtype: Callable
-        """
-
-        def decorator(func: Callable) -> Callable[..., Any]:
-            cls._dispatch_affinity[name] = classmethod(func).__get__(None, cls)
-            return func
-
-        return decorator
 
     def threshold(
         self,
@@ -210,12 +189,10 @@ class DistanceMatrix(DistanceMatrixMixin, ABC):
 
         dist_is_sq = self.metadata.dist_type == "sqeuclidean"
 
-        return self._dispatch_affinity[aff_type].__get__(self)(
-            eps, dist_is_sq, in_place
-        )
+        if aff_type == "gaussian":
+            return gaussian(self, eps, dist_is_sq, in_place)
 
 
-@DistanceMatrix._register("gaussian")
 def gaussian(
     dists: DistanceMatrix,
     eps: Optional[float] = None,
@@ -290,7 +267,7 @@ class DenseDistanceMatrix(DistanceMatrix, DenseArray):
     ) -> DistanceMatrix:
         """
         Threshold a dense distance matrix by eliminating entries larger
-        than a given radius.
+        than a given radius, setting them to +inf.
 
         :param radius: The maximum radius to retain distances. Entries
                        greater than this are set to infinity.

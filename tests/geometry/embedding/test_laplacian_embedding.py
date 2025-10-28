@@ -28,13 +28,13 @@ def test__aff_laplacian_embedding__output(key: str):
                     drop_first=True,
                 )
                 assert np.allclose(
-                    embedding[0],
+                    embedding[0].as_nparray(),
                     laplacian_embedding_sol[key][lap_type][0],
                     rtol=test_rtol,
                     atol=test_atol,
                 )
                 assert np.allclose(
-                    embedding[1],
+                    embedding[1].as_nparray(),
                     laplacian_embedding_sol[key][lap_type][1],
                     rtol=test_rtol,
                     atol=test_atol,
@@ -53,16 +53,16 @@ def test__lap_laplacian_embedding__output(type: str):
                     eigen_solver="dense",
                     drop_first=True,
                 )
-                sort_idx_emb = np.argsort(embedding[0])[::-1]
+                sort_idx_emb = np.argsort(embedding[0].as_nparray())[::-1]
                 sort_idx_sol = np.argsort(laplacian_embedding_sol[key][type][0])[::-1]
                 assert np.allclose(
-                    embedding[0][sort_idx_emb],
-                    laplacian_embedding_sol[key][type][0][sort_idx_sol],
+                    embedding[0].as_nparray(),
+                    laplacian_embedding_sol[key][type][0],
                     rtol=test_rtol,
                     atol=test_atol,
                 )
                 assert np.allclose(
-                    np.abs(embedding[1][:, sort_idx_emb]),
+                    np.abs(embedding[1][:, sort_idx_emb].as_nparray()),
                     np.abs(laplacian_embedding_sol[key][type][1][:, sort_idx_sol]),
                     rtol=test_rtol,
                     atol=test_atol,
