@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>src.linalg package &#8212; superman 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="src-linalg-package">
+<h1>src.linalg package<a class="headerlink" href="#src-linalg-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-src.linalg.covariance">
+<span id="src-linalg-covariance-module"></span><h2>src.linalg.covariance module<a class="headerlink" href="#module-src.linalg.covariance" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.covariance.Covariance">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.covariance.</span></span><span class="sig-name descname"><span class="pre">Covariance</span></span><a class="headerlink" href="#src.linalg.covariance.Covariance" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.linalg.func.func" title="src.linalg.func.func"><code class="xref py py-class docutils literal notranslate"><span class="pre">func</span></code></a>[<a class="reference internal" href="#src.linalg.covariance.CovarianceMatrix" title="src.linalg.covariance.CovarianceMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceMatrix</span></code></a>, <a class="reference internal" href="#src.linalg.covariance.CovarianceMatrices" title="src.linalg.covariance.CovarianceMatrices"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceMatrices</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.covariance.Covariance.global_func">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">global_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centered_x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.covariance.Covariance.global_func" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the global covariance matrix from centered data points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centered_x_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – Centered data points with shape <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">p)</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of samples and <code class="docutils literal notranslate"><span class="pre">p</span></code> is the feature dimension.</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>) – Optional weight array of shape <code class="docutils literal notranslate"><span class="pre">(m,)</span></code> to compute a
+weighted covariance. If None, computes the unweighted covariance. (default: None).</p></li>
+<li><p><strong>md</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a><em> | </em><em>None</em>) – Metadata to attach to the returned <cite>CovarianceMatrix</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <cite>CovarianceMatrix</cite> representing the global covariance structure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.covariance.CovarianceMatrix" title="src.linalg.covariance.CovarianceMatrix"><em>CovarianceMatrix</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.covariance.Covariance.local">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_means</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.covariance.Covariance.local" title="Link to this definition">¶</a></dt>
+<dd><p>Lazily computes the local covariance on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>. If there are multiple mean points, computes covariance for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>) – The neighborhood to calculate covariance with.</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>None</em>) – Optional center for the covariance calculation. If there are multiple mean points, computes covariance for each. If None, each point is treated as its own center. (default: None)</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>) – Optional weight matrix to calculate weighted covariance with. (default: None).</p></li>
+<li><p><strong>needs_means</strong> (<em>bool</em>) – Whether <cite>x_pts</cite> is centered. (default: True)</p></li>
+<li><p><strong>needs_norm</strong> (<em>bool</em>) – Whether the weights need to be normalized. (default: True)</p></li>
+<li><p><strong>in_place_norm</strong> (<em>bool</em>) – If <cite>needs_norm</cite>, whether to do the weight normalization in-place. (default: False)</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size to divide the covariance calculation. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The desired covariance matrices in a <cite>CovarianceMatrices</cite> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.covariance.CovarianceMatrices" title="src.linalg.covariance.CovarianceMatrices"><em>CovarianceMatrices</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.covariance.Covariance.local_func">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_means</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.covariance.Covariance.local_func" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the local covariance on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>. If there are multiple mean points, computes covariance for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – The neighborhood to calculate covariance with.</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – The center for the covariance calculation. If there are multiple mean points, computes covariance for each.</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>) – Optional weight matrix to calculate weighted covariance with.</p></li>
+<li><p><strong>needs_means</strong> (<em>bool</em>) – Whether <cite>x_pts</cite> is centered.</p></li>
+<li><p><strong>md</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a><em> | </em><em>None</em>) – Optional metadata to include in return <cite>CovarianceMatrices</cite>. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matrix where covariance matrices are joined along axis 0.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.covariance.CovarianceMatrices" title="src.linalg.covariance.CovarianceMatrices"><em>CovarianceMatrices</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.covariance.Covariance.local_iter">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_means</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.covariance.Covariance.local_iter" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the local covariance in a batched manner on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>. If there are multiple mean points, computes covariance for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>) – The neighborhood to calculate covariance with.</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>None</em>) – Optional center for the covariance calculation. If there are multiple mean points, computes covariance for each. If None, each point is treated as its own center. (default: None)</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>) – Optional weight matrix to calculate weighted covariance with. (default: None).</p></li>
+<li><p><strong>needs_means</strong> (<em>bool</em>) – Whether <cite>x_pts</cite> is centered. (default: True)</p></li>
+<li><p><strong>needs_norm</strong> (<em>bool</em>) – Whether the weights need to be normalized. (default: True)</p></li>
+<li><p><strong>in_place_norm</strong> (<em>bool</em>) – If <cite>needs_norm</cite>, whether to do the weight normalization in-place. (default: False)</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size to divide the covariance calculation. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator that gives the desired covariance matrices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Iterator</em>[<a class="reference internal" href="#src.linalg.covariance.CovarianceMatrices" title="src.linalg.covariance.CovarianceMatrices"><em>CovarianceMatrices</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.covariance.CovarianceMatrices">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.covariance.</span></span><span class="sig-name descname"><span class="pre">CovarianceMatrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.covariance.CovarianceMatrices" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.linalg.covariance.CovarianceMatrixMixin" title="src.linalg.covariance.CovarianceMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceMatrixMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<p>Container class for multiple covariance matrices.</p>
+<p>Extends <code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code> with a fixed third dimension for stacking
+covariance matrices along axis 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.linalg.covariance.CovarianceMatrices.fixed_ndim">
+<span class="sig-name descname"><span class="pre">fixed_ndim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#src.linalg.covariance.CovarianceMatrices.fixed_ndim" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.covariance.CovarianceMatrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.covariance.</span></span><span class="sig-name descname"><span class="pre">CovarianceMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.covariance.CovarianceMatrix" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.linalg.covariance.CovarianceMatrixMixin" title="src.linalg.covariance.CovarianceMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceMatrixMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+<p>Container class for a single Dense covariance matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.covariance.CovarianceMatrixMixin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.covariance.</span></span><span class="sig-name descname"><span class="pre">CovarianceMatrixMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.covariance.CovarianceMatrixMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin" title="src.object.geometry_matrix_mixin.GeometryMatrixMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometryMatrixMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract mixin class for covariance matrices.</p>
+<p>Provides a common interface for covariance-related matrix objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.linalg.func">
+<span id="src-linalg-func-module"></span><h2>src.linalg.func module<a class="headerlink" href="#module-src.linalg.func" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.func.func">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.func.</span></span><span class="sig-name descname"><span class="pre">func</span></span><a class="headerlink" href="#src.linalg.func.func" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">GlobalType</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalType</span></code>]</p>
+<p>Abstract base class for functions that produce both global and local outputs.</p>
+<p>Subclasses must implement <cite>global_func</cite>, <cite>local_func</cite>, and <cite>local_iter</cite>
+to define how to compute global and local structures. The <cite>package</cite>
+helper aggregates local outputs into a single object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GlobalType</strong> – Type returned by <cite>global_func</cite>.</p></li>
+<li><p><strong>LocalType</strong> – Type returned by <cite>local_func</cite> and <cite>local_iter</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.func.func.global_func">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">global_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.func.func.global_func" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the global object for the function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>) – Positional arguments specific to the subclass implementation.</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Keyword arguments specific to the subclass implementation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A global object of type <cite>GlobalType</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>GlobalType</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.linalg.func.func.global_type">
+<span class="sig-name descname"><span class="pre">global_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#src.linalg.func.func.global_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.func.func.local_func">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.func.func.local_func" title="Link to this definition">¶</a></dt>
+<dd><p>Computes a local object for the function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>) – Positional arguments specific to the subclass implementation.</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Keyword arguments specific to the subclass implementation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A local object of type <cite>LocalType</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>LocalType</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.func.func.local_iter">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.func.func.local_iter" title="Link to this definition">¶</a></dt>
+<dd><p>Iterates over local computations in a batched manner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>) – Positional arguments specific to the subclass implementation.</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Keyword arguments specific to the subclass implementation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An iterable of local objects of type <cite>LocalType</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Iterable</em>[<em>LocalType</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.linalg.func.func.local_type">
+<span class="sig-name descname"><span class="pre">local_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span></em><a class="headerlink" href="#src.linalg.func.func.local_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.func.func.package">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">package</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.func.func.package" title="Link to this definition">¶</a></dt>
+<dd><p>Aggregates all local computations into a single object based on the object’s <cite>concat_with_metadata</cite> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>) – Positional arguments forwarded to <cite>local_iter</cite>.</p></li>
+<li><p><strong>output_cls</strong> (<em>Type</em><em>[</em><em>LocalType</em><em>]</em>) – The output class used to aggregate local objects.</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size for chunked iteration. (default: None).</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – Keyword arguments forwarded to <cite>local_iter</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A concatenated <cite>LocalType</cite> object with metadata.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>LocalType</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.linalg.rmetric">
+<span id="src-linalg-rmetric-module"></span><h2>src.linalg.rmetric module<a class="headerlink" href="#module-src.linalg.rmetric" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetric">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.rmetric.</span></span><span class="sig-name descname"><span class="pre">RMetric</span></span><a class="headerlink" href="#src.linalg.rmetric.RMetric" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.linalg.func.func" title="src.linalg.func.func"><code class="xref py py-class docutils literal notranslate"><span class="pre">func</span></code></a>[<a class="reference internal" href="#src.linalg.rmetric.RMetricSystem" title="src.linalg.rmetric.RMetricSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">RMetricSystem</span></code></a>, <a class="reference internal" href="#src.linalg.rmetric.RMetricSystems" title="src.linalg.rmetric.RMetricSystems"><code class="xref py py-class docutils literal notranslate"><span class="pre">RMetricSystems</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetric.global_func">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">global_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncomp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.rmetric.RMetric.global_func" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the global Riemannian metric decomposition from data embeddings and a Laplacian vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><em>Embedding</em></a>) – Input data embedding.</p></li>
+<li><p><strong>lap</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – Laplacian vector or equivalent weight vector.</p></li>
+<li><p><strong>ncomp</strong> (<em>int</em><em> | </em><em>None</em>) – Number of eigencomponents to retain. If None, keep all. (default: None).</p></li>
+<li><p><strong>dual</strong> (<em>bool</em>) – If True, return the dual metric. If False, return the inverse. (default: True).</p></li>
+<li><p><strong>md</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a><em> | </em><em>None</em>) – Optional metadata to merge with x_pts metadata. If None, inherits from x_pts. (default: None)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An <cite>RMetricSystems</cite> object containing eigenvalues and eigenvectors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.rmetric.RMetricSystem" title="src.linalg.rmetric.RMetricSystem"><em>RMetricSystem</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetric.local">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncomp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.rmetric.RMetric.local" title="Link to this definition">¶</a></dt>
+<dd><p>Lazily computes the local Riemannian metric decomposition on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>.
+If there are multiple mean points, computes metrics for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><em>Embedding</em></a>) – Input data embedding.</p></li>
+<li><p><strong>lap</strong> (<a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a>) – Laplacian weights for local neighborhoods.</p></li>
+<li><p><strong>ncomp</strong> (<em>int</em><em> | </em><em>None</em>) – Number of eigencomponents to retain. If None, keep all. (default: None).</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>None</em>) – Optional local mean points. If None, defaults to each data point. (default: None).</p></li>
+<li><p><strong>dual</strong> (<em>bool</em>) – If True, return the dual metric. If False, return the inverse. (default: True).</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size for dividing the computation. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The desired local Riemannian metric in an <cite>RMetricSystems</cite> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.rmetric.RMetricSystems" title="src.linalg.rmetric.RMetricSystems"><em>RMetricSystems</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetric.local_func">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncomp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.rmetric.RMetric.local_func" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the local Riemannian metric decomposition using uncentered data and affinity weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><em>Embedding</em></a>) – Input data embedding.</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – Local mean points for each neighborhood.</p></li>
+<li><p><strong>lap</strong> (<a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a>) – Laplacian weights for local neighborhoods.</p></li>
+<li><p><strong>ncomp</strong> (<em>int</em><em> | </em><em>None</em>) – Number of eigencomponents to retain. If None, keep all. (default: None).</p></li>
+<li><p><strong>dual</strong> (<em>bool</em>) – If True, return the dual metric. If False, return the inverse. (default: True).</p></li>
+<li><p><strong>md</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a><em> | </em><em>None</em>) – Metadata to include in the return <cite>RMetricSystems</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The desired local Riemannian metric in an <cite>RMetricSystems</cite> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.rmetric.RMetricSystems" title="src.linalg.rmetric.RMetricSystems"><em>RMetricSystems</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetric.local_iter">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncomp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.rmetric.RMetric.local_iter" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the local Riemannian metric decomposition in a batched manner on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>.
+If there are multiple mean points, computes metrics for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><em>Embedding</em></a>) – Input data embedding.</p></li>
+<li><p><strong>lap</strong> (<a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a>) – Laplacian weights for local neighborhoods.</p></li>
+<li><p><strong>ncomp</strong> (<em>int</em><em> | </em><em>None</em>) – Number of eigencomponents to retain. If None, keep all. (default: None).</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>None</em>) – Optional local mean points. If None, defaults to each data point. (default: None).</p></li>
+<li><p><strong>dual</strong> (<em>bool</em>) – If True, return the dual metric. If False, return the inverse. (default: True).</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size for dividing the computation. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator that yields <cite>RMetricSystems</cite> objects per batch.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Iterator</em>[<a class="reference internal" href="#src.linalg.rmetric.RMetricSystems" title="src.linalg.rmetric.RMetricSystems"><em>RMetricSystems</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetricSystem">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.rmetric.</span></span><span class="sig-name descname"><span class="pre">RMetricSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.rmetric.RMetricSystem" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.geometry.html#src.geometry.EigenSystem" title="src.geometry.eigen_system.EigenSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">EigenSystem</span></code></a></p>
+<p>Container class for a single Riemannian metric eigensystem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong> (<em>Iterable</em><em>[</em><em>Any</em><em>]</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="src.object.html#src.object.Eigen" title="src.object.Eigen">Eigen</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetricSystems">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.rmetric.</span></span><span class="sig-name descname"><span class="pre">RMetricSystems</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.rmetric.RMetricSystems" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.geometry.html#src.geometry.EigenSystem" title="src.geometry.eigen_system.EigenSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">EigenSystem</span></code></a></p>
+<p>Container class for multiple Riemannian metric eigensystems. Index 0 is an array of eigenvalue arrays. Index 1 is an array of eigenvector matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong> (<em>Iterable</em><em>[</em><em>Any</em><em>]</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="src.object.html#src.object.Eigen" title="src.object.Eigen">Eigen</a></p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetricSystems.fixed_value_ndim">
+<span class="sig-name descname"><span class="pre">fixed_value_ndim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.linalg.rmetric.RMetricSystems.fixed_value_ndim" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetricSystems.fixed_value_type">
+<span class="sig-name descname"><span class="pre">fixed_value_type</span></span><a class="headerlink" href="#src.linalg.rmetric.RMetricSystems.fixed_value_type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetricSystems.fixed_vector_ndim">
+<span class="sig-name descname"><span class="pre">fixed_vector_ndim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#src.linalg.rmetric.RMetricSystems.fixed_vector_ndim" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.linalg.rmetric.RMetricSystems.fixed_vector_type">
+<span class="sig-name descname"><span class="pre">fixed_vector_type</span></span><a class="headerlink" href="#src.linalg.rmetric.RMetricSystems.fixed_vector_type" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.linalg">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.linalg" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.Covariance">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.</span></span><span class="sig-name descname"><span class="pre">Covariance</span></span><a class="headerlink" href="#src.linalg.Covariance" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.linalg.func.func" title="src.linalg.func.func"><code class="xref py py-class docutils literal notranslate"><span class="pre">func</span></code></a>[<a class="reference internal" href="#src.linalg.covariance.CovarianceMatrix" title="src.linalg.covariance.CovarianceMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceMatrix</span></code></a>, <a class="reference internal" href="#src.linalg.covariance.CovarianceMatrices" title="src.linalg.covariance.CovarianceMatrices"><code class="xref py py-class docutils literal notranslate"><span class="pre">CovarianceMatrices</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.Covariance.global_func">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">global_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">centered_x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.Covariance.global_func" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the global covariance matrix from centered data points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>centered_x_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – Centered data points with shape <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">p)</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">m</span></code> is the number of samples and <code class="docutils literal notranslate"><span class="pre">p</span></code> is the feature dimension.</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>) – Optional weight array of shape <code class="docutils literal notranslate"><span class="pre">(m,)</span></code> to compute a
+weighted covariance. If None, computes the unweighted covariance. (default: None).</p></li>
+<li><p><strong>md</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a><em> | </em><em>None</em>) – Metadata to attach to the returned <cite>CovarianceMatrix</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <cite>CovarianceMatrix</cite> representing the global covariance structure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.covariance.CovarianceMatrix" title="src.linalg.covariance.CovarianceMatrix"><em>CovarianceMatrix</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.Covariance.local">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_means</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.Covariance.local" title="Link to this definition">¶</a></dt>
+<dd><p>Lazily computes the local covariance on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>. If there are multiple mean points, computes covariance for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>) – The neighborhood to calculate covariance with.</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>None</em>) – Optional center for the covariance calculation. If there are multiple mean points, computes covariance for each. If None, each point is treated as its own center. (default: None)</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>) – Optional weight matrix to calculate weighted covariance with. (default: None).</p></li>
+<li><p><strong>needs_means</strong> (<em>bool</em>) – Whether <cite>x_pts</cite> is centered. (default: True)</p></li>
+<li><p><strong>needs_norm</strong> (<em>bool</em>) – Whether the weights need to be normalized. (default: True)</p></li>
+<li><p><strong>in_place_norm</strong> (<em>bool</em>) – If <cite>needs_norm</cite>, whether to do the weight normalization in-place. (default: False)</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size to divide the covariance calculation. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The desired covariance matrices in a <cite>CovarianceMatrices</cite> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.covariance.CovarianceMatrices" title="src.linalg.covariance.CovarianceMatrices"><em>CovarianceMatrices</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.Covariance.local_func">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_means</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.Covariance.local_func" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the local covariance on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>. If there are multiple mean points, computes covariance for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – The neighborhood to calculate covariance with.</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – The center for the covariance calculation. If there are multiple mean points, computes covariance for each.</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>) – Optional weight matrix to calculate weighted covariance with.</p></li>
+<li><p><strong>needs_means</strong> (<em>bool</em>) – Whether <cite>x_pts</cite> is centered.</p></li>
+<li><p><strong>md</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a><em> | </em><em>None</em>) – Optional metadata to include in return <cite>CovarianceMatrices</cite>. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matrix where covariance matrices are joined along axis 0.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.covariance.CovarianceMatrices" title="src.linalg.covariance.CovarianceMatrices"><em>CovarianceMatrices</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.Covariance.local_iter">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_means</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.Covariance.local_iter" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the local covariance in a batched manner on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>. If there are multiple mean points, computes covariance for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>) – The neighborhood to calculate covariance with.</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>None</em>) – Optional center for the covariance calculation. If there are multiple mean points, computes covariance for each. If None, each point is treated as its own center. (default: None)</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>) – Optional weight matrix to calculate weighted covariance with. (default: None).</p></li>
+<li><p><strong>needs_means</strong> (<em>bool</em>) – Whether <cite>x_pts</cite> is centered. (default: True)</p></li>
+<li><p><strong>needs_norm</strong> (<em>bool</em>) – Whether the weights need to be normalized. (default: True)</p></li>
+<li><p><strong>in_place_norm</strong> (<em>bool</em>) – If <cite>needs_norm</cite>, whether to do the weight normalization in-place. (default: False)</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size to divide the covariance calculation. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator that gives the desired covariance matrices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Iterator</em>[<a class="reference internal" href="#src.linalg.covariance.CovarianceMatrices" title="src.linalg.covariance.CovarianceMatrices"><em>CovarianceMatrices</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.linalg.RMetric">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.linalg.</span></span><span class="sig-name descname"><span class="pre">RMetric</span></span><a class="headerlink" href="#src.linalg.RMetric" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.linalg.func.func" title="src.linalg.func.func"><code class="xref py py-class docutils literal notranslate"><span class="pre">func</span></code></a>[<a class="reference internal" href="#src.linalg.rmetric.RMetricSystem" title="src.linalg.rmetric.RMetricSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">RMetricSystem</span></code></a>, <a class="reference internal" href="#src.linalg.rmetric.RMetricSystems" title="src.linalg.rmetric.RMetricSystems"><code class="xref py py-class docutils literal notranslate"><span class="pre">RMetricSystems</span></code></a>], <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.RMetric.global_func">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">global_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncomp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.RMetric.global_func" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the global Riemannian metric decomposition from data embeddings and a Laplacian vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><em>Embedding</em></a>) – Input data embedding.</p></li>
+<li><p><strong>lap</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – Laplacian vector or equivalent weight vector.</p></li>
+<li><p><strong>ncomp</strong> (<em>int</em><em> | </em><em>None</em>) – Number of eigencomponents to retain. If None, keep all. (default: None).</p></li>
+<li><p><strong>dual</strong> (<em>bool</em>) – If True, return the dual metric. If False, return the inverse. (default: True).</p></li>
+<li><p><strong>md</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a><em> | </em><em>None</em>) – Optional metadata to merge with x_pts metadata. If None, inherits from x_pts. (default: None)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An <cite>RMetricSystems</cite> object containing eigenvalues and eigenvectors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.rmetric.RMetricSystem" title="src.linalg.rmetric.RMetricSystem"><em>RMetricSystem</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.RMetric.local">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncomp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.RMetric.local" title="Link to this definition">¶</a></dt>
+<dd><p>Lazily computes the local Riemannian metric decomposition on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>.
+If there are multiple mean points, computes metrics for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><em>Embedding</em></a>) – Input data embedding.</p></li>
+<li><p><strong>lap</strong> (<a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a>) – Laplacian weights for local neighborhoods.</p></li>
+<li><p><strong>ncomp</strong> (<em>int</em><em> | </em><em>None</em>) – Number of eigencomponents to retain. If None, keep all. (default: None).</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>None</em>) – Optional local mean points. If None, defaults to each data point. (default: None).</p></li>
+<li><p><strong>dual</strong> (<em>bool</em>) – If True, return the dual metric. If False, return the inverse. (default: True).</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size for dividing the computation. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The desired local Riemannian metric in an <cite>RMetricSystems</cite> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.rmetric.RMetricSystems" title="src.linalg.rmetric.RMetricSystems"><em>RMetricSystems</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.RMetric.local_func">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncomp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">md</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.RMetric.local_func" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the local Riemannian metric decomposition using uncentered data and affinity weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><em>Embedding</em></a>) – Input data embedding.</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a>) – Local mean points for each neighborhood.</p></li>
+<li><p><strong>lap</strong> (<a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a>) – Laplacian weights for local neighborhoods.</p></li>
+<li><p><strong>ncomp</strong> (<em>int</em><em> | </em><em>None</em>) – Number of eigencomponents to retain. If None, keep all. (default: None).</p></li>
+<li><p><strong>dual</strong> (<em>bool</em>) – If True, return the dual metric. If False, return the inverse. (default: True).</p></li>
+<li><p><strong>md</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a><em> | </em><em>None</em>) – Metadata to include in the return <cite>RMetricSystems</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The desired local Riemannian metric in an <cite>RMetricSystems</cite> object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.linalg.rmetric.RMetricSystems" title="src.linalg.rmetric.RMetricSystems"><em>RMetricSystems</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.linalg.RMetric.local_iter">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_iter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncomp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.linalg.RMetric.local_iter" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the local Riemannian metric decomposition in a batched manner on all <cite>x_pts</cite> centered on <cite>mean_pts</cite>.
+If there are multiple mean points, computes metrics for each.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_pts</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><em>Embedding</em></a>) – Input data embedding.</p></li>
+<li><p><strong>lap</strong> (<a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a>) – Laplacian weights for local neighborhoods.</p></li>
+<li><p><strong>ncomp</strong> (<em>int</em><em> | </em><em>None</em>) – Number of eigencomponents to retain. If None, keep all. (default: None).</p></li>
+<li><p><strong>mean_pts</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>None</em>) – Optional local mean points. If None, defaults to each data point. (default: None).</p></li>
+<li><p><strong>dual</strong> (<em>bool</em>) – If True, return the dual metric. If False, return the inverse. (default: True).</p></li>
+<li><p><strong>bsize</strong> (<em>int</em><em> | </em><em>None</em>) – Optional batch size for dividing the computation. (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator that yields <cite>RMetricSystems</cite> objects per batch.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Iterator</em>[<a class="reference internal" href="#src.linalg.rmetric.RMetricSystems" title="src.linalg.rmetric.RMetricSystems"><em>RMetricSystems</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">superman</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Octavian-Vlad Murad, Marcus Yim.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/src.linalg.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

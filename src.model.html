@@ -35,6 +35,62 @@
 <h1>src.model package<a class="headerlink" href="#src-model-package" title="Link to this heading">¶</a></h1>
 <section id="module-src.model">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.model" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model.SpectralEmbedding">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.</span></span><span class="sig-name descname"><span class="pre">SpectralEmbedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eigen_solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'amg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_first</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lap_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'geometric'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffusion_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffusion_maps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">solver_kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.SpectralEmbedding" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.geometry.html#src.geometry.points.Embedding" title="src.geometry.points.Embedding"><code class="xref py py-class docutils literal notranslate"><span class="pre">Embedding</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>float</em>)</p></li>
+<li><p><strong>n_components</strong> (<em>int</em>)</p></li>
+<li><p><strong>eps</strong> (<em>float</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>eigen_solver</strong> (<em>Literal</em><em>[</em><em>'dense'</em><em>, </em><em>'arpack'</em><em>, </em><em>'lobpcg'</em><em>, </em><em>'amg'</em><em>]</em>)</p></li>
+<li><p><strong>drop_first</strong> (<em>bool</em>)</p></li>
+<li><p><strong>lap_type</strong> (<em>Literal</em><em>[</em><em>'geometric'</em><em>, </em><em>'random_walk'</em><em>, </em><em>'symmetric'</em><em>]</em>)</p></li>
+<li><p><strong>diffusion_time</strong> (<em>float</em>)</p></li>
+<li><p><strong>diffusion_maps</strong> (<em>bool</em>)</p></li>
+<li><p><strong>solver_kwds</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.model.SpectralEmbedding.aff_mat">
+<span class="sig-name descname"><span class="pre">aff_mat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix"><span class="pre">AffinityMatrix</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.model.SpectralEmbedding.aff_mat" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.model.SpectralEmbedding.dist_mat">
+<span class="sig-name descname"><span class="pre">dist_mat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><span class="pre">DistanceMatrix</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.model.SpectralEmbedding.dist_mat" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.SpectralEmbedding.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.SpectralEmbedding.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Fit the model from geometry matrix data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="src.geometry.html#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a><em> | </em><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.affinity.AffinityMatrix" title="src.geometry.matrix.affinity.AffinityMatrix"><em>AffinityMatrix</em></a><em> | </em><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.distance.DistanceMatrix" title="src.geometry.matrix.distance.DistanceMatrix"><em>DistanceMatrix</em></a><em> | </em><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><em>LaplacianMatrix</em></a>) – Any GeometryType geometry matrix. If a <cite>LaplacianMatrix</cite>, overrides the <cite>lap_type</cite> specified in the constructor.</p></li>
+<li><p><strong>save</strong> (<em>bool</em>) – Whether to save the <cite>DistanceMatrix</cite>, <cite>AffinityMatrix</cite> and <cite>LaplacianMatrix</cite>. IMPORTANT: If True, will take a significant additional memory. If your dataset is a significant portion of your available memory, it is reccomended to keep <cite>save</cite> False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <cite>EigenSystem</cite> corresponding to the spectral embedding.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>EmbeddingSystem</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.model.SpectralEmbedding.lap_mat">
+<span class="sig-name descname"><span class="pre">lap_mat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="src.geometry.matrix.html#src.geometry.matrix.laplacian.LaplacianMatrix" title="src.geometry.matrix.laplacian.LaplacianMatrix"><span class="pre">LaplacianMatrix</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.model.SpectralEmbedding.lap_mat" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 

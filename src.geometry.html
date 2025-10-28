@@ -142,7 +142,7 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>arr</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em>[</em><em>T</em><em>]</em>)</p></li>
+<li><p><strong>arr</strong> (<em>T</em>)</p></li>
 <li><p><strong>axis</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>degree_exp</strong> (<em>float</em>)</p></li>
 <li><p><strong>sym_norm</strong> (<em>bool</em>)</p></li>
@@ -150,7 +150,7 @@
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a>[<em>T</em>]</p>
+<dd class="field-even"><p><em>T</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -160,16 +160,37 @@
 <span id="src-geometry-points-module"></span><h2>src.geometry.points module<a class="headerlink" href="#module-src.geometry.points" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.points.Coordinates">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Coordinates" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Coordinates" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.geometry.points.PointsMixin" title="src.geometry.points.PointsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.points.Coordinates.concat_with_metadata">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concat_with_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Coordinates.concat_with_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Concatenates a <cite>Sequence</cite> of this class, retaining the metadata of the first in the sequence.
+Returns an instance of this class with data concatentated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arrs</strong> (<em>Sequence</em><em>[</em><em>Self</em><em>]</em>) – <cite>Sequence</cite> of instances to concatenate.</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – Axis to concatentate on. Axis must exist for each instance in <cite>arrs</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of this class with data concatentated.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Self</em></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="src.geometry.points.Coordinates.d">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">d</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.points.Coordinates.d" title="Link to this definition">¶</a></dt>
@@ -179,13 +200,13 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.points.Data">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Data" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Data" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -198,13 +219,13 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.points.Embedding">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Embedding" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Embedding" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -217,16 +238,56 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.points.Points">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Points" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">Points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Points" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.geometry.points.PointsMixin" title="src.geometry.points.PointsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.points.Points.concat_with_metadata">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concat_with_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Points.concat_with_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Concatenates a <cite>Sequence</cite> of this class, retaining the metadata of the first in the sequence.
+Returns an instance of this class with data concatentated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arrs</strong> (<em>Sequence</em><em>[</em><em>Self</em><em>]</em>) – <cite>Sequence</cite> of instances to concatenate.</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – Axis to concatentate on. Axis must exist for each instance in <cite>arrs</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of this class with data concatentated.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Self</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.points.Points.demean">
+<span class="sig-name descname"><span class="pre">demean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_pt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place_demean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Points.demean" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mean_pt</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>int</em><em> | </em><em>bool</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>needs_norm</strong> (<em>bool</em>)</p></li>
+<li><p><strong>in_place_demean</strong> (<em>bool</em>)</p></li>
+<li><p><strong>in_place_norm</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Tuple</em>[<a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a> | None, <a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a> | None]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.geometry.points.Points.pairwise_distance">
 <span class="sig-name descname"><span class="pre">pairwise_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.Points.pairwise_distance" title="Link to this definition">¶</a></dt>
@@ -255,8 +316,8 @@ is constructed from the metadata of the points involved.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.points.PointsMixin">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">PointsMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.PointsMixin" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.object_mixin.ObjectMixin" title="src.object.object_mixin.ObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.points.</span></span><span class="sig-name descname"><span class="pre">PointsMixin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.points.PointsMixin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.object_mixin.ObjectMixin" title="src.object.object_mixin.ObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectMixin</span></code></a>, <a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseArray</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Mixin class for point cloud objects.</p>
 <p>Adds fixed dimensionality and dtype constraints, metadata handling,
 and distance computation functionality to point cloud classes.</p>
@@ -264,7 +325,7 @@ and distance computation functionality to point cloud classes.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<a class="reference internal" href="src.object.html#src.object.metadata.Metadata" title="src.object.metadata.Metadata"><em>Metadata</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -319,16 +380,37 @@ and distance computation functionality to point cloud classes.</p>
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.geometry" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.Coordinates">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Coordinates" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Coordinates" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.geometry.points.PointsMixin" title="src.geometry.points.PointsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.Coordinates.concat_with_metadata">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concat_with_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Coordinates.concat_with_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Concatenates a <cite>Sequence</cite> of this class, retaining the metadata of the first in the sequence.
+Returns an instance of this class with data concatentated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arrs</strong> (<em>Sequence</em><em>[</em><em>Self</em><em>]</em>) – <cite>Sequence</cite> of instances to concatenate.</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – Axis to concatentate on. Axis must exist for each instance in <cite>arrs</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of this class with data concatentated.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Self</em></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="src.geometry.Coordinates.d">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">d</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#src.geometry.Coordinates.d" title="Link to this definition">¶</a></dt>
@@ -338,13 +420,13 @@ and distance computation functionality to point cloud classes.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.Data">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Data" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Data" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -356,14 +438,64 @@ and distance computation functionality to point cloud classes.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="src.geometry.EigenSystem">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">EigenSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.EigenSystem" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.object.html#src.object.Eigen" title="src.object.eigen.Eigen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Eigen</span></code></a></p>
+<p>This class represents a pair of eigenvalues and eigenvectors aka an eigensystem.
+EigenSystem behaves as a Tuple with extra methods. An eigenvalue’s corresponding eigenvector is stored at the same index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong> (<em>Iterable</em><em>[</em><em>Any</em><em>]</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="src.object.html#src.object.Eigen" title="src.object.Eigen">Eigen</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.EigenSystem.drop_first">
+<span class="sig-name descname"><span class="pre">drop_first</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.EigenSystem.drop_first" title="Link to this definition">¶</a></dt>
+<dd><p>Drops the first eigenvalue and eigenvector of the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An <cite>EigenSystem</cite> with the first eigenvalue and eigenvector dropped.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#src.geometry.EigenSystem" title="src.geometry.eigen_system.EigenSystem"><em>EigenSystem</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.EigenSystem.get_comp">
+<span class="sig-name descname"><span class="pre">get_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ncomp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.EigenSystem.get_comp" title="Link to this definition">¶</a></dt>
+<dd><p>Gets the first <cite>ncomp</cite> number of eigenvalues and eigenvectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ncomp</strong> (<em>int</em>) – The number of eigenvalues and eigenvectors to return.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An <cite>EigenSystem</cite> with the <cite>ncomp</cite> number of eigenvalues and eigenvectors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.geometry.EigenSystem" title="src.geometry.eigen_system.EigenSystem"><em>EigenSystem</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.Embedding">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Embedding" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Embedding" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><code class="xref py py-class docutils literal notranslate"><span class="pre">Points</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -376,16 +508,56 @@ and distance computation functionality to point cloud classes.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.geometry.Points">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Points" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geometry.</span></span><span class="sig-name descname"><span class="pre">Points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Points" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#src.geometry.points.PointsMixin" title="src.geometry.points.PointsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointsMixin</span></code></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">DenseArray</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
-<li><p><strong>metadata</strong> (<em>Any</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.Points.concat_with_metadata">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concat_with_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Points.concat_with_metadata" title="Link to this definition">¶</a></dt>
+<dd><p>Concatenates a <cite>Sequence</cite> of this class, retaining the metadata of the first in the sequence.
+Returns an instance of this class with data concatentated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arrs</strong> (<em>Sequence</em><em>[</em><em>Self</em><em>]</em>) – <cite>Sequence</cite> of instances to concatenate.</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – Axis to concatentate on. Axis must exist for each instance in <cite>arrs</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of this class with data concatentated.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Self</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geometry.Points.demean">
+<span class="sig-name descname"><span class="pre">demean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_pt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">needs_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place_demean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place_norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Points.demean" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mean_pt</strong> (<a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a><em> | </em><em>int</em><em> | </em><em>bool</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>weights</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>needs_norm</strong> (<em>bool</em>)</p></li>
+<li><p><strong>in_place_demean</strong> (<em>bool</em>)</p></li>
+<li><p><strong>in_place_norm</strong> (<em>bool</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Tuple</em>[<a class="reference internal" href="#src.geometry.points.Points" title="src.geometry.points.Points"><em>Points</em></a>, <a class="reference internal" href="src.array.dense.html#src.array.dense.dense.DenseArray" title="src.array.dense.dense.DenseArray"><em>DenseArray</em></a> | None, <a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a> | None]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.geometry.Points.pairwise_distance">
 <span class="sig-name descname"><span class="pre">pairwise_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geometry.Points.pairwise_distance" title="Link to this definition">¶</a></dt>
@@ -418,7 +590,7 @@ is constructed from the metadata of the points involved.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>arr</strong> (<a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a><em>[</em><em>T</em><em>]</em>)</p></li>
+<li><p><strong>arr</strong> (<em>T</em>)</p></li>
 <li><p><strong>axis</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>degree_exp</strong> (<em>float</em>)</p></li>
 <li><p><strong>sym_norm</strong> (<em>bool</em>)</p></li>
@@ -426,7 +598,7 @@ is constructed from the metadata of the points involved.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="src.array.html#src.array.base.BaseArray" title="src.array.base.BaseArray"><em>BaseArray</em></a>[<em>T</em>]</p>
+<dd class="field-even"><p><em>T</em></p>
 </dd>
 </dl>
 </dd></dl>

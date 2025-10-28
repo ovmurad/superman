@@ -562,6 +562,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.geometry.html#module-src.geometry.points">src.geometry.points module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src.geometry.html#src.geometry.points.Coordinates"><code class="docutils literal notranslate"><span class="pre">Coordinates</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.points.Coordinates.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">Coordinates.concat_with_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.points.Coordinates.d"><code class="docutils literal notranslate"><span class="pre">Coordinates.d</span></code></a></li>
 </ul>
 </li>
@@ -574,6 +575,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="src.geometry.html#src.geometry.points.Points"><code class="docutils literal notranslate"><span class="pre">Points</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.points.Points.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">Points.concat_with_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.points.Points.demean"><code class="docutils literal notranslate"><span class="pre">Points.demean()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.points.Points.pairwise_distance"><code class="docutils literal notranslate"><span class="pre">Points.pairwise_distance()</span></code></a></li>
 </ul>
 </li>
@@ -589,6 +592,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.geometry.html#module-src.geometry">Module contents</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src.geometry.html#src.geometry.Coordinates"><code class="docutils literal notranslate"><span class="pre">Coordinates</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.Coordinates.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">Coordinates.concat_with_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.Coordinates.d"><code class="docutils literal notranslate"><span class="pre">Coordinates.d</span></code></a></li>
 </ul>
 </li>
@@ -596,11 +600,18 @@
 <li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.Data.D"><code class="docutils literal notranslate"><span class="pre">Data.D</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="src.geometry.html#src.geometry.EigenSystem"><code class="docutils literal notranslate"><span class="pre">EigenSystem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.EigenSystem.drop_first"><code class="docutils literal notranslate"><span class="pre">EigenSystem.drop_first()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.EigenSystem.get_comp"><code class="docutils literal notranslate"><span class="pre">EigenSystem.get_comp()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="src.geometry.html#src.geometry.Embedding"><code class="docutils literal notranslate"><span class="pre">Embedding</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.Embedding.p"><code class="docutils literal notranslate"><span class="pre">Embedding.p</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="src.geometry.html#src.geometry.Points"><code class="docutils literal notranslate"><span class="pre">Points</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.Points.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">Points.concat_with_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.Points.demean"><code class="docutils literal notranslate"><span class="pre">Points.demean()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.geometry.html#src.geometry.Points.pairwise_distance"><code class="docutils literal notranslate"><span class="pre">Points.pairwise_distance()</span></code></a></li>
 </ul>
 </li>
@@ -610,7 +621,16 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src.model.html">src.model package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="src.model.html#module-src.model">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.model.html#module-src.model">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.model.html#src.model.SpectralEmbedding"><code class="docutils literal notranslate"><span class="pre">SpectralEmbedding</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.model.html#src.model.SpectralEmbedding.aff_mat"><code class="docutils literal notranslate"><span class="pre">SpectralEmbedding.aff_mat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.html#src.model.SpectralEmbedding.dist_mat"><code class="docutils literal notranslate"><span class="pre">SpectralEmbedding.dist_mat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.html#src.model.SpectralEmbedding.fit"><code class="docutils literal notranslate"><span class="pre">SpectralEmbedding.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.html#src.model.SpectralEmbedding.lap_mat"><code class="docutils literal notranslate"><span class="pre">SpectralEmbedding.lap_mat</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="src.object.html">src.object package</a><ul>
@@ -621,6 +641,7 @@
 <li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.function.Degree"><code class="docutils literal notranslate"><span class="pre">Degree</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.function.DegreeMixin"><code class="docutils literal notranslate"><span class="pre">DegreeMixin</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.function.FunctionMixin"><code class="docutils literal notranslate"><span class="pre">FunctionMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.function.FunctionMixin.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">FunctionMixin.concat_with_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.function.FunctionMixin.fixed_dtype"><code class="docutils literal notranslate"><span class="pre">FunctionMixin.fixed_dtype</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.function.FunctionMixin.fixed_ndim"><code class="docutils literal notranslate"><span class="pre">FunctionMixin.fixed_ndim</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.function.FunctionMixin.metadata"><code class="docutils literal notranslate"><span class="pre">FunctionMixin.metadata</span></code></a></li>
@@ -641,11 +662,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.object.html#module-src.object.geometry_matrix_mixin">src.object.geometry_matrix_mixin module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.concat_with_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin.fixed_dtype"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.fixed_dtype</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin.fixed_ndim"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.fixed_ndim</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin.from_npts"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.from_npts</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin.is_square"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.is_square</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin.metadata"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.metadata</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin.npts"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.npts</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.geometry_matrix_mixin.GeometryMatrixMixin.to_npts"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.to_npts</span></code></a></li>
 </ul>
@@ -674,15 +695,29 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.object.html#module-src.object.object_mixin">src.object.object_mixin module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.object_mixin.ObjectMixin"><code class="docutils literal notranslate"><span class="pre">ObjectMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.object_mixin.ObjectMixin.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">ObjectMixin.concat_with_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.object_mixin.ObjectMixin.fixed_dtype"><code class="docutils literal notranslate"><span class="pre">ObjectMixin.fixed_dtype</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.object_mixin.ObjectMixin.fixed_ndim"><code class="docutils literal notranslate"><span class="pre">ObjectMixin.fixed_ndim</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.object_mixin.ObjectMixin.metadata"><code class="docutils literal notranslate"><span class="pre">ObjectMixin.metadata</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.object_mixin.chunk"><code class="docutils literal notranslate"><span class="pre">chunk()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.object.html#module-src.object">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.Eigen"><code class="docutils literal notranslate"><span class="pre">Eigen</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.Eigen.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">Eigen.concat_with_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.Eigen.eigenvalues"><code class="docutils literal notranslate"><span class="pre">Eigen.eigenvalues</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.Eigen.eigenvectors"><code class="docutils literal notranslate"><span class="pre">Eigen.eigenvectors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.Eigen.fixed_tuple_length"><code class="docutils literal notranslate"><span class="pre">Eigen.fixed_tuple_length</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.Eigen.fixed_type"><code class="docutils literal notranslate"><span class="pre">Eigen.fixed_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.Eigen.fixed_value_ndim"><code class="docutils literal notranslate"><span class="pre">Eigen.fixed_value_ndim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.Eigen.fixed_vector_ndim"><code class="docutils literal notranslate"><span class="pre">Eigen.fixed_vector_ndim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.Eigen.sort_by_eigval"><code class="docutils literal notranslate"><span class="pre">Eigen.sort_by_eigval()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.FunctionMixin"><code class="docutils literal notranslate"><span class="pre">FunctionMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.FunctionMixin.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">FunctionMixin.concat_with_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.FunctionMixin.fixed_dtype"><code class="docutils literal notranslate"><span class="pre">FunctionMixin.fixed_dtype</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.FunctionMixin.fixed_ndim"><code class="docutils literal notranslate"><span class="pre">FunctionMixin.fixed_ndim</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.FunctionMixin.metadata"><code class="docutils literal notranslate"><span class="pre">FunctionMixin.metadata</span></code></a></li>
@@ -691,6 +726,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.GeometryMatrixMixin"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.GeometryMatrixMixin.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.concat_with_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.GeometryMatrixMixin.fixed_dtype"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.fixed_dtype</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.GeometryMatrixMixin.fixed_ndim"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.fixed_ndim</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.GeometryMatrixMixin.from_npts"><code class="docutils literal notranslate"><span class="pre">GeometryMatrixMixin.from_npts</span></code></a></li>
@@ -716,11 +752,13 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.ObjectMixin"><code class="docutils literal notranslate"><span class="pre">ObjectMixin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.ObjectMixin.concat_with_metadata"><code class="docutils literal notranslate"><span class="pre">ObjectMixin.concat_with_metadata()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.ObjectMixin.fixed_dtype"><code class="docutils literal notranslate"><span class="pre">ObjectMixin.fixed_dtype</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.ObjectMixin.fixed_ndim"><code class="docutils literal notranslate"><span class="pre">ObjectMixin.fixed_ndim</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.object.html#src.object.ObjectMixin.metadata"><code class="docutils literal notranslate"><span class="pre">ObjectMixin.metadata</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="src.object.html#src.object.chunk"><code class="docutils literal notranslate"><span class="pre">chunk()</span></code></a></li>
 </ul>
 </li>
 </ul>
