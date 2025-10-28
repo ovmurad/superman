@@ -1,0 +1,3 @@
+[submodule "superman-visualizations"]
+	path = superman-visualizations
+	url = https://github.com/MarcusYim/superman-visualizations
